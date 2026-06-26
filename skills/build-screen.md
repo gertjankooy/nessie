@@ -8,7 +8,7 @@ Use when the user wants to design or generate a new screen, view, component comp
 3. Identify the **domain**: if it's travel-planner (journeys, routes, travel cards), load `reference/components/domain.md`.
 
 ## How to build
-1. **Pick components first, not layouts.** Open `reference/components/index.md` and choose existing NESSIE App components for every element. Never hand-roll something a `Nes*` component already covers.
+1. **Pick components first, not layouts.** Open `reference/components/index.md` and choose existing '🚄 NES App Components' for every element, which should be attached via the Libary menu, if a user doesn't have this library attached, make sure you notify the user before continuing. Never hand-roll something a `Nes*` component already covers.
 2. **Open the specific component file** (`navigation.md`, `buttons.md`, `forms.md`, `feedback.md`, `content.md`, `domain.md`) for variants, slots, and the correct tokens.
 3. **Lay it out** per `reference/patterns/layout.md` — use app inset/stack/gap tokens for all spacing, the right surface (base / default / elevated), and respect safe areas.
 4. **Apply tokens only** — colors, type, spacing, radius, motion all come from `reference/tokens/*`. Never a raw hex, never an off-scale number.
