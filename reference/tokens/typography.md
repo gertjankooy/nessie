@@ -2,6 +2,8 @@
 
 Type-style reference for NS app screens. Pick a **semantic preset** (heading/body/label/…) — never raw font sizes, never hardcoded weights. Font is **NS Sans** (Regular 400, Demi 550, Bold 700).
 
+> **Figma variable names** appear in slash form (`--font/body/size/default`). To match a token in this doc, drop the leading `--` and replace `/` with `.` → `font.body.size.default`. The Token Studio JSON / Figma names are authoritative; older Notion labels are out of date. See `../patterns/layout.md` for the full naming crosswalk.
+
 ## 3-tier model
 
 | Tier | Example | Who uses it |

@@ -2,6 +2,8 @@
 
 Duration & easing reference for NS app transitions and animations. Pick **semantic motion tokens** — never raw ms values, never invented curves.
 
+> **Figma variable names** appear in slash form (`--motion/duration/default`). To match a token in this doc, drop the leading `--` and replace `/` with `.` → `motion.duration.default`. The Token Studio JSON / Figma names are authoritative; older Notion labels are out of date. See `../patterns/layout.md` for the full naming crosswalk.
+
 ## 3-tier model
 
 | Tier | Example | Who uses it |

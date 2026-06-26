@@ -24,6 +24,12 @@ All paths are absolute from `/tmp/figma-skills/`. The repo is cloned fresh each 
 - `reference/tokens/` — `color.md` · `typography.md` · `spacing.md` · `shape.md` · `motion.md` · `applied.md`
 - `reference/patterns/` — `layout.md` (app insets/stacks/surfaces/safe areas) · `navigation-patterns.md` (incl. iOS vs Android) · `accessibility.md`
 
+### Token doc convention (always follow when adding/editing tokens)
+
+Token names have two shapes that must never be confused: **Figma binds variables in slash form with a `--` prefix** (e.g. `--content/text/default`), while **these docs use dotted JSON form** (e.g. `content.text.default`). Convert by dropping the leading `--` and replacing `/` with `.`. The Token Studio JSON / Figma variable names are authoritative; older Notion labels are out of date.
+
+Every file in `reference/tokens/` MUST carry a callout near the top stating this rule with a token example from that file, cross-linking to `reference/patterns/layout.md` (the single-source naming crosswalk). When you add a new token file or a new token category, add/extend that callout — do not document a token only in dotted form without noting its Figma `--slash/form`.
+
 ## Non-negotiable rules (always apply)
 
 1. **Tokens only.** Every color, type style, spacing, radius, and motion value comes from a NESSIE token (`base`/semantic or `applied`/component tier). Never a raw hex, never an off-scale number, never a `core`/raw-palette token used directly.

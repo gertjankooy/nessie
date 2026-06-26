@@ -3,6 +3,7 @@
 Component-level (tier 3) tokens: pre-composed values for form states, interaction states, skeleton, modality, and layout. **Use an applied token when one exists** instead of re-composing base tokens — it encodes a fixed design decision and themes automatically. Each resolves to a base token (shown), which in turn remaps per light/dark.
 
 > **iOS:** `NesPalette.formColorLabel`, `NesPalette.interactionColorHover`, etc. **Android:** `NesTokens` applied refs. **Web/CSS:** `--nes-applied-form-color-label`, `--nes-applied-interaction-color-hover`, …
+> **Figma variable names** appear in slash form (`--form/color/border`). To match a token in this doc, drop the leading `--` and replace `/` with `.` → `form.color.border`. The Token Studio JSON / Figma names are authoritative; older Notion labels are out of date. See `../patterns/layout.md` for the full naming crosswalk.
 
 ## Form (TextField, Checkbox, Radio, Toggle, Select)
 
