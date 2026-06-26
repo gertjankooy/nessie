@@ -26,12 +26,12 @@ The app layout system is built on three dynamic spacing families. All scale auto
 | **Stack** | Vertical distance between stacked elements | `space.app.stack.*` |
 | **Inline** | Horizontal distance between elements | `space.app.inline.*` |
 
-> **iOS:** Use these as the app spacing language. In Figma Make, apply inset as padding, stack as vertical auto-layout gap, inline as horizontal auto-layout gap.
+> **iOS:** Use these as the app spacing language. In Figma, apply inset as padding, stack as vertical auto-layout gap, inline as horizontal auto-layout gap.
 > **Android:** Same tokens map to `NesTokens.layout.spaceAppInset*`, `spaceAppStack*`, `spaceAppInline*` (Compose). `space.app.inset.default` → `Modifier.padding(NesTokens.layout.spaceAppInsetDefault)`.
 
 ### Token naming across surfaces (the JSON is the source of truth)
 
-The same token has three name shapes. **The Token Studio JSON / Figma variables are authoritative — older Notion names are out of date and must not be trusted.**
+The same token has three name shapes. **The Token Studio JSON / Figma variables are authoritative**
 
 | Surface | Format | Example |
 | :--- | :--- | :--- |
@@ -40,8 +40,6 @@ The same token has three name shapes. **The Token Studio JSON / Figma variables 
 | Android (Compose) | camelCase, drop dashes | `spaceAppInlineComfy` |
 
 > **Auditing tip:** Figma binds variables in the `--space/app/...` form. Convert by replacing `/` with `.` (drop the leading `--`) to match the JSON token names in this doc.
-
-**Outdated Notion names → real token (do not use the Notion labels):** Notion's `inset.relaxed`/`inset.loose` are really `inset.comfy`/`inset.relaxed`; Notion's `stack.compressed`/`stack.relaxed` are really `stack.tiny`/`stack.comfy`. Always use the JSON/Figma names in the tables below.
 
 ### App Inset — padding inside a container/boundary
 
@@ -99,11 +97,12 @@ Every app screen has two regions:
   1. **Section** — the page's content collection; stacks containers, optionally adds top/bottom page spacing.
   2. **Container** — implicit grouping of related items (e.g. a date picker under a route component).
   3. **Group** — connects related elements (heading + input field, image + caption).
-  4. **Closed group** — uses a visual boundary (outline, divider, shadow, elevation) to enclose related items; can also signal interactivity.
 
 ## Stacking behaviour (spacing compounds)
 
 When sections/containers stack, top + bottom insets **add up**. This is intentional — larger outer spacing signals weaker relationships, tighter internal spacing signals stronger ones.
+
+These insets apply to **containers**. When containers stack within a section, adjacent top + bottom insets compound to the totals below.
 
 | Inset (top + bottom) | Total between sections | Internal stacking |
 | :--- | :--- | :--- |
@@ -111,22 +110,23 @@ When sections/containers stack, top + bottom insets **add up**. This is intentio
 | 24 + 24 | 48 | 24 default, up to 32 max |
 | 32 + 32 | 64 | 32 (min and max) |
 
+### Picking the inset by screen type
+
+Default container inset depends on the kind of screen (all values are `space.app.inset.*` tokens):
+
+| Screen type | Container inset | Token | Effect when stacked |
+| :--- | :--- | :--- | :--- |
+| **Flow screens** (booking, onboarding, decision-mode) | 24 | `space.app.inset.comfy` | 24 + 24 = 48 between containers; calmer rhythm. |
+| **High-density screens** (scan-mode, data-heavy) | 16 | `space.app.inset.default` | 16 + 16 = 32 between containers; tighter grouping. |
+
+> **Forms** typically use **32 stacking** *within* the container (`space.app.stack.comfy`) between grouped input fields — separate from the container inset choice above.
+
+_To be filled from real screens: which specific screen types / templates use which inset and stacking. Add concrete mappings here as Figma screens are analysed._
+
 ## Layout rules & constraints
 
 - **Scaling increments** — all spacing scales in steps of 4px.
 - **Minimum spacing** — dynamic spacing never scales below **8px**. An 8px value in Default stays 8px in 2xs. Ensures touch safety and legibility on small screens.
-
-## List container density
-
-List/list-container density is a separate setting controlling the gap between list rows. (Defaults from Notion App Guidelines; token names not yet published in the JSON — do not invent them.)
-
-| Density | Value | When to use |
-| :--- | :--- | :--- |
-| dense | 0 | High-density / data-heavy screens. |
-| default | 4 | Standard lists, e.g. settings. |
-| loose | 8 | Flows and modal screens (e.g. buy-ticket). |
-
-Related list guidance: max row content 3–4 lines (12px top/bottom inset); use dividers only to separate large dense lists, never on the last item; keep one artwork size per page; avoid gray backgrounds behind icons (they read as buttons).
 
 ## Breakpoints / density modes (screen scaling)
 
