@@ -1,0 +1,14 @@
+# Secret-bearing local files (PATs / bootstrap) — never commit
+figma-bootstrap/
+bootstrap.md
+**/bootstrap.md
+
+# Environment & credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+
+# OS / editor cruft
+.DS_Store
