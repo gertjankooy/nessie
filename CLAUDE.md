@@ -56,5 +56,3 @@ Some base components have styling (e.g. gap, typography) baked in as defaults. E
 ## Platform notes
 
 iOS-first. Android-specific and iOS-26+ distinctions live in clearly-marked sections of `reference/patterns/navigation-patterns.md` and as `> **Android:**` / `> **iOS 26+:**` callouts inside component files. Add new distinctions there as they're discovered.
-
-<!-- write-test -->
