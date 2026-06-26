@@ -119,7 +119,7 @@ Default container inset depends on the kind of screen (all values are `space.app
 | **Flow screens** (booking, onboarding, decision-mode) | 24 | `space.app.inset.comfy` | 24 + 24 = 48 between containers; calmer rhythm. |
 | **High-density screens** (scan-mode, data-heavy) | 16 | `space.app.inset.default` | 16 + 16 = 32 between containers; tighter grouping. |
 
-> **Forms** typically use **32 stacking** *within* the container (`space.app.stack.comfy`) between grouped input fields — separate from the container inset choice above.
+> **Forms** typically use **32 stacking** *within* the container between grouped input fields — `applied.space.app.container.stack.control` (→ `space.app.stack.comfy`, 32). This is separate from the container inset choice above.
 
 _To be filled from real screens: which specific screen types / templates use which inset and stacking. Add concrete mappings here as Figma screens are analysed._
 

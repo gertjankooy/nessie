@@ -1,5 +1,5 @@
 # Secret-bearing local files (PATs / bootstrap) — never commit
-figma-bootstrap/
+figma-bootstrap/            # covers figma-bootstrap/nessie.md, nessie-admin.md, etc.
 bootstrap.md
 **/bootstrap.md
 
