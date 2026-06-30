@@ -2,7 +2,7 @@
 
 Routing/lookup table for the NESSIE (NS Dutch Railways) **App** component library. iOS-first; use only documented App variants — never invent variants.
 
-**Read this first** to pick a component, then open its own `<component>.md` file (linked below) for usage, anatomy, configurations, placement, behavior, content, and accessibility. Each file is synced from the NS ZeroHeight and carries frontmatter (`zeroheight_page_id`, `last_synced`, `gaps`). Run `/sync-component <name>` to refresh one from ZeroHeight, or `/sync-component all`.
+**Read this first** to pick a component, then open its own `<component>.md` file (linked below) for usage, anatomy, configurations, placement, behavior, content, and accessibility. Each file is synced from the NS ZeroHeight and carries frontmatter (`zeroheight_page_id`, `last_synced`, `gaps`). Run `/sync-docs <name>` to refresh one from ZeroHeight, `/sync-docs components` for all components, or `/sync-docs all` for components + patterns + fundamentals.
 
 > Sections marked `_Not available in ZeroHeight — to review._` (and listed in each file's `gaps:`) are documentation gaps to fill later, not missing features.
 
