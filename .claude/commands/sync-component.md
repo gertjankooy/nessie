@@ -24,7 +24,8 @@ Author or update the per-component reference doc(s) in `reference/components/` f
 5. **Drop the noise.** Ignore each image's `**Style**` / `**Attributes**` tables (generic `X:0 Y:0`, `#FFFFFF`, `848px`), decorative example images, the "Questions?" / "Copywriting / We've moved" blocks, and marketing prose.
 6. **Tokens by meaning, never hex.** Where a token is named, use dotted JSON form (`content.text.default`); otherwise describe the role. See the token-doc convention in `CLAUDE.md`.
 7. **Filename** = kebab-case of the ZeroHeight App page title, trimmed (`Button` → `button.md`, `Message Inline` → `message-inline.md`, `From To` → `from-to.md`).
-8. After writing, **update `index.md`** so its row points to the per-component file, and (per project decision) once every component in a legacy grouped file (`buttons.md`, `forms.md`, `feedback.md`, `content.md`, `domain.md`, `navigation.md`) has its own file, delete the grouped file.
+8. After writing, **update `index.md`** so the component's row links to its per-component file. (The legacy grouped files — `buttons.md`, `forms.md`, etc. — have been removed; everything is now one file per component.)
+9. **App patterns** live in `reference/patterns/` (e.g. `interaction-models.md`, `settings-utility.md`), synced from ZeroHeight **Design System → PATTERNS** the same way. They use a pattern-appropriate structure rather than the component template, but follow the same rules: App/iOS-first source of truth, no implementation code, gaps kept and flagged, provenance footer. Sync a pattern by name just like a component.
 
 ## Writing rules (from the Tractie usage-doc standard)
 
