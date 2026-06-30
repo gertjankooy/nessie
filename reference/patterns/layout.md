@@ -90,13 +90,29 @@ Use applied tokens for common layout structures instead of composing spacing by 
 
 ## Layout regions
 
-Every app screen has two regions:
+### Screen frame setup
 
-- **Navigation region** — holds primary navigation: the Header (top bar) and the Bottom Navigation. See `navigation-patterns.md`.
-- **Body region** — scrollable content, structured as nested levels of grouping (strongest relationship = tightest spacing):
-  1. **Section** — the page's content collection; stacks containers, optionally adds top/bottom page spacing.
-  2. **Container** — implicit grouping of related items (e.g. a date picker under a route component).
-  3. **Group** — connects related elements (heading + input field, image + caption).
+Always bind the root screen frame to ScreenSize variables **before placing any content**:
+
+- **Width** (`screenSize/width`) — required. Keeps all screens consistent with the agreed design format and enables dynamic layout scaling.
+- **Height** (`screenSize/height`) — required. Height is secondary when content overflows the frame, but binding it ensures format consistency across the team.
+
+Apply this to every new screen frame regardless of screen type.
+
+### Navigation region
+
+Holds primary navigation: the Header (top bar) and the Bottom Navigation. See `navigation-patterns.md` for component choices and placement. For focused flow screens (close/confirm button placement, modal vs push navigation), see `interaction-models.md`.
+
+### Body region
+
+Scrollable content, structured as four nested levels of grouping. The strongest relationship uses the tightest spacing.
+
+| Level | Name | Role | Spacing rule |
+| :--- | :--- | :--- | :--- |
+| 1 | **Section** | Content collection for the page; wraps all Containers. LR padding always: `applied.space.app.section.inset` (16). TB padding varies by screen type — see "Screen type patterns" below. | Section `gap` = 0; spacing between Containers is created by compounding Container TB insets. |
+| 2 | **Container** | Thematic grouping of related components (e.g. all booking options, all traveller inputs). On flow screens, multiple Containers stack directly in the Section. On navigation screens, a single Container wraps all Groups. | TB: `applied.space.app.container.inset` (24). Internal gap between Groups: `applied.space.app.container.stack.default` (24) or `applied.space.app.container.stack.control` (32) for list types and input fields. |
+| 3 | **Group** | Related components sharing a conceptual purpose. Can contain one or more SubGroups. `🚄 Headings` — when used — is the first child of the first SubGroup and carries its own bottom spacing. | Gap between SubGroups: `applied.space.app.group.stack.default` (16) or `applied.space.app.group.stack.relaxed` (24). Headings are not always required — see `reference/patterns/settings-utility.md`. |
+| 4 | **SubGroup** | A zero-gap stack of tightly related components that share the same Group heading but need a subtle visual break from sibling SubGroups (e.g. info fields / card actions / destructive action, all under "About this card"). | `gap` is **always 0** on the SubGroup layer itself. The gap between SubGroups is controlled by the parent Group's `itemSpacing` token — never applied on the SubGroup layer. |
 
 ## Stacking behaviour (spacing compounds)
 
@@ -121,7 +137,18 @@ Default container inset depends on the kind of screen (all values are `space.app
 
 > **Forms** typically use **32 stacking** *within* the container between grouped input fields — `applied.space.app.container.stack.control` (→ `space.app.stack.comfy`, 32). This is separate from the container inset choice above.
 
-_To be filled from real screens: which specific screen types / templates use which inset and stacking. Add concrete mappings here as Figma screens are analysed._
+### Screen type patterns
+
+Two patterns are documented from real screens. Add further types here as screens are analysed.
+
+| Screen type | Section TB padding | Containers in Section | Container internal gap | Bottom chrome |
+| :--- | :--- | :--- | :--- | :--- |
+| **Navigation / Home** (tab hub, cards + navigation lists) | `space/app/inset/relaxed` (32) | Single Container wrapping all Groups | `applied.space.app.container.stack.control` (32) | `🚄 Bottom Navigation` |
+| **Flow** (booking, configuration, decision screens) | — | Multiple thematic Containers; Section `gap:0` | `applied.space.app.container.stack.default` (24) | Sticky footer — see `interaction-models.md` for focused flow top bar guidance |
+
+> **Flow compounding:** Section `gap` is 0 between Containers. Spacing is created by compounding Container TB insets — 24 + 24 = 48px between adjacent Containers, signalling each Container is a separate topic.
+
+_Add further screen types as they are analysed from real screens._
 
 ## Layout rules & constraints
 
