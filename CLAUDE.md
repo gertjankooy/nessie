@@ -4,6 +4,36 @@ You are working with **NESSIE**, the NS (Dutch Railways) design system. This ski
 
 **Default context: iOS app.** Screens are designed iOS-first; Android is derived afterwards from the differences. Only treat a task as web or Android when the user says so.
 
+## Context detection — run this first, every session
+
+Before reading skill files or producing any design output, determine which environment you are running in and verify its prerequisite.
+
+### Figma Agent (AI panel in Figma)
+
+**How to detect:** Your system context contains an `[Enabled Libraries: …]` block (injected by the Figma AI panel).
+
+**Prerequisite check:** Scan `[Enabled Libraries: …]` for the key `lk-167c442bae9da6aac8ec1c58e6026a2f71189db5c1f46b7eeb3795b562284aadea1732849c8ad53afc2713a37d59dc416728cd6d7e5b2e385947a8f5d42ab4ec`.
+
+- ✅ **Key present** → proceed normally.
+- ❌ **Key absent** → stop and tell the user:
+
+  > The **🚄 NES App Components** library is not connected. Please add it via the **Add Context** button in the Figma AI panel, then try again.
+
+Do not attempt design or audit work until the library is connected.
+
+### Figma Make (code generation)
+
+**How to detect:** No `[Enabled Libraries: …]` block in context; you have filesystem access to a `src/` directory with React source files.
+
+**Prerequisite check:** Verify that `../src/NesFundamentals/guidelines/Guidelines.md` is readable.
+
+- ✅ **File present** → invoke the `make-kit` skill and proceed.
+- ❌ **File absent** → stop and tell the user:
+
+  > The **Nessie Make Kit** is not included in this project. Please add it as a dependency in Figma Make before generating any UI.
+
+Do not generate any UI until the Make Kit is confirmed present.
+
 ## How to use this skill
 
 This file is the entry point. **Read the relevant skill file before producing any design output** — do not rely on memory from a previous session. Then lazy-load only the reference files you need for that task (each `reference/` file is self-contained and skimmable).
