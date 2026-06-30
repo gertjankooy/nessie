@@ -13,6 +13,8 @@ gaps: []
 How users perform actions that require a choice, adjustment, or task completion across the NS app on iOS and Android. **Intent drives the choice, not visual size** — a full-height sheet and a focused flow both fill the screen but serve different purposes. Platform conventions are respected (cohesion over consistency); where iOS and Android differ, both are documented.
 
 > iOS uses native SwiftUI APIs directly; Android uses Nessie's `Nes`-prefixed implementations (e.g. `NesAlertDialog`, `NesPopupMenu`). This page is iOS/Android only — not web. It does not cover motion, toast/snackbar feedback, or onboarding.
+>
+> Navigation **structure** — top bar, tabs vs bottom navigation, and back navigation — lives in `navigation-patterns.md`. This page owns the transient surfaces and actions layered on top of that structure.
 
 ## Menus & actions
 

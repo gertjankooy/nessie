@@ -51,7 +51,7 @@ All paths are absolute from `/tmp/figma-skills/`. The repo is cloned fresh each 
 - `reference/design-language.md` — brand personality, visual direction, iconography, brand-color usage. (The "what makes it feel NESSIE" doc.)
 - `reference/components/index.md` — **master catalog**: every App component, when to use it, and a link to its own file. **Start here to pick components**, then open the linked `reference/components/<component>.md` (one file per component — e.g. `button.md`, `input.md`, `route.md`). Each is synced from ZeroHeight and carries `zeroheight_page_id` / `last_synced` / `gaps` frontmatter. Refresh docs (components, patterns, fundamentals) with `/sync-docs <name | category | all>`.
 - `reference/tokens/` — `color.md` · `typography.md` · `spacing.md` · `shape.md` · `motion.md` · `applied.md`
-- `reference/patterns/` — `layout.md` (app insets/stacks/surfaces/safe areas) · `navigation-patterns.md` (incl. iOS vs Android) · `accessibility.md` · `interaction-models.md` (menus/sheets/flows, iOS vs Android) · `settings-utility.md` (settings list layout/behaviour/states)
+- `reference/patterns/` — `layout.md` (app insets/stacks/surfaces/safe areas) · `navigation-patterns.md` (nav **structure**: top bar, tabs vs bottom nav, back nav) · `interaction-models.md` (transient **surfaces**: menus, sheets, dialogs, flows, panels — iOS vs Android) · `accessibility.md` · `settings-utility.md` (settings list layout/behaviour/states)
 
 ### Token doc convention (always follow when adding/editing tokens)
 
