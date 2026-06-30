@@ -1,6 +1,6 @@
 # figma-skills
 
-NESSIE (NS Dutch Railways) design skill for Figma / Figma Make. Loaded into an AI session via the Figma Make bootstrap, which clones this repo and applies `CLAUDE.md` as instructions. It helps an AI **design** and **audit** screens against the NESSIE design system, iOS-first.
+NESSIE (NS Dutch Railways) design skill for Figma / Figma Make. `CLAUDE.md` is the entry point applied as instructions for an AI session. It helps an AI **design** and **audit** screens against the NESSIE design system, iOS-first.
 
 ## Architecture
 
@@ -8,7 +8,6 @@ Three layers, loaded lazily — `CLAUDE.md` routes to a skill, which pulls in on
 
 ```
 CLAUDE.md                  Entry point: routing + non-negotiable rules + reference map
-figma-make-bootstrap/      Clone-and-load bootstrap snippets for Figma Make
 skills/                    Task playbooks (the "commands")
   build-screen.md            Design a new screen from scratch
   audit-screen.md            Full review of a screen against NESSIE
@@ -26,4 +25,4 @@ Reference content is distilled from the NESSIE ZeroHeight, the design-tokens Tok
 
 ## Updating
 
-Edit the relevant `reference/` or `skills/` file, then commit and push (the read/write bootstrap picks up changes on next session). Keep files tight — they're AI-consumed references, not marketing copy.
+Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session). Keep files tight — they're AI-consumed references, not marketing copy.
