@@ -44,12 +44,11 @@ Every file in `reference/tokens/` MUST carry a callout near the top stating this
 
 When running in **Figma Make** (generating React/web UI), the Nessie Kit applies in addition to the rules above.
 
-### Kit bootstrap
+### Make Kit bootstrap
 
-At the start of every session, these design-system guidelines MUST be read in full **before generating any UI**:
+At the start of every Make session, these design-system guidelines MUST be read in full **before generating any UI**:
 
 - `../src/NesFundamentals/guidelines/Guidelines.md` — NES Fundamentals guidelines
-- `../src/NesWebComponents/guidelines/Guidelines.md` — NES Web Components guidelines
 
 Invoke the `make-kit` skill **before** generating any UI element, updating tokens, picking icons, or reproducing an attached design or screenshot.
 

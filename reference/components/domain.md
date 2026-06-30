@@ -65,18 +65,6 @@ Flags across pills: `cancelled`, `attentionBadge` (`Info` | `Warning` | `Critica
 
 ---
 
-## Receipt
-**When to use:** Show a calculated price outcome of a (partly) completed form, updating live as the user makes choices.
-**Variants:** Single component in its most complete setup; sections (titles, cost items, subitems, total) can be removed without detaching; number of cost subitems is a property.
-**Anatomy / slots:** Optional grouping Titles → cost items (and subitems) → total amount. Uses the **Price** component for amounts.
-**Tokens used:** Price tokens for amounts; likely a `Strong` divider before the total; surface tokens.
-**Accessibility:** Give a clear indication when data updates so the change is perceivable; announce updated totals.
-**iOS-first notes:** Content always reflects current form choices. In Figma, delete a section with backspace (no detach); change subitem count via the amount property.
-> **Android:** (No dedicated sample documented — compose from Price + dividers following the Figma structure.)
-**Don't:** Use a title to group cost items when there's only a single cost item. Show stale totals after a form change.
-
----
-
 ## From To
 **When to use:** Let users define a departure and arrival point (and optional via station) — the travel planner's core input.
 **Variants:** `Base` (From, To, Via field + error message) and prefabs: `Brand Background`, `Surface Background`, `Via Station`, `Unfilled`.
