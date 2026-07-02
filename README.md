@@ -2,6 +2,20 @@
 
 NESSIE (NS Dutch Railways) design skill for AI agents. **`AGENTS.md` is the canonical, tool-agnostic entry point** applied as instructions for an AI session; it helps an AI **design** and **audit** screens against the NESSIE design system, iOS-first. Works with Claude Code, Cursor, Codex, Copilot, the Figma AI agent, and Figma Make.
 
+## Install (Claude Code, Cursor, Codex, Copilot)
+
+The quickest way to add the skill to your own project is the installer:
+
+```bash
+npx nessie-skill init      # auto-detects your tool(s); --all for every tool
+npx nessie-skill status    # check for newer docs
+npx nessie-skill update    # pull the latest docs
+```
+
+It vendors `AGENTS.md` + `skills/` + `reference/` into a `.nessie/` folder and writes the entry file your tool reads (`CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/`) — using managed blocks that never overwrite your own instructions. See [`tools/cli/`](tools/cli/).
+
+No install needed? Point any repo-aware agent at this public repo and tell it to read `AGENTS.md`. To **audit** an actual Figma file, your tool also needs the Figma MCP / Dev Mode MCP server connected.
+
 ## Architecture
 
 Three layers, loaded lazily — the entry brief routes to a skill, which pulls in only the reference files it needs. Each tool auto-reads its own entry file; all of them redirect into `AGENTS.md`.
@@ -28,4 +42,10 @@ Reference content is distilled from the NESSIE ZeroHeight, the design-tokens Tok
 
 ## Updating
 
-Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session). Keep files tight — they're AI-consumed references, not marketing copy.
+Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session, and by `npx nessie-skill update`). Keep files tight — they're AI-consumed references, not marketing copy.
+
+## License
+
+- **Code** (e.g. `tools/cli/`) — Apache-2.0, see [`LICENSE`](LICENSE).
+- **Documentation** (`AGENTS.md`, `skills/`, `reference/`) — CC BY 4.0, see [`LICENSE-docs.md`](LICENSE-docs.md).
+- NS trademarks, logos, brand colours, and the "flow" element are **not** licensed and remain the property of NS.

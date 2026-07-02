@@ -8,17 +8,20 @@ It vendors the skill (`AGENTS.md` + `skills/` + `reference/`) into a `.nessie/` 
 
 ```bash
 # from your project root
-npx nessie-skill init            # auto-detects your tool(s)
+npx nessie-skill init            # auto-detects your tool(s) (prompts if a TTY)
 npx nessie-skill init --all      # configure every supported tool
+npx nessie-skill status          # is a newer version of the docs available?
 npx nessie-skill update          # refresh .nessie/ to the latest docs
+npx nessie-skill remove          # remove .nessie/ and the entry-file blocks
 ```
 
 ### Options
 
 | Flag | Description |
 | :--- | :--- |
-| `--tools <list>` | Comma list: `claude, cursor, codex, copilot` (default: auto-detect) |
+| `--tools <list>` | Comma list: `claude, cursor, codex, copilot` (default: auto-detect / prompt) |
 | `--all` | Configure every supported tool |
+| `--yes` | Non-interactive: accept detected tools without prompting (good for CI) |
 | `--dir <path>` | Target project (default: current directory) |
 | `--ref <ref>` | Branch, tag, or commit of the skill repo (default: `main`) |
 | `--repo <o/n>` | Source repo (default: `gertjankooy/nessie`) |
@@ -41,9 +44,13 @@ duplicates content and never overwrites your own instructions — it updates onl
 
 ## How it stays current
 
-`init`/`update` download the skill from the public repo tarball at the given `--ref`
-(default `main`), so you always get the latest docs without republishing this package.
-Pin a release with `--ref v1.2.0` if you want a fixed version.
+The skill **docs** are downloaded from the public repo tarball at the given `--ref`
+(default `main`), so `update` always pulls the latest without republishing this package.
+`status` compares your installed commit against the latest and tells you if an update
+exists. Pin a fixed version with `--ref v1.2.0`.
+
+The **CLI itself** updates via npm — `npx nessie-skill@latest …` always runs the newest
+published version.
 
 ## Notes
 
@@ -53,3 +60,7 @@ Pin a release with `--ref v1.2.0` if you want a fixed version.
   **Figma MCP / Dev Mode MCP server** connected — the skill files can't provide that.
 - Maintainer commands (`/sync-docs`, `/sync-tokens`, `/docs-coverage`) live in the skill
   repo's `.claude/` and are intentionally **not** vendored by this installer.
+
+## License
+
+Apache-2.0 — see [`LICENSE`](LICENSE). (The design-system **docs** it vendors are CC BY 4.0.)

@@ -8,6 +8,20 @@ function keep(rel) {
   return rel === 'AGENTS.md' || rel.startsWith('skills/') || rel.startsWith('reference/');
 }
 
+/** Resolve a ref (branch/tag/sha) to its current commit SHA, or null if unreachable. */
+export async function resolveCommit({ repo, ref }) {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}/commits/${ref}`, {
+      headers: { 'User-Agent': 'nessie-skill', Accept: 'application/vnd.github+json' },
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return json.sha || null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Download the skill repo tarball for `ref` and extract only AGENTS.md, skills/,
  * and reference/ into `destDir`. Works for branches, tags, and commit SHAs.

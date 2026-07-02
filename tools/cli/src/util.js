@@ -1,6 +1,7 @@
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname } from 'node:path';
+import { createInterface } from 'node:readline';
 
 const useColor = process.stdout.isTTY && !process.env.NO_COLOR;
 const wrap = (code) => (s) => (useColor ? `\x1b[${code}m${s}\x1b[0m` : String(s));
@@ -63,4 +64,32 @@ export async function upsertManagedBlock(file, body) {
 export async function writeFileEnsured(file, content) {
   await mkdir(dirname(file), { recursive: true });
   await writeFile(file, content);
+}
+
+/** Remove a nessie-managed block; delete the file if nothing else remains. */
+export async function removeManagedBlock(file) {
+  if (!existsSync(file)) return 'absent';
+  const content = await readFile(file, 'utf8');
+  if (!content.includes(START) || !content.includes(END)) return 'absent';
+  const re = new RegExp(`${escapeRe(START)}[\\s\\S]*?${escapeRe(END)}`);
+  const next = content.replace(re, '').replace(/\n{3,}/g, '\n\n').trim();
+  if (!next) {
+    await rm(file, { force: true });
+    return 'deleted';
+  }
+  await writeFile(file, `${next}\n`);
+  return 'stripped';
+}
+
+/** Single-line prompt with a default; returns the default on empty/no-TTY. */
+export function promptLine(question, def) {
+  if (!process.stdin.isTTY) return Promise.resolve(def || '');
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  const label = def ? `${question} [${def}] ` : `${question} `;
+  return new Promise((resolve) => {
+    rl.question(label, (ans) => {
+      rl.close();
+      resolve((ans || '').trim() || def || '');
+    });
+  });
 }
