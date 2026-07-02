@@ -2,8 +2,16 @@
 
 Use when the user wants an existing Figma screen, frame, or component checked against NESSIE guidelines — components, tokens, layout, accessibility, and brand.
 
+## Reading the design (environment dependency — check this first)
+
+Auditing a real Figma screen means reading it through the **Figma MCP tools** (`get_design_context`, `get_screenshot`, `get_metadata`, `get_variable_defs`). Their availability depends on where you run:
+
+- **Figma AI agent** — available natively; read the selection / frame directly.
+- **External LLM tool** (Claude Code, Cursor, Codex, Copilot) — available **only if the Figma MCP (Dev Mode MCP server) is connected** in the tool and a frame is selected. If it is, use it the same way.
+- **No Figma access** — if those tools aren't available you **cannot read the file**. Ask the user to either **(a)** connect the Figma MCP and select the frame, or **(b)** paste a **screenshot** plus, where possible, exported code and the bound-variable list. Then audit from what you were given and **state the reduced fidelity**: without `get_variable_defs` you can flag visible issues but **cannot confirm token bindings** (a value that looks right may not be a bound token, and vice versa) — mark those checks **"unverified"** rather than passing them.
+
 ## Inputs
-- A Figma selection / frame / file URL. Use the Figma MCP tools (`get_design_context`, `get_screenshot`, `get_metadata`, `get_variable_defs`) to read what's actually there.
+- A Figma selection / frame / file URL (read via the tools above), or a screenshot / exported code when no Figma access is available.
 - Assume **iOS app** context unless told otherwise.
 
 ## What to check (run all five passes)

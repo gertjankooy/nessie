@@ -14,6 +14,8 @@ Before reading skill files or producing any design output, determine which envir
 
 **Prerequisite:** none — the reference docs in this repo are self-contained. Read this brief, then the relevant skill and reference files below, and proceed.
 
+> **Reading a Figma file (audits, design-to-code):** designing from scratch and answering from the reference docs need no Figma connection. But to **read an actual Figma design** (e.g. `skills/audit-screen.md`, `skills/audit-tokens.md`), the **Figma MCP / Dev Mode MCP server must be connected in your tool** and a frame selected — that's what provides `get_design_context` / `get_variable_defs` / `get_screenshot`. Without it, work only from a screenshot or exported code the user pastes, and flag token bindings as unverified. See each audit skill's "Reading the design" note.
+
 ### Figma Agent (AI panel in Figma)
 
 **How to detect:** Your system context contains an `[Enabled Libraries: …]` block (injected by the Figma AI panel).

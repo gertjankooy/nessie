@@ -5,6 +5,8 @@ Focused, token-only check. Use when the user wants to verify that a Figma screen
 ## Inputs
 - A Figma selection / frame / file URL. Read the actual values with the Figma MCP tools — especially `get_variable_defs` (bound variables) and `get_design_context`.
 
+> **Requires Figma variable data.** This audit hinges on `get_variable_defs` — available in the Figma AI agent, or in an external LLM tool (Claude Code, Cursor, Codex, Copilot) **only when the Figma MCP / Dev Mode MCP server is connected**. Without it you can't see whether a value is a *bound* token: ask the user to connect the Figma MCP and select the frame, or state clearly that you can only comment on visible values, not on token bindings (don't pass a token check you couldn't verify).
+
 > **Variable name format:** Figma reports bound variables in slash form (e.g. `--space/app/inset/default`, `--border/radius/container`). To match the token names in the reference docs, drop the leading `--` and replace `/` with `.`. The Figma/JSON names are the source of truth — do **not** trust older Notion labels (e.g. Notion `inset.relaxed`/`inset.loose` are really `inset.comfy`/`inset.relaxed`).
 
 ## Checks
