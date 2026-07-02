@@ -1,0 +1,32 @@
+{
+  "name": "nessie-skill",
+  "version": "0.1.0",
+  "description": "Install the NESSIE (NS Dutch Railways) design system agent skill into your AI tool of choice (Claude Code, Cursor, Codex, Copilot).",
+  "type": "module",
+  "bin": {
+    "nessie-skill": "bin/nessie-skill.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "dependencies": {
+    "tar": "^7.4.3"
+  },
+  "keywords": [
+    "nessie",
+    "ns",
+    "design-system",
+    "ai",
+    "agents",
+    "claude",
+    "cursor",
+    "codex",
+    "copilot"
+  ],
+  "license": "UNLICENSED"
+}
