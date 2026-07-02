@@ -1,0 +1,8 @@
+{
+  "$comment": "Paths the nessie-skill CLI vendors into a project's .nessie/ folder. Entries ending with / are prefixes. Edit here (no CLI republish needed) to add/remove vendored content.",
+  "vendor": [
+    "AGENTS.md",
+    "skills/",
+    "reference/"
+  ]
+}

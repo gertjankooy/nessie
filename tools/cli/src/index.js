@@ -66,7 +66,7 @@ async function init(flags) {
 
   const kept = await fetchSkill(dest, { repo, ref });
   const sha = await resolveCommit({ repo, ref });
-  await writeVersion(dest, { repo, ref, sha, files: kept.length });
+  await writeVersion(dest, { repo, ref, sha, files: kept.length, tools });
   console.log(`${c.green('✓')} vendored ${kept.length} files into ${VENDOR}/`);
 
   await writePointers(dir, tools);
@@ -92,13 +92,21 @@ async function update(flags) {
   const kept = await fetchSkill(dest, { repo, ref });
   const sha = await resolveCommit({ repo, ref });
   const changed = meta.sha && sha && meta.sha !== sha;
-  await writeVersion(dest, { repo, ref, sha, files: kept.length });
+  const tools = Array.isArray(meta.tools) ? meta.tools.filter((t) => TOOLS[t]) : [];
+  await writeVersion(dest, { repo, ref, sha, files: kept.length, tools });
   console.log(
     `${c.green('✓')} refreshed ${kept.length} files` +
       (changed ? ` ${c.dim(`(${meta.sha.slice(0, 7)} → ${sha.slice(0, 7)})`)}` : '') +
       (meta.sha && sha && meta.sha === sha ? ` ${c.dim('(already current)')}` : '') +
       '.'
   );
+
+  // Keep entry files in sync with any pointer-wording changes in this CLI version.
+  if (tools.length) {
+    await writePointers(dir, tools);
+  } else {
+    console.log(c.dim('No recorded tools — run "nessie-skill init" to (re)write entry files.'));
+  }
 }
 
 async function status(flags) {
@@ -114,6 +122,9 @@ async function status(flags) {
       `${meta.sha ? ` ${c.dim(`(${meta.sha.slice(0, 7)})`)}` : ''}` +
       ` — ${meta.files ?? '?'} files${meta.installedAt ? `, ${meta.installedAt}` : ''}`
   );
+  if (Array.isArray(meta.tools) && meta.tools.length) {
+    console.log(`${c.bold('Tools')}      ${meta.tools.map((t) => TOOLS[t]?.label || t).join(', ')}`);
+  }
 
   const latest = await resolveCommit({ repo, ref });
   if (!latest) {
@@ -173,8 +184,15 @@ async function writePointers(dir, tools) {
   }
 }
 
-async function writeVersion(dest, { repo, ref, sha, files }) {
-  const body = { repo, ref, sha: sha || null, files, installedAt: new Date().toISOString() };
+async function writeVersion(dest, { repo, ref, sha, files, tools }) {
+  const body = {
+    repo,
+    ref,
+    sha: sha || null,
+    tools: tools || [],
+    files,
+    installedAt: new Date().toISOString(),
+  };
   await writeFileEnsured(join(dest, '.nessie-version'), `${JSON.stringify(body, null, 2)}\n`);
 }
 
