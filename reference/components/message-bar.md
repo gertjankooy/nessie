@@ -56,7 +56,7 @@ Use an interactive bar when the message links to content on another screen.
 - Use message bars sparingly — people often miss them, and overuse worsens banner blindness.
 
 ## Content guidelines
-_Detailed copywriting lives on the Content tab (not synced here)._
+- Follow the NS voice and message-copy rules in [reference/content/error-message.md](../content/error-message.md) and [reference/content/index.md](../content/index.md). A dedicated Message Bar content page isn't published yet.
 
 ## Accessibility
 - The message includes a hidden type prefix ("Error:", "Waarschuwing:", "Informatief:", "Succes:") so it's announced as, for example, "Error: We can't connect to the internet". `[1.3.1]`

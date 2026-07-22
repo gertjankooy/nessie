@@ -50,6 +50,7 @@ gaps: []
 - Keep it short, active, and polite; avoid negative words and jargon.
 - Success messages can carry a little personality ("Veel reisplezier.").
 - Error messages convey the problem gracefully and, where possible, advise on the fix.
+- Full wording rules — message structure, words to avoid, success/informative copy, NS voice — in [reference/content/error-message.md](../content/error-message.md).
 
 ## Accessibility
 - The message includes a hidden type prefix ("Error:", "Waarschuwing:", "Informatief:", "Succes:") so it's announced as, for example, "Error: We can't connect to the internet". `[1.3.1]`

@@ -1,12 +1,22 @@
 # NS NESSIE — Accessibility (design-level rules)
 
-> Design/audit a11y for NESSIE screens. Target: **WCAG 2.2 AA**. iOS-first. Reframed as design guidance, not code. Source of truth: NS Nessie accessibility docs + staged references. Never invent guidance.
+> Design/audit a11y for NESSIE screens. Target: **WCAG 2.2 AA**. iOS-first. Reframed as design guidance, not code. Source of truth: ZeroHeight Guidelines → ACCESSIBILITY (pages `5784505` overview, `5784836` checklist per role, `5868110` getting started, `5891441` accessibility labels), synced 2026-07-22. Never invent guidance.
 
 ## Why it matters
 
 In the Netherlands ~1 million travellers face accessibility challenges (visual, auditory, motor). Train travel is essential to their participation in society, and the European Accessibility Act (EAA, in force June 2025) makes this a legal requirement, not only a moral one. Accessible products also improve the experience for everyone — access needs can be permanent, temporary, or situational (aging eyes, a broken arm, carrying a baby).
 
 The four WCAG pillars: **Perceivable, Operable, Understandable, Robust.** Accessibility is a shared responsibility across the whole team, not a single role's job.
+
+## Shared responsibility & process
+
+Every role owns a slice, and the roles look to each other to get their slice right: **Designers** integrate a11y into the design; **Content specialists** craft clear, navigable copy and text alternatives; **Developers** write accessible code from the ground up; **Product owners** prioritise it; **Testers** verify it. As a designer you're *responsible* for contrast, structure/headings, meaningful sequence, descriptive labels, and error clarity — and *aware* of the criteria other roles own (keyboard/switch order, text alternatives) so you can flag them.
+
+Build it in rather than bolting it on:
+- **Ask at the start of every feature:** "how will we make this accessible?" — alongside the usual value/security/privacy questions.
+- **Make it a recurring ritual** — in refinement, review, and retro — and add it to your Definition of Ready & Done.
+- **Boy-scout principle:** leave each screen a little more accessible than you found it. Small, continual improvements beat a big one-off audit — write one alt text, fix one vague label, correct one non-heading.
+- **Perfect is the enemy of good:** partial improvement always beats waiting for a perfect pass.
 
 ## Core principle: Nessie bakes in role/target/heading; you supply meaning
 
@@ -107,5 +117,21 @@ Reach for the `Nes*` component so it inherits **role, touch-target size, and hea
 - [ ] Vague link/button labels given extra context.
 - [ ] Accessibility labels used only where a visible label can't do the job.
 
+**Interaction, layout & errors** (design-relevant criteria from the role checklist, app-framed)
+- [ ] **Meaningful sequence** — reading/focus order matches the visual/logical order; know where a floating button lands for a screen reader.
+- [ ] **Orientation** — the screen works in both portrait and landscape; nothing is locked to one orientation without cause.
+- [ ] **Images of text** — real text set with typography tokens, not text baked into an image (it can't resize or be read aloud).
+- [ ] **Content on hover/focus** — transient content (tooltips, popovers) is dismissible, doesn't auto-vanish, and doesn't obstruct what's underneath.
+- [ ] **Focus visible** — the focused element is always clearly indicated for keyboard/switch-control users.
+- [ ] **Labels or instructions** — inputs have persistent labels; placeholder text is never the only instruction.
+- [ ] **Error identification & suggestion** — errors are detected, described in text, and paired with a concrete fix (ties to `feedback-states.md`; don't rely on colour alone).
+- [ ] **Link purpose in context** — link text describes its destination; no "Klik hier"/"Lees meer"/"Volgende" on their own (see `reference/content/link.md`).
+- [ ] **Multiple ways** — more than one route to key content (navigation + search) where it matters.
+
 ## WCAG touchpoints referenced
-1.1.1 Non-text Content · 1.3.1 Info & Relationships · 1.4.1 Use of Color · 1.4.3 / 1.4.11 Contrast · 1.4.4 Resize Text · 2.4.6 Headings & Labels · 2.5.8 Target Size · 4.1.2 Name/Role/Value · 4.1.3 Status Messages.
+1.1.1 Non-text Content · 1.2.x Media alternatives (captions / audio description) · 1.3.1 Info & Relationships · 1.3.2 Meaningful Sequence · 1.3.4 Orientation · 1.4.1 Use of Color · 1.4.3 / 1.4.11 Contrast · 1.4.4 Resize Text · 1.4.5 Images of Text · 1.4.12 Text Spacing · 1.4.13 Content on Hover or Focus · 2.4.4 Link Purpose (In Context) · 2.4.5 Multiple Ways · 2.4.6 Headings & Labels · 2.4.7 Focus Visible · 2.5.3 Label in Name · 2.5.8 Target Size · 3.2.3 Consistent Navigation · 3.3.1 Error Identification · 3.3.2 Labels or Instructions · 3.3.3 Error Suggestion · 4.1.2 Name/Role/Value · 4.1.3 Status Messages.
+
+## Where to get help
+- NS **#accessibility** Slack channel for community support.
+- NS **Team Toegankelijkheid** (`programma.toegankelijkheid@ns.nl`) for specialised assistance.
+- WCAG 2.2 AA [quick reference](https://www.w3.org/WAI/WCAG22/quickref/) for the authoritative criteria.

@@ -75,7 +75,7 @@ Inverted variants exist for placement on colored or dark backgrounds, where the 
 
 ## Content guidelines
 - Write labels in sentence case.
-- Detailed button copywriting lives on the [Content tab](https://design.ns.nl/4a05a30ad/v/latest/p/37dee7-button).
+- Detailed button copywriting lives in [reference/content/button.md](../content/button.md) — verb+noun, root-of-verb rule, 2–4 words, guiding words, webshop step buttons, shared-mobility verbs.
 
 ## Accessibility
 - Supply a visually-hidden label for an icon-only button so assistive technology can announce the action. `[4.1.2]`

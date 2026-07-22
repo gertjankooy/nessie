@@ -2,9 +2,9 @@
 pattern: Interaction Models
 zeroheight_page_id: 8100862
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models
-last_synced: 2026-06-30
+last_synced: 2026-07-22
 platforms: [ios, android]
-related: [navigation-patterns, layout]
+related: [navigation-patterns, layout, feedback-states]
 gaps: []
 ---
 
@@ -37,7 +37,7 @@ Patterns triggered directly by the user (a button tap or long press) that surfac
 `pattern: action-sheet` · **iOS only** (`.confirmationDialog()`); on Android use an **Alert** (≤3 options) or a **Sheet**.
 - A confirmation step for a destructive or irreversible action, triggered from a button or as a follow-up to a destructive overflow option.
 - **Use when:** an action is destructive/irreversible and the user should understand what's affected before confirming.
-- **Rules:** title names what's affected ("Delete widget"); label the destructive button with a specific verb (not "OK"); Cancel is always a separate button.
+- **Rules:** title names what's affected ("Delete widget"); add a short description only when the consequence isn't obvious from the title; label the destructive button with a specific verb (not "OK"); when the only option is destructive, Cancel is always a separate button.
 
 ### Alert
 `pattern: alert` · iOS `.alert()` · Android `NesAlertDialog`
@@ -54,7 +54,7 @@ Patterns that introduce a new surface above the current screen.
 - Slides up from the bottom; the user stays conceptually tied to the originating screen. Size follows content complexity, not interaction type.
 - **Partial** (`variant: partial`): single selections or short adjustments; dismiss on selection for single choices, explicit **Apply** when configuring multiple settings together; always show a grab handle on iOS (optional on Android).
 - **Full height** (`variant: full-height`): small gap at the top; for more vertical space or multiple fields; always dimmed; always a toolbar (Cancel left, Save/Apply right); cancelling with unsaved changes triggers an action sheet (iOS) / alert (Android) to confirm discard.
-- **Drag to dismiss:** on by default; disable when the user must complete a step first; tapping the dimmed area dismisses unless there are unsaved changes.
+- **Drag to dismiss:** on by default; disable when the user must complete a required step before the sheet can close (e.g. accepting required terms), not only when unsaved input exists. When disabled, iOS bounces the drag to signal the sheet can't close this way; Android simply doesn't respond. On iOS, dragging down with unsaved changes can trigger a system action sheet to confirm discard, but only when the app explicitly enables that. Tapping the dimmed area dismisses unless there are unsaved changes.
 
 ### Focused flow
 `pattern: focused-flow` · iOS `.fullScreenCover()` · Android `NesActivityFullScreen`
@@ -94,4 +94,4 @@ Patterns that introduce a new surface above the current screen.
 | An active journey needing awareness across screens | Persistent panel, active journey |
 
 ## Source
-- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models (page `8100862`, synced 2026-06-30)
+- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models (page `8100862`, synced 2026-07-22)

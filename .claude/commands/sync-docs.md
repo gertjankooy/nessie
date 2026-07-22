@@ -10,7 +10,7 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 
 **Argument:** `$ARGUMENTS`
 - A name → sync that one component/pattern/fundamental (e.g. `/sync-docs Tag`, `/sync-docs Interaction Models`, `/sync-docs Color`).
-- A **category** → `components` · `patterns` · `fundamentals`.
+- A **category** → `components` · `patterns` · `fundamentals` · `guidelines` (Content + Accessibility).
 - `all` → everything in the registry below.
 - A comma-list → each in turn.
 - Append `--check` → report drift only, write nothing.
@@ -22,7 +22,9 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 | **COMPONENTS → App** (54 pages) | `reference/components/<kebab>.md` (one per component; see `index.md`) | Component |
 | **Design System → PATTERNS → Interaction Models** (`8100862`) | `reference/patterns/interaction-models.md` | Pattern |
 | **Design System → PATTERNS → Settings & Utility** (`8094399`) | `reference/patterns/settings-utility.md` | Pattern |
-| PATTERNS → Error Handling / Search | *(no page yet / TODO — skip, flag when published)* | Pattern |
+| **Design System → PATTERNS → Feedback & States** (`8773720`) | `reference/patterns/feedback-states.md` (folds in the page's Overview + Content Unavailable + Error States tabs) | Pattern |
+| ~~PATTERNS → Error Handeling (`8118900`)~~ | *being removed from ZeroHeight — duplicate of the Error States content now folded into `feedback-states.md`. Do not sync.* | — |
+| PATTERNS → Search | *(no page yet / TODO — skip, flag when published)* | Pattern |
 | **Fundamentals → Color** (`6693013`) + **TOKENS → Color** (`6694970`) | `reference/tokens/color.md` (usage + Visual hierarchy + token list) | Token |
 | **Fundamentals → Typography** (`6693097`) + **TOKENS → Typography** (`6694972`) | `reference/tokens/typography.md` | Token |
 | **Fundamentals → Style** (`6693107`) + **TOKENS → Style/Dimension** (`6699361`/`6694971`) | `reference/tokens/shape.md` · `spacing.md` | Token |
@@ -31,8 +33,10 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 | **Fundamentals → Composition → Layout for App** (`6693137`) | `reference/patterns/layout.md` | Pattern |
 | **Fundamentals → Icons** (`6693098`) | `reference/components/icon.md` + `reference/design-language.md` | mixed |
 | **Fundamentals / PRINCIPLES → Visual direction** (`5794046`), **Logo / Assets** (`6693011`) | `reference/design-language.md` | Doc |
+| **Guidelines → CONTENT** — Principles of content design (`4492224`), Content scorecard (`5784475`), per-component content (Button `4449721`, Link `4460300`, Error message `4460630`, Empty state `4885927`, Breadcrumb `4492170`) | `reference/content/index.md` + `reference/content/<kebab>.md` (`button` · `link` · `error-message` · `empty-state` · `breadcrumb`) — wording/tone source of truth referenced by patterns (`feedback-states.md`) and by the matching `reference/components/*.md`. **TODO:** Products (Ticket `5784480`) not yet synced | Doc |
+| **Guidelines → ACCESSIBILITY** — Accessibility (`5784505`), WCAG (`6221540`), Checklist per role (`5784836`), Getting started (`5868110`), Accessibility labels deep-dive (`5891441`) | `reference/patterns/accessibility.md` (design-level a11y rules; fold ZeroHeight guidance into the existing house-style doc — it has no frontmatter, preserve it) | Doc |
 
-> Re-resolve page IDs with `list-pages` before trusting them — IDs can change. The token files draw from **two** ZeroHeight pages each (a Fundamentals usage page + a Tokens list page); reconcile both.
+> Re-resolve page IDs with `list-pages` before trusting them — IDs can change. The token files draw from **two** ZeroHeight pages each (a Fundamentals usage page + a Tokens list page); reconcile both. The **CONTENT** and **ACCESSIBILITY** rows each cover several ZeroHeight pages under one Guidelines section — sync the section as a set, not page-by-page.
 
 ## Hard rules (all templates)
 1. **App only.** Use `COMPONENTS → App`, never the `Web` group. If something exists only under Web, report "no App page" and skip.

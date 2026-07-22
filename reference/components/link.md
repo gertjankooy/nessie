@@ -8,7 +8,7 @@ zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/12345b-link
 figma_node: "3257:96076"
 last_synced: 2026-06-30
 related: [button, message-bar, list-items]
-gaps: [Content guidelines]
+gaps: []
 ---
 
 # Link
@@ -44,7 +44,7 @@ When the link leads to an attachment, add an appropriate icon and trailing subte
 - A link can carry a leading icon, an external indicator, or attachment metadata depending on its destination.
 
 ## Content guidelines
-_Detailed copywriting lives on the Content tab (not synced here)._
+- Descriptive link text (≤4 words) that names the destination; never "Klik hier" / "Lees meer" on its own. Full rules — internal/external/file links, WCAG link purpose — in [reference/content/link.md](../content/link.md).
 
 ## Accessibility
 - Keep touch targets at least 48px and separated by at least 8px; this is why "Read more" is a link below the text, not colored words inside it. `[2.5.8]`

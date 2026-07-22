@@ -62,6 +62,7 @@ gaps: []
 - Success: manage expectations and add a little personality ("Veel reisplezier.").
 - Informative: explain what's needed and what to do.
 - Warning/Error: convey gracefully without blaming the user; for errors, give constructive advice on the fix.
+- Full wording rules — message structure, words to avoid, success/informative copy, NS voice — in [reference/content/error-message.md](../content/error-message.md).
 
 ## Accessibility
 - The type, title, body, and variant action are announced together as a single callout; the CTA is always a separate focus target. `[1.3.1]`

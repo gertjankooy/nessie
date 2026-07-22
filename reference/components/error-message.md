@@ -40,7 +40,7 @@ gaps: []
 - Pair with inline validation so errors surface at the right moment, not prematurely.
 
 ## Content guidelines
-- State what went wrong and how to fix it. Detailed error copywriting lives on the [Content tab](https://design.ns.nl/4a05a30ad/p/563e7c-error-message).
+- State what went wrong and how to fix it (Observation → Cause → Solution). Full error copywriting — length, words to avoid, success & informative messages — in [reference/content/error-message.md](../content/error-message.md).
 
 ## Accessibility
 - Include a hidden "Error:" prefix (for example via an `.sr-only` class) so the message is announced as "Error: Date of birth must be in the past". `[1.3.1]`
