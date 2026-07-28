@@ -22,8 +22,7 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 | **COMPONENTS → App** (54 pages) | `reference/components/<kebab>.md` (one per component; see `index.md`) | Component |
 | **Design System → PATTERNS → Interaction Models** (`8100862`) | `reference/patterns/interaction-models.md` | Pattern |
 | **Design System → PATTERNS → Settings & Utility** (`8094399`) | `reference/patterns/settings-utility.md` | Pattern |
-| **Design System → PATTERNS → Feedback & States** (`8773720`) | `reference/patterns/feedback-states.md` (folds in the page's Overview + Content Unavailable + Error States tabs) | Pattern |
-| ~~PATTERNS → Error Handeling (`8118900`)~~ | *being removed from ZeroHeight — duplicate of the Error States content now folded into `feedback-states.md`. Do not sync.* | — |
+| **Design System → PATTERNS → Feedback & States** (`8773720`) | `reference/patterns/feedback-states.md` (folds in the page's Overview + Empty States + Error Handling tabs) | Pattern |
 | PATTERNS → Search | *(no page yet / TODO — skip, flag when published)* | Pattern |
 | **Fundamentals → Color** (`6693013`) + **TOKENS → Color** (`6694970`) | `reference/tokens/color.md` (usage + Visual hierarchy + token list) | Token |
 | **Fundamentals → Typography** (`6693097`) + **TOKENS → Typography** (`6694972`) | `reference/tokens/typography.md` | Token |
@@ -46,6 +45,7 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 5. **Drop the noise** — per-image `**Style**`/`**Attributes**` tables (`#FFFFFF`, `848px`, `X:0 Y:0`), decorative images, "Questions?"/"Copywriting moved" blocks, marketing prose.
 6. **Tokens by meaning, never hex** in base/applied rows; the **core tier** may show a raw value exactly as the existing tables do.
 7. **Match each file's existing structure and tone.** Don't reformat a doc that already has a house style; extend it.
+8. **Sync is a two-way diff — reconcile removals, not just additions.** When ZeroHeight has *dropped* a section, subsection, variant, rule, table row, or piece of guidance that the existing file still carries, **remove it from the file too**. A sync that only folds in new/changed content and never deletes will accumulate stale text. Before writing, walk the existing file section by section and confirm each still exists on the page; delete what no longer does, and note every deletion in the report. **Do not delete** the intentional house-style scaffolding the docs keep by design: the `## Source` block, `gaps:` placeholders (rule 3), `> **Android:**` / `> **iOS 26+:**` divergence callouts, cross-references to other reference files, and deliberate distillations (e.g. glossaries the doc chose not to mirror). If you can't tell whether something was an earlier deliberate distillation or is newly removed, keep it and flag it in the report rather than guessing.
 
 ## Templates
 
@@ -67,7 +67,7 @@ These files have an established house style (3-tier tables, usage columns, the F
 ## Workflow (per item)
 1. `list-pages` (or `search-pages`) → resolve the page in the right area; confirm it's App, not Web.
 2. `get-page` → read it.
-3. `--check`: diff against the existing file, report added/removed variants, changed guidance, new sections — stop, no write.
-4. Distill into the matching template; set `last_synced` to today and fill `gaps:` where the file has frontmatter.
+3. **Diff both directions.** Walk the ZeroHeight page → file (what's new or changed) **and** the file → ZeroHeight page (what the file still has that the page no longer does). `--check`: report added / changed / **removed** sections, variants, rows, and guidance — stop, no write.
+4. Distill into the matching template: fold in new/changed content **and delete anything the page no longer contains** (rule 8, minus the protected scaffolding). Set `last_synced` to today and fill `gaps:` where the file has frontmatter.
 5. `Write`/`Edit` the target file; for components also update `index.md`.
-6. Report: files written, variant/section counts, every `gaps` flagged, any Web page deliberately ignored, and any registry page that 404'd or is still TODO.
+6. Report: files written, variant/section counts, **every section/variant/row removed and why**, every `gaps` flagged, any Web page deliberately ignored, and any registry page that 404'd or is still TODO.

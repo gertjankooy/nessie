@@ -2,7 +2,7 @@
 pattern: Feedback & States
 zeroheight_page_id: 8773720
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/4717b2-feedback-states
-last_synced: 2026-07-22
+last_synced: 2026-07-28
 platforms: [ios, android]
 related: [interaction-models, navigation-patterns, layout, accessibility]
 gaps: []
@@ -27,16 +27,15 @@ Before picking a component, answer these in order:
 
 Read top to bottom — the first row that matches is the answer.
 
-| If the situation is… | Surface |
-| :--- | :--- |
-| The content area has nothing to show, whatever the cause | **Empty State** (WIP) |
-| Content is on screen and something about a whole section is wrong or worth knowing | **Message Inline** |
-| A section failed to load while the rest of the screen works | **Message Inline** (default) + retry action |
-| The content on screen is out of date (e.g. cached content while offline) | **Message Inline** |
-| A background action finished and doesn't change what's on screen | **Message Toast** |
-| A single field has invalid or missing input | **Error Message** |
-| The user must make a choice before anything else can happen | **Alert** (see `interaction-models.md`) |
-| Content is on its way and will arrive shortly | **Skeleton** |
+| If the situation is… | Surface | Example |
+| :--- | :--- | :--- |
+| The content area has nothing to show, whatever the cause | **Empty State** (component WIP) | No tickets bought yet |
+| Content is on screen and something about a whole section is wrong or worth knowing | **Message Inline** | Reservation required on this leg |
+| The content on screen is out of date (e.g. cached content while offline) | **Message Inline** | Showing older departures while offline |
+| A background action finished and doesn't change what's on screen | **Message Toast** | Preference saved |
+| A single field has invalid or missing input | **Error Message** | Date is in the past |
+| The user must make a choice before anything else can happen | **Alert** (see `interaction-models.md`) | Allow location to continue |
+| Content is on its way and will arrive shortly | **Skeleton** | Loading travel advice |
 
 **Surfaces at a glance:**
 - **Empty State** — replaces the content area; used when there's nothing to show, including when loading failed.
@@ -46,12 +45,12 @@ Read top to bottom — the first row that matches is the answer.
 - **Alert** — interrupts and requires a choice, for critical or blocking situations.
 - **Skeleton** — placeholder shape while content loads.
 
-## Content unavailable (Empty State)
+## Empty states
 
-An Empty State replaces content — it fills the area where a screen's content would have been and explains why nothing is there. A content area ends up empty for one of three reasons, and all three use the **same layout**; only the text and the action differ:
+An Empty State replaces content — it fills the area where a screen's content would have been and explains why nothing is there. Every reason it's empty uses the **same layout**; only the text and the action differ. The three cases:
 
 1. **No content** — nothing bought/saved/reported yet. The most common case, and not a failure.
-2. **Excluded** — content exists but a filter or search returns no results.
+2. **No results** — content exists but a filter or search excludes it.
 3. **Failed** — loading failed (error or offline) and there's nothing cached to fall back on.
 
 ### Use when
@@ -60,18 +59,12 @@ An Empty State replaces content — it fills the area where a screen's content w
 - A filter or search returned no results.
 - Loading failed and there's nothing cached to fall back on.
 
-### Don't use when
-- Content is still on screen → **Message Inline**.
-- The problem is tied to a single input → **Error Message**.
-- Content is still loading → **Skeleton**.
-- A widget is empty or shows a promotion/incentive to add something → **Highlight Box**, not an Empty State.
-
 ### Scope
-Screen level. It replaces the content area only; the top bar and bottom nav stay in place and keep working. Refresh gestures keep working while an Empty State is shown.
+It fills the content area only; the top bar and bottom nav stay in place — and so do any controls that scope the current view, such as a filter, a search field, or in-screen tabs. Refresh gestures keep working while an Empty State is shown.
 
 ### Variants
 - **`empty`** — no content. Two readings: *nothing yet* (explain what will appear; add an action when the user can create the first item, e.g. buy a ticket) and *all clear* (nothing because everything is fine, e.g. no disruptions — positive tone, usually no action). Illustration allowed.
-- **`no-results`** — content exists but the current filter/search excludes it. Text refers to the filter or search term; the action clears or widens it. **Must look and read differently from `empty`** — if it doesn't, users assume the feature is broken. Illustration allowed.
+- **`no-results`** — content exists but the current filter/search excludes it. Text refers to the filter or search term; the action clears or adjusts it. **Must look and read differently from `empty`** — if it doesn't, users assume the feature is broken. Illustration allowed.
 - **`error`** — loading failed, nothing cached. Say what didn't load in plain language; the action is **Try again**. Use an icon, not an illustration.
 - **`offline`** — no connection, nothing cached. Explain the connection is missing; the action is **Try again**. Use an icon, not an illustration.
 
@@ -81,8 +74,9 @@ Screen level. It replaces the content area only; the top bar and bottom nav stay
 - The illustration or icon is decorative; the **title must carry the meaning on its own**.
 
 ### Tone
-- `empty` and `no-results` are neutral; a light branded line is welcome. The *all clear* reading of `empty` can be a little more positive — it's good news.
-- `error` and `offline` stay plain. No humour when money or a journey is involved, or when the user was trying to fix something. If you have to ask whether a joke fits, it doesn't.
+Wording follows the Content scorecard (`reference/content/index.md`); what's specific here is which variant gets which tone.
+- `empty` and `no-results` are neutral. A short line in the NS voice is welcome — warm, human, positive words. The *all clear* reading of `empty` (e.g. no disruptions) can lean a little more positive, since it's good news.
+- `error` and `offline` stay plain and factual. Keep the NS voice, but no jokes, and never make light of money or a missed journey.
 
 ## Error handling
 
@@ -126,7 +120,7 @@ The content area becomes an Empty State (`error` or `offline` variant). The deci
 - Validate when the user leaves a field or tries to continue — not while typing.
 - If more than one field is wrong, move focus to the first one.
 - Say what's wrong *and how to fix it* ("Vul een datum in" doesn't tell the user their date was in the past).
-- Don't use a Message Inline or an Alert for a problem that lives in one field.
+- Don't use a Message Inline for a problem that lives in one field.
 
 ### Retry behaviour
 - Retry is not a default action — only offer it when repeating the same request could reasonably succeed.
@@ -139,11 +133,12 @@ The content area becomes an Empty State (`error` or `offline` variant). The deci
 ## What this page does not cover
 - App-wide calamity messaging → **Message Bar** (`message-bar.md`).
 - Loading and placeholder shapes → **Skeleton** (`skeleton.md`).
+- Empty or promotional widgets (an incentive to add something) → **Highlight Box** (`highlight-box.md`), not an Empty State.
 - Alert anatomy, use, and button rules → **Interaction Models** (`interaction-models.md`).
 - Component anatomy, variants, and tokens → the individual component pages.
-- Wording and tone in full → `reference/content/` (Content scorecard + content-design principles, synced from ZeroHeight's CONTENT guidelines). _Content docs not mirrored into this skill yet — tracked in the `/sync-docs` registry._
+- Wording and tone in full → `reference/content/` (`index.md` scorecard + `error-message.md` / `empty-state.md`).
 - Accessibility requirements → `accessibility.md`.
 
 ## Source
-- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/4717b2-feedback-states (page `8773720`, synced 2026-07-22)
-- Sections folded in: Overview, Content Unavailable (Empty State), Error States (Error Handling).
+- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/4717b2-feedback-states (page `8773720`, synced 2026-07-28)
+- Tabs folded in: Overview, Empty States, Error Handling.
