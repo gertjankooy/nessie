@@ -75,10 +75,33 @@ Reach for the `Nes*` component so it inherits **role, touch-target size, and hea
 
 ## Labels (writing)
 
-- Provide clear visual labels **by default**; use accessibility labels as a **last resort**, only when needed (interactive icons/logos, extra context, breadcrumbs).
+Provide clear visual labels **by default**; add a separate accessibility label only as a **last resort** — when the visible label can't do the job.
+
+**Set a custom label when:**
+- An interactive element has no descriptive text (an icon/image button).
+- The visible label is long — give the screen reader the essential part only (a card with a lengthy description → the title).
+- The visible label is short and leans on surrounding design for meaning — bake that context into the label.
+- A custom or composite control combines elements that need one clear, contextual name.
+
+**Don't add a label when** the element is decorative (hide it from assistive tech), or it already has a sufficiently descriptive label.
+
+**How to write the label:**
+- **Describe the action or meaning, not the element type or graphic** — "Add", not "Add button" or "Cart icon". Screen readers already announce the role, so repeating it ("button", "tag", "image") is redundant.
+- **No instructions** — the label says *what it is*, not how to operate it; leave out "Tap" / "Swipe".
+- **Keep it concise** — the shortest unambiguous form, single words where they suffice; verbose labels slow navigation.
+- **Cut redundancy across a set** — for related controls, drop the shared words: "Earlier" / "Later", not "Earlier trip recommendations" / "Later trip recommendations".
+- **Capitalise the first character** — it helps VoiceOver read with the right inflection.
+- **No trailing punctuation** — periods disrupt the VoiceOver flow.
+- **Mind the read order** — for a composite element, set the order the parts are announced so it reads logically.
 - **Label in name:** the accessible name must contain the visible label text. If a field shows "Zoeken", its accessible name must include "Zoeken" (critical for voice-control users).
 - Add context when the visible label is vague: "Lees meer" → "Bestel hier je kaartje tussen Amsterdam en Berlijn".
-- Caution with `aria-label` / `aria-labelledby`: they **overwrite** other naming methods and even the element's own contents — use deliberately.
+
+**Label vs hint:** the label names *what the element is*; move extra "how/why" context into a **hint**, and only add a hint when the label alone isn't enough.
+
+> **iOS:** an element exposes a **label**, an optional **value**, **traits** (role), and an optional **hint**. Only fold the component type into the label when the element is interactive and the trait doesn't already convey it; if a label feels verbose, shift the excess into the hint.
+> **Android:** use `contentDescription` for meaningful non-text elements; don't describe plain text — the platform announces `TextView` content automatically.
+
+Caution with `aria-label` / `aria-labelledby` (web): they **overwrite** other naming methods and even the element's own contents — use deliberately, and give the context without the component name ("Platform, 8, Changed", not "Location tag, Platform, 8, Changed").
 
 ## Enforcement / handoff
 
@@ -114,8 +137,11 @@ Reach for the `Nes*` component so it inherits **role, touch-target size, and hea
 
 **Labels**
 - [ ] Accessible name contains the visible label (label-in-name).
-- [ ] Vague link/button labels given extra context.
-- [ ] Accessibility labels used only where a visible label can't do the job.
+- [ ] Label describes the action/meaning, not the element type ("Add", not "Add button").
+- [ ] No instructions ("Tap"/"Swipe"), no trailing punctuation, first character capitalised.
+- [ ] Related controls avoid repeated shared words ("Earlier"/"Later"); labels kept concise.
+- [ ] Vague labels given extra context; extra "how/why" moved into a hint, not the label.
+- [ ] Accessibility labels used only where a visible label can't do the job; decorative elements hidden.
 
 **Interaction, layout & errors** (design-relevant criteria from the role checklist, app-framed)
 - [ ] **Meaningful sequence** — reading/focus order matches the visual/logical order; know where a floating button lands for a screen reader.

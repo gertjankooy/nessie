@@ -51,7 +51,7 @@ Transparent by default; a tinted background is also possible.
 - Keep the label brief but clear and descriptive, in sentence case and limited to one sentence.
 
 ## Accessibility
-_Not available in ZeroHeight — to review._
+Follow the cross-cutting accessibility rules in [../accessibility.md](../accessibility.md) — roles, labels, touch targets, contrast, focus & status. Component-specific guidance is not yet in ZeroHeight — to review.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/90132b-expandable (page `2105596`, synced 2026-06-30)

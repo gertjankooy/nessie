@@ -51,7 +51,7 @@ _Not documented separately; placed within a form like other inputs._
 - Give visual feedback (thumb or track changes) for the selected value.
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - Provide clear min/max labels and a unit so the value is understandable. `[1.3.1]`

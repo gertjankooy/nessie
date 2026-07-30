@@ -43,10 +43,10 @@ gaps: [Content guidelines, Accessibility]
 - Use selectable (not tiles) when the goal is selection rather than navigation.
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
-_Not available in ZeroHeight — to review._
+Follow the cross-cutting accessibility rules in [../accessibility.md](../accessibility.md) — roles, labels, touch targets, contrast, focus & status. Component-specific guidance is not yet in ZeroHeight — to review.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/332804-selectable (page `3413454`, synced 2026-06-30)

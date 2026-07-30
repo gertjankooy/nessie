@@ -41,7 +41,7 @@ For the text shape, the number of lines can be set (2 to 5).
 - Show static content that never changes immediately, and use skeletons only for dynamic content.
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - Give non-text shapes a content description where they represent meaningful content (for example a user avatar circle). `[1.1.1]`

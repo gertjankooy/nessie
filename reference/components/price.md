@@ -53,7 +53,7 @@ The amount can be stacked, and combined with leading and/or trailing text.
 - In the Netherlands the decimal separator is a comma and the thousands separator is a point; other countries may reverse these.
 
 ## Accessibility
-_Not available in ZeroHeight — to review._
+Follow the cross-cutting accessibility rules in [../accessibility.md](../accessibility.md) — roles, labels, touch targets, contrast, focus & status. Component-specific guidance is not yet in ZeroHeight — to review.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/97e622-price (page `1995200`, synced 2026-06-30)

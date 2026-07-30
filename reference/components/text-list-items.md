@@ -51,7 +51,7 @@ _Not documented separately._
 - Commas and periods are allowed when items are 4 words or more.
 
 ## Accessibility
-_Not available in ZeroHeight — to review._
+Follow the cross-cutting accessibility rules in [../accessibility.md](../accessibility.md) — roles, labels, touch targets, contrast, focus & status. Component-specific guidance is not yet in ZeroHeight — to review.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/55aa68-text-list-items (page `1848660`, synced 2026-06-30)

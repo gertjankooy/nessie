@@ -40,7 +40,7 @@ Add a [Badge](https://design.ns.nl/4a05a30ad/p/540677-badge) to a navigation ite
 - Keep the bar consistent across platforms while letting the section below it match each OS.
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - Don't rely on color alone for the active state — pair it with a filled or thicker icon. `[1.4.1]`

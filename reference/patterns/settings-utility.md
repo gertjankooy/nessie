@@ -4,7 +4,7 @@ zeroheight_page_id: 8094399
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/17b7b1-settings-utility
 last_synced: 2026-06-30
 platforms: [ios, android]
-related: [interaction-models, navigation-patterns, layout]
+related: [interaction-models, layout]
 gaps: [Accessibility]
 ---
 

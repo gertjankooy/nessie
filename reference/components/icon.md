@@ -38,7 +38,7 @@ _Not available in ZeroHeight — to review._
 _Not available in ZeroHeight — to review._
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - Provide a content description / accessibility label for a meaningful icon; set it to null when the icon is decorative. `[1.1.1]`

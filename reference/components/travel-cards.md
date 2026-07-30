@@ -51,7 +51,7 @@ NS Flex, NS Business, Payment card, Anonymous (and Single ticket for inline).
 - Don't mix multiple Default variants on one page.
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - Announce in reading order: card name → subscription → balance ("Balance: €20,45") → check-in status → button ("Go to card details"). `[1.3.1]`

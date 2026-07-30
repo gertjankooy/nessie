@@ -9,7 +9,7 @@ gaps: [App component]
 
 # Content — Breadcrumb
 
-Wording for breadcrumbs. Breadcrumbs are primarily a **web** pattern; on app, back navigation lives in `reference/patterns/navigation-patterns.md`.
+Wording for breadcrumbs. Breadcrumbs are primarily a **web** pattern; on app, back navigation lives in `reference/fundamentals/layout.md` (Navigation region).
 
 ## Marking a page — `Label level 2 / Label level 3`
 The breadcrumb names the page:

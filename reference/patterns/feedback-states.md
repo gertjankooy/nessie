@@ -4,7 +4,7 @@ zeroheight_page_id: 8773720
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/4717b2-feedback-states
 last_synced: 2026-07-28
 platforms: [ios, android]
-related: [interaction-models, navigation-patterns, layout, accessibility]
+related: [interaction-models, layout, accessibility]
 gaps: []
 ---
 

@@ -40,7 +40,7 @@ _Not documented as configurable properties in ZeroHeight._
 - Use the label "Kaartnummer" and help text "De cijfers aan de voorkant van de kaart." instead of the generic defaults.
 
 ## Accessibility
-_Not available in ZeroHeight — to review._
+Follow the cross-cutting accessibility rules in [../accessibility.md](../accessibility.md) — roles, labels, touch targets, contrast, focus & status. Component-specific guidance is not yet in ZeroHeight — to review.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/329f62-creditcard-input (page `2556152`, synced 2026-06-30)

@@ -48,7 +48,7 @@ By default the primary action is a primary button; the others are tertiary butto
 - Give labels the same number of words, preferably one each — especially for a horizontal group on a small viewport.
 
 ## Accessibility
-_Not documented separately; follows [Button](button.md) accessibility._
+Not documented separately; follows [Button](button.md) accessibility. See also [../accessibility.md](../accessibility.md) for the cross-cutting rules.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/086fef-button-group (page `1936817`, synced 2026-06-30)

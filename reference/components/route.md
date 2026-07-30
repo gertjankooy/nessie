@@ -54,7 +54,7 @@ A long location can be constrained to a single line and truncated with an ellips
 _Not available in ZeroHeight — to review._
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - Combine each direction's labels into a single container announcement — for example "Departure time, 09:00", "Delayed by 5 minutes", "Departure location, …", "Carrier, …", "Boarding location, …", and the matching connection and arrival labels. `[1.3.1]`

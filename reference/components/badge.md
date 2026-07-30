@@ -45,7 +45,7 @@ Documented variants include Default, Important, Success, and Brand.
 - Badges are blue or red; reserve red to convey importance.
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - A standalone number lacks context for screen-reader users — include hidden text such as "You have 4 unread messages" rather than just "4". `[1.1.1]`

@@ -101,7 +101,27 @@ Apply this to every new screen frame regardless of screen type.
 
 ### Navigation region
 
-Holds primary navigation: the Header (top bar) and the Bottom Navigation. See `../patterns/navigation-patterns.md` for component choices and placement. For focused flow screens (close/confirm button placement, modal vs push navigation), see `../patterns/interaction-models.md`.
+Holds primary navigation: the **Header** (top bar) and the **Bottom Navigation**. For transient surfaces layered over a screen — sheets, dialogs, alerts, menus, focused flows, persistent panels — and focused-flow close/confirm placement, see `../patterns/interaction-models.md`.
+
+**Header (top bar).** Carries the screen title, back/close affordance, and trailing actions. Start (top) spacing varies by screen type:
+
+| Header start spacing | When |
+| :--- | :--- |
+| 32 | List page (large-title / scrolling-list screens) |
+| 24 | Default top and bottom |
+| 0 | Flush header (no extra start spacing) |
+
+> **iOS:** Treat the Header like a native navigation bar (title + back/close + optional trailing actions); a large title (32 start) suits scroll/list landing screens and can collapse to inline on scroll.
+> **Android:** Maps to a top app bar; default 24 top/bottom.
+
+**Tabs vs bottom navigation.** Bottom nav = "where in the app am I" — top-level destinations, persistent across those screens. Tabs = "which view of this screen" — switching views/filters within a single screen or section, in the body region. Don't use tabs to fake top-level navigation, and don't use bottom nav for in-screen view switching.
+
+**Back navigation.** Provide a clear back/up affordance in the Header for any pushed screen; modals and sheets *dismiss* rather than go "back", and dialogs resolve via their actions.
+
+> **iOS:** back chevron top-left (often with the previous title) + edge-swipe-back; sheets dismiss with swipe-down or an explicit Close/Done.
+> **Android:** up arrow in the top app bar **plus** the system back gesture/button — both must work and reach the same destination (predictive back where supported).
+
+**Loading transitions.** Navigating to a new screen or refreshing: use a **Skeleton** when the incoming layout is predictable (placeholder blocks mimic the final content); use a **loading spinner** when structure or duration is unpredictable and there's no content shape to show yet. See `../patterns/feedback-states.md` for the full loading / empty / error decision.
 
 ### Body region
 

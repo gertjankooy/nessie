@@ -49,7 +49,7 @@ Neutral or Blue color set.
 _Not available in ZeroHeight — to review._
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - Line tag announces as `{Category}, {Number/Letter}` — for example "Metro Line, 8". `[1.3.1]`

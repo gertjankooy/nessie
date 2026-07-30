@@ -23,7 +23,6 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 | **Design System → PATTERNS → Interaction Models** (`8100862`) | `reference/patterns/interaction-models.md` | Pattern |
 | **Design System → PATTERNS → Settings & Utility** (`8094399`) | `reference/patterns/settings-utility.md` | Pattern |
 | **Design System → PATTERNS → Feedback & States** (`8773720`) | `reference/patterns/feedback-states.md` (folds in the page's Overview + Empty States + Error Handling tabs) | Pattern |
-| PATTERNS → Search | *(no page yet / TODO — skip, flag when published)* | Pattern |
 | **Fundamentals → Color** (`6693013`) + **TOKENS → Color** (`6694970`) | `reference/tokens/color.md` (usage + Visual hierarchy + token list) | Token |
 | **Fundamentals → Typography** (`6693097`) + **TOKENS → Typography** (`6694972`) | `reference/tokens/typography.md` | Token |
 | **Fundamentals → Style** (`6693107`) + **TOKENS → Style/Dimension** (`6699361`/`6694971`) | `reference/tokens/shape.md` · `spacing.md` | Token |
@@ -40,7 +39,7 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 ## Hard rules (all templates)
 1. **App only.** Use `COMPONENTS → App`, never the `Web` group. If something exists only under Web, report "no App page" and skip.
 2. **ZeroHeight is the only source of truth.** Never invent content, variants, props, token names, or values.
-3. **Gaps are kept, not dropped.** A section with nothing in ZeroHeight keeps its header with `_Not available in ZeroHeight — to review._`, is added to frontmatter `gaps:` (where the file has frontmatter), and is flagged in the run report.
+3. **Gaps are kept, not dropped.** A section with nothing in ZeroHeight keeps its header with `_Not available in ZeroHeight — to review._`, is added to frontmatter `gaps:` (where the file has frontmatter), and is flagged in the run report. **Cross-link exception:** for a component's `## Accessibility` or `## Content guidelines` section with no ZeroHeight content, replace the bare marker with a pointer to the general doc — `[../accessibility.md](../accessibility.md)` or `[../content/index.md](../content/index.md)` respectively — while still keeping the type in `gaps:` (component-specific detail is still pending). Don't revert these cross-links back to the bare marker on re-sync.
 4. **No implementation details** — no SwiftUI/Compose/web code, Storybook links, or platform status tables. **Exception:** iOS-first *design* divergences as `> **Android:**` / `> **iOS 26+:**` callouts.
 5. **Drop the noise** — per-image `**Style**`/`**Attributes**` tables (`#FFFFFF`, `848px`, `X:0 Y:0`), decorative images, "Questions?"/"Copywriting moved" blocks, marketing prose.
 6. **Tokens by meaning, never hex** in base/applied rows; the **core tier** may show a raw value exactly as the existing tables do.

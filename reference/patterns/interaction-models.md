@@ -4,7 +4,7 @@ zeroheight_page_id: 8100862
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models
 last_synced: 2026-07-22
 platforms: [ios, android]
-related: [navigation-patterns, layout, feedback-states]
+related: [layout, feedback-states]
 gaps: []
 ---
 
@@ -14,7 +14,7 @@ How users perform actions that require a choice, adjustment, or task completion 
 
 > iOS uses native SwiftUI APIs directly; Android uses Nessie's `Nes`-prefixed implementations (e.g. `NesAlertDialog`, `NesPopupMenu`). This page is iOS/Android only — not web. It does not cover motion, toast/snackbar feedback, or onboarding.
 >
-> Navigation **structure** — top bar, tabs vs bottom navigation, and back navigation — lives in `navigation-patterns.md`. This page owns the transient surfaces and actions layered on top of that structure.
+> Navigation **structure** — top bar, tabs vs bottom navigation, and back navigation — lives in `../fundamentals/layout.md` (Navigation region). This page owns the transient surfaces and actions layered on top of that structure.
 
 ## Menus & actions
 

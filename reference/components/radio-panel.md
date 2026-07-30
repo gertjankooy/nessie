@@ -43,7 +43,7 @@ _Not documented as configurable properties in ZeroHeight; items share width by d
 - Keep option labels short to display items next to each other.
 
 ## Accessibility
-_Not available in ZeroHeight — to review._
+Follow the cross-cutting accessibility rules in [../accessibility.md](../accessibility.md) — roles, labels, touch targets, contrast, focus & status. Component-specific guidance is not yet in ZeroHeight — to review.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/042c3f-radio-panel (page `1787026`, synced 2026-06-30)

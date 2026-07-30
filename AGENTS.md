@@ -59,10 +59,10 @@ All paths are **relative to the repository root**. Re-read files every session; 
 - `reference/design-language.md` — brand personality, visual direction, iconography, brand-color usage. (The "what makes it feel NESSIE" doc.)
 - `reference/components/index.md` — **master catalog**: every App component, when to use it, and a link to its own file. **Start here to pick components**, then open the linked `reference/components/<component>.md` (one file per component — e.g. `button.md`, `input.md`, `route.md`). Each is synced from ZeroHeight and carries `zeroheight_page_id` / `last_synced` / `gaps` frontmatter. (Maintainers refresh docs with the `/sync-docs` command in Claude Code.)
 - `reference/tokens/` — `color.md` · `typography.md` · `spacing.md` · `shape.md` · `motion.md` · `applied.md`
-- `reference/fundamentals/` — `layout.md` (composition: app insets/stacks/surfaces, safe areas, screen-type patterns, and the token `--slash` ↔ dotted naming crosswalk). *ZeroHeight: Fundamentals → Composition.*
+- `reference/fundamentals/` — `layout.md` (composition: app insets/stacks/surfaces, safe areas, screen-type patterns, the **navigation region** — header/tabs/bottom-nav/back-nav — and the token `--slash` ↔ dotted naming crosswalk). *ZeroHeight: Fundamentals → Composition.*
 - `reference/content/` — **UX writing**: `index.md` (six principles, content scorecard, NS voice — Sympathetic/Professional/Inspiring, NL+EN B1) plus per-component wording (`button.md`, `link.md`, `error-message.md`, `empty-state.md`, `breadcrumb.md`). The source of truth for tone and copy referenced by patterns and components.
 - `reference/accessibility.md` — cross-cutting accessibility guidance (WCAG 2.2 AA: contrast pairings, touch targets, headings/structure, labels, focus & status). *ZeroHeight: Guidelines → Accessibility.*
-- `reference/patterns/` — `navigation-patterns.md` (nav **structure**: top bar, tabs vs bottom nav, back nav) · `interaction-models.md` (transient **surfaces**: menus, sheets, dialogs, flows, panels — iOS vs Android) · `feedback-states.md` (empty / loading / error / offline states: which surface for empty vs error vs stale content, and error-handling rules) · `settings-utility.md` (settings list layout/behaviour/states)
+- `reference/patterns/` — `interaction-models.md` (transient **surfaces**: menus, sheets, dialogs, flows, panels — iOS vs Android) · `feedback-states.md` (empty / loading / error / offline states: which surface for empty vs error vs stale content, and error-handling rules) · `settings-utility.md` (settings list layout/behaviour/states)
 
 ### Token doc convention (always follow when adding/editing tokens)
 
@@ -100,4 +100,4 @@ Some base components have styling (e.g. gap, typography) baked in as defaults. E
 
 ## Platform notes
 
-iOS-first. Android-specific and iOS-26+ distinctions live in clearly-marked sections of `reference/patterns/navigation-patterns.md` and as `> **Android:**` / `> **iOS 26+:**` callouts inside component files. Add new distinctions there as they're discovered.
+iOS-first. Android-specific and iOS-26+ distinctions live in clearly-marked sections of `reference/fundamentals/layout.md` (navigation region, safe areas, breakpoints) and as `> **Android:**` / `> **iOS 26+:**` callouts inside component files. Add new distinctions there as they're discovered.

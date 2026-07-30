@@ -35,7 +35,7 @@ reference/                 Source-of-truth knowledge (self-contained, skimmable)
   fundamentals/              layout (composition: insets, stacks, surfaces, safe areas)
   content/                   UX writing — index + per-component wording
   accessibility.md           Cross-cutting a11y guidance (WCAG 2.2 AA)
-  patterns/                  navigation-patterns, interaction-models, feedback-states, settings-utility
+  patterns/                  interaction-models, feedback-states, settings-utility
 .claude/commands/          Maintainer tooling (Claude Code only; not part of the distributed skill)
 ```
 

@@ -50,7 +50,7 @@ Marks the leg or transfer as cancelled.
 _Not available in ZeroHeight — to review._
 
 ## Content guidelines
-_Not available in ZeroHeight — to review._
+Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md). Component-specific copy guidance is not yet in ZeroHeight — to review.
 
 ## Accessibility
 - A custom content description overrides the default and is read in full (for example "De trein naar Maastricht rijdt niet vanwege een gestrande trein"). `[1.3.1]`
