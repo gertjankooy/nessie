@@ -6,6 +6,8 @@ Routing/lookup table for the NESSIE (NS Dutch Railways) **App** component librar
 
 > Sections marked `_Not available in ZeroHeight — to review._` (and listed in each file's `gaps:`) are documentation gaps to fill later, not missing features.
 
+> **Authoring or updating a component doc?** Follow the house standard in [_component-doc-standard.md](_component-doc-standard.md) (frontmatter + fixed section order + conventions), or use the `document-component` skill which walks the flow.
+
 ## Buttons
 
 | Component | When to use | Doc |

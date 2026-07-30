@@ -49,6 +49,7 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 ## Templates
 
 ### Component  (`reference/components/<kebab>.md`)
+**Canonical spec: `reference/components/_component-doc-standard.md`** (distributed with the skill) — follow it; keep this summary in sync with it, don't let them drift.
 Frontmatter (`component, category, status, aliases, zeroheight_page_id, zeroheight_url, figma_node, last_synced, related, gaps`) + fixed body order, sentence case, no `---` dividers in the body:
 `# <Component>` → `## Usage` (`### Use when` / `### Don't use when`) → `## Anatomy` → `## Configurations` (with the `⚠️ Missing the disabled state?` callout for buttons/form components) → `## Placement` → `## Behavior` → `## Best practices` → `## Content guidelines` → `## Accessibility` (WCAG refs in backticks) → `## Source`.
 Filename = kebab-case of the App page title. After writing, update the row in `index.md`.

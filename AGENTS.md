@@ -51,6 +51,7 @@ This file (`AGENTS.md`) is the entry point. **Read the relevant skill file befor
 | Design / generate a new screen, view, or flow | **`skills/build-screen.md`** | `reference/components/index.md`, then specific component + token + layout files |
 | Review / check an existing screen against NESSIE | **`skills/audit-screen.md`** | the five reference areas it lists |
 | Check only token usage | **`skills/audit-tokens.md`** | `reference/tokens/*` |
+| Create / update a component's reference doc | **`skills/document-component.md`** | `reference/components/_component-doc-standard.md` |
 
 All paths are **relative to the repository root**. Re-read files every session; never assume you remember them.
 
