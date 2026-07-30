@@ -17,6 +17,7 @@ Open the spec and follow it for the **frontmatter, section order, disabled-state
 
 4. **Fill only what the source documents.** Every variant, state, and token name comes from ZeroHeight/Figma; where the source is silent, mark a gap per the spec — don't infer.
 5. **Set `last_synced` to today**, and list every undocumented section in `gaps:`.
+6. **Mark anything authored ahead of the source.** If you add a decision that isn't in ZeroHeight yet (from a design meeting, app-team guidance, etc.), it **must** carry the `Local guidance` marker — see the spec's *Local guidance* section. This is not optional; without it `/sync-docs` will delete the block on the next run.
 
 ## Finish
 6. **Filename** = kebab-case of the App page title; **update `reference/components/index.md`** — add or refresh the row (`| Name | when to use | [kebab.md](kebab.md) |`) under the right category section.

@@ -83,7 +83,7 @@ Use `.pale` for the tinted background of an alert, `.default` for icon/border, `
 | Token | Light → Dark | Usage |
 | :--- | :--- | :--- |
 | `content.background.base` | gray.25 → gray.900 | App canvas — settings, search, nav-heavy screens. |
-| `content.background.base-alt` | gray.25 → gray.950 | Pairs with brand-alt; avoids overlap in dark mode. |
+| `content.background.base-alt` | gray.25 → gray.950 | Pairs with brand-alt; avoids overlap in dark mode (e.g. a branded Top Bar on a base canvas — see `../components/top-bar.md`). |
 | `content.background.default` | white → gray.800 | Content-first screens, modals, forms, grouped containers. |
 | `content.background.alt` | white → gray.200 | Alternative theming, larger areas in dark mode. |
 | `content.background.elevated` | white → gray.700 | Cards, tiles, form inputs (shadow OR border, never both). |

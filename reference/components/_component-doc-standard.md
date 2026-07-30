@@ -70,6 +70,16 @@ _Not available in ZeroHeight — to review._
 
 **Cross-link exception:** for `## Accessibility` and `## Content guidelines` with no component-specific ZeroHeight content, replace the bare marker with a pointer to the general doc (`../accessibility.md` / `../content/index.md`) — but **keep the section in `gaps:`**, since the component-specific detail is still pending.
 
+## Local guidance (authored ahead of ZeroHeight)
+
+**Rule: any content you add that is not sourced from ZeroHeight MUST carry this marker.** Sometimes a decision is documented here *before* the ZeroHeight page catches up (design changes flow both ways). Mark every such block so `/sync-docs` doesn't mistake its absence upstream for a removal and delete it:
+
+```
+> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).**
+```
+
+Put the line directly under the section/sub-section heading it protects. When ZeroHeight later covers the content, reconcile the wording and **remove the marker** — it becomes normal synced content. This is the counterpart to a gap: a gap = ZeroHeight has it, we don't yet; a `Local guidance` block = we have it, ZeroHeight doesn't yet. (Keep the marker's "Local guidance" wording distinct from the gap phrase "not yet in ZeroHeight — to review", which means the opposite.)
+
 ## Authoring checklist (verify before done)
 
 - [ ] It's an **App** component (not Web); source is ZeroHeight (+ Figma), nothing invented.

@@ -75,6 +75,8 @@ Reach for the `Nes*` component so it inherits **role, touch-target size, and sem
 
 ## Labels (writing)
 
+> **Local guidance — keep on sync (the label-authoring detail below is authored ahead of ZeroHeight; not a removal).** Some of it — the last-resort principle, label-in-name, adding context, and the `aria-*` caution — is on the ZeroHeight Accessibility labels page; the rest is app-team guidance to move upstream later. Reconcile and remove this line once ZeroHeight covers the full set.
+
 Provide clear visual labels **by default**; add a separate accessibility label only as a **last resort** — when the visible label can't do the job.
 
 **Set a custom label when:**

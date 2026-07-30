@@ -101,6 +101,8 @@ Apply this to every new screen frame regardless of screen type.
 
 ### Navigation region
 
+> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).** This navigation-region guidance comes from NS App Guidelines (Notion), not the ZeroHeight Composition page; reconcile and remove this line once ZeroHeight covers it.
+
 Holds primary navigation: the **Header** (top bar) and the **Bottom Navigation**. For transient surfaces layered over a screen — sheets, dialogs, alerts, menus, focused flows, persistent panels — and focused-flow close/confirm placement, see `../patterns/interaction-models.md`.
 
 **Header (top bar).** Carries the screen title, back/close affordance, and trailing actions. Start (top) spacing varies by screen type:

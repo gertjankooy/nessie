@@ -49,6 +49,8 @@ Patterns triggered directly by the user (a button tap or long press) that surfac
 
 Patterns that introduce a new surface above the current screen.
 
+> Task surfaces (sheets, focused flows) carry their own **plain** top bar — white/transparent, not the branded main-nav bar. The bottom nav is already hidden here, so focus stays on the task, not the branding. See `../components/top-bar.md` → Surface.
+
 ### Sheet
 `pattern: sheet` · iOS `.sheet()` (medium/large detent) · Android `NesBottomSheetDialogFragment`
 - Slides up from the bottom; the user stays conceptually tied to the originating screen. Size follows content complexity, not interaction type.
