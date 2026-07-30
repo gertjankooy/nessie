@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# NESSIE pre-commit security gate (public repo).
+# BLOCKS secrets & local-only/secret-bearing files from being committed; WARNS on
+# machine paths and internal references. The thorough interactive version is
+# `/pre-publish-check`. Bypass only when you are certain: git commit --no-verify
+set -u
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
+
+fail=0
+RED=$'\033[31m'; YEL=$'\033[33m'; GRN=$'\033[32m'; NC=$'\033[0m'
+
+# New content being introduced (added lines, leading '+' stripped)
+added=$(git diff --cached --diff-filter=ACM -U0 | grep -E '^\+' | grep -vE '^\+\+\+' | sed 's/^+//')
+
+# 1) local-only / secret-bearing files must never be staged  -> BLOCK
+badfiles=$(printf '%s\n' "$staged" | grep -iE '(^|/)\.env(\.|$)|\.(pem|key|p12)$|(^|/)settings\.local\.json$|(^|/)sync-tokens\.md$|(^|/)figma-bootstrap/|(^|/)\.claude/state/|(^|/)bootstrap\.md$' || true)
+if [ -n "$badfiles" ]; then
+  printf '%s\n' "${RED}SECURITY BLOCK: local-only / secret-bearing file is staged:${NC}"
+  printf '   %s\n' $badfiles
+  fail=1
+fi
+
+# 2) high-signal secrets in added content  -> BLOCK
+sec=$(printf '%s\n' "$added" | grep -nE 'ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|figd_[A-Za-z0-9_-]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----' || true)
+if [ -n "$sec" ]; then
+  printf '%s\n' "${RED}SECURITY BLOCK: possible secret in staged changes:${NC}"
+  printf '   %s\n' "$sec"
+  fail=1
+fi
+
+# 3) absolute local paths  -> WARN
+paths=$(printf '%s\n' "$added" | grep -nE '/Users/[a-z]|/home/[a-z]|C:\\Users' || true)
+[ -n "$paths" ] && { printf '%s\n' "${YEL}SECURITY REVIEW: absolute local path in staged changes:${NC}"; printf '   %s\n' "$paths"; }
+
+# 4) internal references (excluding the expected design.ns.nl source links)  -> WARN
+intern=$(printf '%s\n' "$added" | grep -nE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}|atlassian\.net|sharepoint\.com|slack\.com/share|[A-Za-z0-9.-]+\.ns\.nl' | grep -viE 'design\.ns\.nl' || true)
+[ -n "$intern" ] && { printf '%s\n' "${YEL}SECURITY REVIEW: internal reference / contact in staged changes:${NC}"; printf '   %s\n' "$intern"; }
+
+if [ "$fail" -ne 0 ]; then
+  printf '%s\n' "${RED}Commit blocked by the pre-commit security gate. Fix the above, or bypass with: git commit --no-verify${NC}"
+  exit 1
+fi
+printf '%s\n' "${GRN}pre-commit security gate: passed${NC}"
+exit 0

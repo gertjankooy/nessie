@@ -11,6 +11,9 @@ bootstrap.md
 *.key
 *.p12
 
+# Claude Code local settings (machine paths + permission grants — never publish)
+.claude/settings.local.json
+
 # Local-only commands & their state (reference machine-specific paths)
 .claude/commands/sync-tokens.md
 .claude/state/

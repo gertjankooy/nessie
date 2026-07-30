@@ -11,3 +11,5 @@ Everything a designer needs lives in `AGENTS.md`, `skills/`, and `reference/`.
 _Maintainer note (Claude Code only):_ the commands in `.claude/commands/` — `/sync-docs`, `/sync-tokens`, `/docs-coverage` — refresh the docs from ZeroHeight / the design-tokens repo. They are not part of the distributed skill.
 
 _When editing reference docs by hand:_ any content you add that is **not sourced from ZeroHeight** (a design decision documented here before the upstream page catches up) MUST carry a `Local guidance` marker directly under its heading — `> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).**` — otherwise `/sync-docs` will delete it as a "removal" on the next run. Convention: `reference/components/_component-doc-standard.md` → *Local guidance*.
+
+_Security (public repo):_ a pre-commit gate in `.githooks/pre-commit` blocks secrets and local-only files on every commit. **Enable it once per clone:** `git config core.hooksPath .githooks` (it's local config, not carried by `git clone`). Run the thorough interactive scan with `/pre-publish-check` before publishing; bypass the gate only when certain with `git commit --no-verify`.
