@@ -20,14 +20,14 @@ Build it in rather than bolting it on:
 
 ## Core principle: Nessie bakes in role/target/heading; you supply meaning
 
-Reach for the `Nes*` component so it inherits **role, touch-target size, and heading semantics for free.** Your job is to supply the dynamic, localized **meaning** the system cannot invent (labels, content descriptions, state names).
+Reach for the `Nes*` component so it inherits **role, touch-target size, and semantics for free.** Your job is to supply the dynamic, localized **meaning** the system cannot invent (labels, content descriptions, state names).
 
-> **Rationale:** Styling a plain text node with heading typography does NOT make it a heading. Use the actual heading component, or assistive tech can't navigate it.
+> **Rationale:** Styling a plain text node with a `heading1–4` type style does NOT make it a heading. You must also apply the heading **role/semantics** (the heading trait), or assistive tech can't navigate it. Headings are a **type style + role**, not a component from the app library.
 
 ### What Nessie gives vs what you must supply
 | Element | Nessie bakes in | You supply |
 | --- | --- | --- |
-| Heading / Top bar | Heading semantics + color | The text (use the heading component, not styled text) |
+| Heading / Top bar | Top Bar bakes in heading semantics; `heading1–4` type styles supply the visual | The text, set as a heading type style **with the heading role applied** — a type style alone isn't a heading to assistive tech |
 | Button | 48-target + Role.Button; label defaults to text | Meaningful text |
 | IconButton | Target + role | Mandatory content description |
 | Toggle / Checkbox / Radio | Role + state wiring | Label + state name |
@@ -60,7 +60,7 @@ Reach for the `Nes*` component so it inherits **role, touch-target size, and hea
 
 ## Headings & structure
 
-- Use real heading components so the heading gesture/rotor can navigate; styled text is not a heading.
+- Give headings the real heading **role/semantics** so the heading gesture/rotor can navigate; heading typography alone (a `heading1–4` type style) is not a heading.
 - In lists, mark **each item a heading** so the heading gesture steps card-to-card.
 - Do **NOT** mark tab rows as headings — tabs are controls (Role.Tab).
 - **Section box:** wrap heading + body into one focusable, heading-navigable node with a summary description. But do NOT merge a section that contains its own interactive children — group those with a traversal-group instead.
@@ -127,7 +127,7 @@ Caution with `aria-label` / `aria-labelledby` (web): they **overwrite** other na
 - [ ] All tap targets ≥ 48.
 
 **Structure & headings**
-- [ ] Headings use real heading components (not styled text).
+- [ ] Headings carry the heading role/semantics (a `heading1–4` type style alone isn't a heading).
 - [ ] List items are headings; tab rows are NOT headings.
 - [ ] Section boxes merged into one navigable node (unless they contain interactive children → traversal-group).
 
