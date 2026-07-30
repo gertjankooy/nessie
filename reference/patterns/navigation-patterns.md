@@ -4,7 +4,7 @@
 
 ## Navigation region
 
-Every screen splits into a **navigation region** (primary navigation) and a **body region** (content — see `layout.md`). The navigation region holds two components:
+Every screen splits into a **navigation region** (primary navigation) and a **body region** (content — see `../fundamentals/layout.md`). The navigation region holds two components:
 
 - **Header navigation** (top bar)
 - **Bottom navigation**
@@ -39,7 +39,7 @@ _The Nessie source reviewed here documents the bottom navigation as a navigation
 
 Choosing and dismissing overlays — bottom sheets, dialogs, alerts, action sheets, menus, focused flows, and persistent panels — is owned by `interaction-models.md` (with its "Choosing the right pattern" tables and per-platform naming). Pick the surface there; this doc only governs how navigation structure behaves around it.
 
-> **Navigation-structure note:** a card or row that **opens a modal** uses shadow/elevation to signal that depth (see `layout.md` surface rules).
+> **Navigation-structure note:** a card or row that **opens a modal** uses shadow/elevation to signal that depth (see `../fundamentals/layout.md` surface rules).
 
 ## Back navigation
 
@@ -65,7 +65,7 @@ When navigating to a new screen or refreshing data (Notion App Guidelines):
 | Window/size class | Regular vs compact/limited window | smallest-width drives size class (orientation-independent) |
 | Density mapping | Compact / Regular / Large window → 2XS / Default / MD | Compact / Medium / Expanded → 2XS / Default / MD |
 
-> Density modes (and therefore spacing/component scaling in the nav region) are derived from window size, not platform — see `layout.md` breakpoints. The design system abstracts both platforms into the shared 2XS / Default / MD model.
+> Density modes (and therefore spacing/component scaling in the nav region) are derived from window size, not platform — see `../fundamentals/layout.md` breakpoints. The design system abstracts both platforms into the shared 2XS / Default / MD model.
 >
 > Sheet / dialog / alert platform mapping (iOS `.sheet()`/`.alert()` vs Android `NesBottomSheet`/`NesAlertDialog`) lives in `interaction-models.md` → Platform naming reference.
 

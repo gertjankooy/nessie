@@ -59,21 +59,23 @@ All paths are **relative to the repository root**. Re-read files every session; 
 - `reference/design-language.md` — brand personality, visual direction, iconography, brand-color usage. (The "what makes it feel NESSIE" doc.)
 - `reference/components/index.md` — **master catalog**: every App component, when to use it, and a link to its own file. **Start here to pick components**, then open the linked `reference/components/<component>.md` (one file per component — e.g. `button.md`, `input.md`, `route.md`). Each is synced from ZeroHeight and carries `zeroheight_page_id` / `last_synced` / `gaps` frontmatter. (Maintainers refresh docs with the `/sync-docs` command in Claude Code.)
 - `reference/tokens/` — `color.md` · `typography.md` · `spacing.md` · `shape.md` · `motion.md` · `applied.md`
+- `reference/fundamentals/` — `layout.md` (composition: app insets/stacks/surfaces, safe areas, screen-type patterns, and the token `--slash` ↔ dotted naming crosswalk). *ZeroHeight: Fundamentals → Composition.*
 - `reference/content/` — **UX writing**: `index.md` (six principles, content scorecard, NS voice — Sympathetic/Professional/Inspiring, NL+EN B1) plus per-component wording (`button.md`, `link.md`, `error-message.md`, `empty-state.md`, `breadcrumb.md`). The source of truth for tone and copy referenced by patterns and components.
-- `reference/patterns/` — `layout.md` (app insets/stacks/surfaces/safe areas) · `navigation-patterns.md` (nav **structure**: top bar, tabs vs bottom nav, back nav) · `interaction-models.md` (transient **surfaces**: menus, sheets, dialogs, flows, panels — iOS vs Android) · `feedback-states.md` (empty / loading / error / offline states: which surface for empty vs error vs stale content, and error-handling rules) · `accessibility.md` · `settings-utility.md` (settings list layout/behaviour/states)
+- `reference/accessibility.md` — cross-cutting accessibility guidance (WCAG 2.2 AA: contrast pairings, touch targets, headings/structure, labels, focus & status). *ZeroHeight: Guidelines → Accessibility.*
+- `reference/patterns/` — `navigation-patterns.md` (nav **structure**: top bar, tabs vs bottom nav, back nav) · `interaction-models.md` (transient **surfaces**: menus, sheets, dialogs, flows, panels — iOS vs Android) · `feedback-states.md` (empty / loading / error / offline states: which surface for empty vs error vs stale content, and error-handling rules) · `settings-utility.md` (settings list layout/behaviour/states)
 
 ### Token doc convention (always follow when adding/editing tokens)
 
 Token names have two shapes that must never be confused: **Figma binds variables in slash form with a `--` prefix** (e.g. `--content/text/default`), while **these docs use dotted JSON form** (e.g. `content.text.default`). Convert by dropping the leading `--` and replacing `/` with `.`. The Token Studio JSON / Figma variable names are authoritative; older Notion labels are out of date.
 
-Every file in `reference/tokens/` MUST carry a callout near the top stating this rule with a token example from that file, cross-linking to `reference/patterns/layout.md` (the single-source naming crosswalk). When you add a new token file or a new token category, add/extend that callout — do not document a token only in dotted form without noting its Figma `--slash/form`.
+Every file in `reference/tokens/` MUST carry a callout near the top stating this rule with a token example from that file, cross-linking to `reference/fundamentals/layout.md` (the single-source naming crosswalk). When you add a new token file or a new token category, add/extend that callout — do not document a token only in dotted form without noting its Figma `--slash/form`.
 
 ## Non-negotiable rules (always apply)
 
 1. **Tokens only.** Every color, type style, spacing, radius, and motion value comes from a NESSIE token (`base`/semantic or `applied`/component tier). Never a raw hex, never an off-scale number, never a `core`/raw-palette token used directly.
 2. **Components first.** Use an existing NESSIE App component for anything it covers — never hand-roll a duplicate. Use only documented variants.
 3. **Dark mode is automatic.** Tokens remap per mode; never hardcode light-mode values or branch on mode manually.
-4. **Accessibility is built in, meaning is yours.** NESSIE components carry role / touch-target / heading semantics; you must still supply labels, contrast pairings, and structure (`reference/patterns/accessibility.md`).
+4. **Accessibility is built in, meaning is yours.** NESSIE components carry role / touch-target / heading semantics; you must still supply labels, contrast pairings, and structure (`reference/accessibility.md`).
 5. **Figma generation.** When running in a Figma environment, before calling `use_figma` follow the `/figma-use` skill (mandatory). Prefer the Figma plugin's bundled skills when present.
 6. **When in doubt, flag it.** If a design needs something the system doesn't have, surface it as a system gap rather than inventing a token or component.
 7. **Read before you design.** When any screen or component task starts, read the skill file for that task (from the routing table above) *before* writing any design output. This is a hard gate, not a suggestion.

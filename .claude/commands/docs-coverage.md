@@ -12,9 +12,10 @@ Give a coverage overview of the NESSIE ZeroHeight (`Nessie Design System`) again
 
 ## In scope (App skill)
 - **COMPONENTS → App** → `reference/components/*.md`
-- **Design System → PATTERNS** (Interaction Models, Settings & Utility, Error Handling, Search) → `reference/patterns/*.md`
-- **Fundamentals** (Color, Typography, Style, Motion, Icons, Logo/Assets, Composition → Layout for App) and **TOKENS** (Color, Typography, Dimension, Style, Motion, Opacity, Screen, Overview/applied) → `reference/tokens/*.md`, `layout.md`, `design-language.md`
-- **Guidelines → ACCESSIBILITY** → `reference/patterns/accessibility.md`
+- **Design System → PATTERNS** (Interaction Models, Settings & Utility, Feedback & States, Search) → `reference/patterns/*.md`
+- **Fundamentals** (Color, Typography, Style, Motion, Icons, Logo/Assets, Composition → Layout for App) and **TOKENS** (Color, Typography, Dimension, Style, Motion, Opacity, Screen, Overview/applied) → `reference/tokens/*.md`, `reference/fundamentals/layout.md`, `design-language.md`
+- **Guidelines → ACCESSIBILITY** → `reference/accessibility.md`
+- **Guidelines → CONTENT** (Principles, Content scorecard, per-component copy) → `reference/content/*.md`
 - **PRINCIPLES** (Visual direction, Platform Consistency, UX Guidelines) → `design-language.md` / `navigation-patterns.md`
 
 ## Out of scope (don't report as gaps)
@@ -24,13 +25,13 @@ COMPONENTS → **Web**, TEMPLATES → Web, Fundamentals → Composition → **La
 1. `list-pages` → full ZeroHeight tree (current IDs/titles).
 2. Build the **repo inventory**:
    - Registry entries: read `.claude/commands/sync-docs.md` (the source registry table).
-   - Covered page IDs: collect `zeroheight_page_id` from `reference/components/*.md` and `reference/patterns/*.md` frontmatter, and the `zeroheight_url` page slugs cited in `reference/tokens/*.md` / `design-language.md`. A quick way to list component/pattern coverage:
+   - Covered page IDs: collect `zeroheight_page_id` from `reference/**/*.md` frontmatter (components, patterns, fundamentals, content, accessibility), and the `zeroheight_url` page slugs cited in `reference/tokens/*.md` / `design-language.md`. A quick way to list component/pattern coverage:
      `grep -rhoE 'zeroheight_page_id: [0-9]+' reference | grep -oE '[0-9]+' | sort -u`
 3. For every **in-scope** ZeroHeight page, classify:
    - ✅ **Mapped & covered** — in the registry *and* a reference file cites its id/slug.
    - ⚠️ **Mapped, no file yet** — registry lists it (or marks TODO) but no reference file exists (e.g. Error Handling / Search when still stubs).
    - ❌ **Unmapped** — in scope but absent from both the registry and the reference files. **This is the headline list.**
-   - 🔌 **Reverse gap** — a reference file that cites no ZeroHeight source (e.g. `navigation-patterns.md`, `accessibility.md` today) — flag so a source can be mapped later.
+   - 🔌 **Reverse gap** — a reference file that cites no ZeroHeight source (e.g. `navigation-patterns.md` today) — flag so a source can be mapped later.
 4. **Report** as four short tables (Unmapped first), each row: `ZeroHeight page · area · id · suggested target file`. End with a one-line count summary (`X in scope · Y covered · Z unmapped · N reverse-gaps`) and, for `--`-style brevity, list only ❌ and 🔌 when everything else is green.
 
 ## Notes

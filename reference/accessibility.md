@@ -124,8 +124,8 @@ Reach for the `Nes*` component so it inherits **role, touch-target size, and hea
 - [ ] **Content on hover/focus** — transient content (tooltips, popovers) is dismissible, doesn't auto-vanish, and doesn't obstruct what's underneath.
 - [ ] **Focus visible** — the focused element is always clearly indicated for keyboard/switch-control users.
 - [ ] **Labels or instructions** — inputs have persistent labels; placeholder text is never the only instruction.
-- [ ] **Error identification & suggestion** — errors are detected, described in text, and paired with a concrete fix (ties to `feedback-states.md`; don't rely on colour alone).
-- [ ] **Link purpose in context** — link text describes its destination; no "Klik hier"/"Lees meer"/"Volgende" on their own (see `reference/content/link.md`).
+- [ ] **Error identification & suggestion** — errors are detected, described in text, and paired with a concrete fix (ties to `patterns/feedback-states.md`; don't rely on colour alone).
+- [ ] **Link purpose in context** — link text describes its destination; no "Klik hier"/"Lees meer"/"Volgende" on their own (see `content/link.md`).
 - [ ] **Multiple ways** — more than one route to key content (navigation + search) where it matters.
 
 ## WCAG touchpoints referenced

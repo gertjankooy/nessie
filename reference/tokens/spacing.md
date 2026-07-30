@@ -2,7 +2,7 @@
 
 Spacing, control-height, and icon-size reference for NS app layouts. Pick **semantic space tokens** — never raw dimension steps, never invented values. Values are px (web) / points (iOS) / dp (Android).
 
-> **Figma variable names** appear in slash form (`--space/app/stack/default`). To match a token in this doc, drop the leading `--` and replace `/` with `.` → `space.app.stack.default`. The Token Studio JSON / Figma names are authoritative; older Notion labels are out of date. See `../patterns/layout.md` for the app `inset`/`stack`/`inline` tokens and the full naming crosswalk.
+> **Figma variable names** appear in slash form (`--space/app/stack/default`). To match a token in this doc, drop the leading `--` and replace `/` with `.` → `space.app.stack.default`. The Token Studio JSON / Figma names are authoritative; older Notion labels are out of date. See `../fundamentals/layout.md` for the app `inset`/`stack`/`inline` tokens and the full naming crosswalk.
 
 ## 3-tier model
 

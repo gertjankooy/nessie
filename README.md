@@ -32,7 +32,10 @@ reference/                 Source-of-truth knowledge (self-contained, skimmable)
   design-language.md         Brand, visual direction, iconography
   components/                App component docs + index.md (master catalog)
   tokens/                    color, typography, spacing, shape, motion, applied
-  patterns/                  layout, navigation-patterns, interaction-models, settings-utility, accessibility
+  fundamentals/              layout (composition: insets, stacks, surfaces, safe areas)
+  content/                   UX writing — index + per-component wording
+  accessibility.md           Cross-cutting a11y guidance (WCAG 2.2 AA)
+  patterns/                  navigation-patterns, interaction-models, feedback-states, settings-utility
 .claude/commands/          Maintainer tooling (Claude Code only; not part of the distributed skill)
 ```
 

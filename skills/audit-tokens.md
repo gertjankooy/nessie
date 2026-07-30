@@ -12,7 +12,7 @@ Focused, token-only check. Use when the user wants to verify that a Figma screen
 ## Checks
 1. **Color** — Every fill, stroke, and text color must be a bound NESSIE color variable (`base`/`applied` tier), never a raw hex and never a `core`/raw-palette token used directly. Verify the semantic choice fits the role (e.g. text on a colored surface uses the matching `*Contrast`/`on-default` token). See `reference/tokens/color.md` + `reference/tokens/applied.md`.
 2. **Typography** — Text uses a NESSIE type style (heading1-4, body/article, label lg/default/sm/xs, caption, footnote, eyebrow, link), not a detached font size/weight. See `reference/tokens/typography.md`.
-3. **Spacing** — All padding, gaps, and margins are on-scale spacing/layout tokens (`space.*`, `space.app.inset/stack/inline.*`). Flag off-scale values (e.g. 28, 36) and recommend the nearest token. See `reference/tokens/spacing.md` + `reference/patterns/layout.md`.
+3. **Spacing** — All padding, gaps, and margins are on-scale spacing/layout tokens (`space.*`, `space.app.inset/stack/inline.*`). Flag off-scale values (e.g. 28, 36) and recommend the nearest token. See `reference/tokens/spacing.md` + `reference/fundamentals/layout.md`.
 4. **Shape** — Corner radii and border widths use radius/border tokens, not literals. See `reference/tokens/shape.md`.
 5. **Motion** — Any prototyped transitions use duration/easing tokens. See `reference/tokens/motion.md`.
 

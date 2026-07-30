@@ -41,7 +41,7 @@ Use **only** NS Fundamentals colors (shared across platforms via design tokens).
 - **Light blue** — secondary / supporting brand color.
 - Logo color is restricted to **dark blue, yellow, or white** — no other colors permitted (see Logo rules).
 
-> **Rationale:** Color carries the brand; tokens (not raw hex) keep it consistent across platforms and dark mode. See `patterns/accessibility.md` for contrast rules — never rely on color alone to convey status.
+> **Rationale:** Color carries the brand; tokens (not raw hex) keep it consistent across platforms and dark mode. See `accessibility.md` for contrast rules — never rely on color alone to convey status.
 
 ## Iconography
 
@@ -87,7 +87,7 @@ Icons vary in optical size, so there is no single perfect bounding box — a 24�
 - **NS-Vignet** (the logo, designed 1968 by Gert Dumbar & René van Raalte) symbolizes a train moving back and forth on the track.
 - Logo color: **dark blue, yellow, or white only**. No other colors permitted.
 - **Flow** — an identity style element standing for freedom of movement; contributes to NS recognizability. Use per the Branding Guidelines.
-- A clickable logo (e.g. navigating home) is interactive and **must have an accessible label** (see `patterns/accessibility.md`).
+- A clickable logo (e.g. navigating home) is interactive and **must have an accessible label** (see `accessibility.md`).
 - Full logo clear-space/construction rules live on NS Merkplaats / NS Branding Guidelines.
 
 ## Platform-consistency philosophy
@@ -107,6 +107,6 @@ Core stance: **keep design as consistent as possible across Web / iOS / Android 
 - **Always use Nessie.** To deviate: honor brand guidelines + design principles, and check with the Nessie team.
 - Follow NS brand guidelines — use only NS Fundamentals (colors, fonts, icons); apply Merkplaats style rules.
 - Write copy in NS brand voice; follow content guidelines.
-- Design **accessible to WCAG 2.2 AA** — run the role-specific accessibility checklist; coordinate with dev at handoff. (See `patterns/accessibility.md`.)
+- Design **accessible to WCAG 2.2 AA** — run the role-specific accessibility checklist; coordinate with dev at handoff. (See `accessibility.md`.)
 - Strive for **consistency** between features and channels; review with another designer; only deviate to honor platform guidelines.
 - **Validate** with users where possible (moderated interviews/NS panel/Happy Labs; unmoderated via Maze).

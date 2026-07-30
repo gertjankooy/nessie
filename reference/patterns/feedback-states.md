@@ -131,13 +131,13 @@ The content area becomes an Empty State (`error` or `offline` variant). The deci
 > **Android:** pull-to-refresh is called swipe-to-refresh; on both platforms it's a *secondary* way to reload list-based screens. There is always a visible retry action too — a gesture is never the only way out.
 
 ## What this page does not cover
-- App-wide calamity messaging → **Message Bar** (`message-bar.md`).
-- Loading and placeholder shapes → **Skeleton** (`skeleton.md`).
-- Empty or promotional widgets (an incentive to add something) → **Highlight Box** (`highlight-box.md`), not an Empty State.
+- App-wide calamity messaging → **Message Bar** (`../components/message-bar.md`).
+- Loading and placeholder shapes → **Skeleton** (`../components/skeleton.md`).
+- Empty or promotional widgets (an incentive to add something) → **Highlight Box** (`../components/highlight-box.md`), not an Empty State.
 - Alert anatomy, use, and button rules → **Interaction Models** (`interaction-models.md`).
 - Component anatomy, variants, and tokens → the individual component pages.
-- Wording and tone in full → `reference/content/` (`index.md` scorecard + `error-message.md` / `empty-state.md`).
-- Accessibility requirements → `accessibility.md`.
+- Wording and tone in full → `../content/index.md` (scorecard) + `../content/error-message.md` / `../content/empty-state.md`.
+- Accessibility requirements → `../accessibility.md`.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/4717b2-feedback-states (page `8773720`, synced 2026-07-28)

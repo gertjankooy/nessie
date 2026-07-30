@@ -101,7 +101,7 @@ Apply this to every new screen frame regardless of screen type.
 
 ### Navigation region
 
-Holds primary navigation: the Header (top bar) and the Bottom Navigation. See `navigation-patterns.md` for component choices and placement. For focused flow screens (close/confirm button placement, modal vs push navigation), see `interaction-models.md`.
+Holds primary navigation: the Header (top bar) and the Bottom Navigation. See `../patterns/navigation-patterns.md` for component choices and placement. For focused flow screens (close/confirm button placement, modal vs push navigation), see `../patterns/interaction-models.md`.
 
 ### Body region
 
@@ -111,7 +111,7 @@ Scrollable content, structured as four nested levels of grouping. The strongest 
 | :--- | :--- | :--- | :--- |
 | 1 | **Section** | Content collection for the page; wraps all Containers. LR padding always: `applied.space.app.section.inset` (16). TB padding varies by screen type — see "Screen type patterns" below. | Section `gap` = 0; spacing between Containers is created by compounding Container TB insets. |
 | 2 | **Container** | Thematic grouping of related components (e.g. all booking options, all traveller inputs). On flow screens, multiple Containers stack directly in the Section. On navigation screens, a single Container wraps all Groups. | TB: `applied.space.app.container.inset` (24). Internal gap between Groups: `applied.space.app.container.stack.default` (24) or `applied.space.app.container.stack.control` (32) for list types and input fields. |
-| 3 | **Group** | Related components sharing a conceptual purpose. Can contain one or more SubGroups. `🚄 Headings` — when used — is the first child of the first SubGroup and carries its own bottom spacing. | Gap between SubGroups: `applied.space.app.group.stack.default` (16) or `applied.space.app.group.stack.relaxed` (24). Headings are not always required — see `reference/patterns/settings-utility.md`. |
+| 3 | **Group** | Related components sharing a conceptual purpose. Can contain one or more SubGroups. `🚄 Headings` — when used — is the first child of the first SubGroup and carries its own bottom spacing. | Gap between SubGroups: `applied.space.app.group.stack.default` (16) or `applied.space.app.group.stack.relaxed` (24). Headings are not always required — see `../patterns/settings-utility.md`. |
 | 4 | **SubGroup** | A zero-gap stack of tightly related components that share the same Group heading but need a subtle visual break from sibling SubGroups (e.g. info fields / card actions / destructive action, all under "About this card"). | `gap` is **always 0** on the SubGroup layer itself. The gap between SubGroups is controlled by the parent Group's `itemSpacing` token — never applied on the SubGroup layer. |
 
 ## Stacking behaviour (spacing compounds)
@@ -144,7 +144,7 @@ Two patterns are documented from real screens. Add further types here as screens
 | Screen type | Section TB padding | Containers in Section | Container internal gap | Bottom chrome |
 | :--- | :--- | :--- | :--- | :--- |
 | **Navigation / Home** (tab hub, cards + navigation lists) | `space/app/inset/relaxed` (32) | Single Container wrapping all Groups | `applied.space.app.container.stack.control` (32) | `🚄 Bottom Navigation` |
-| **Flow** (booking, configuration, decision screens) | — | Multiple thematic Containers; Section `gap:0` | `applied.space.app.container.stack.default` (24) | Sticky footer — see `interaction-models.md` for focused flow top bar guidance |
+| **Flow** (booking, configuration, decision screens) | — | Multiple thematic Containers; Section `gap:0` | `applied.space.app.container.stack.default` (24) | Sticky footer — see `../patterns/interaction-models.md` for focused flow top bar guidance |
 
 > **Flow compounding:** Section `gap` is 0 between Containers. Spacing is created by compounding Container TB insets — 24 + 24 = 48px between adjacent Containers, signalling each Container is a separate topic.
 
@@ -201,7 +201,7 @@ Box spacing for spacing inside boxed UI elements (form inputs, highlight boxes, 
 
 ## Surfaces for layout (base vs default vs elevated)
 
-NESSIE surface roles for layout (see `design-language.md` / tokens for exact token names — never invent):
+NESSIE surface roles for layout (see `../design-language.md` / tokens for exact token names — never invent):
 
 - **Base surface** — the lightest background layer (light grey). Content sits directly on it. Cards on a base surface often need **no outline** (App Guidelines: skip the outline when on background base).
 - **Default surface** — standard content surface; the normal container fill, typically outlined to separate from surroundings.

@@ -2,7 +2,7 @@
 
 Semantic color reference for designing/auditing iOS-first NS app screens. Pick **base (semantic)** or **applied (component)** tokens — never core/raw, never hex. Dark mode resolves automatically; you do not set dark values by hand.
 
-> **Figma variable names** appear in slash form (`--content/text/default`). To match a token in this doc, drop the leading `--` and replace `/` with `.` → `content.text.default`. The Token Studio JSON / Figma names are authoritative; older Notion labels are out of date. See `../patterns/layout.md` for the full naming crosswalk.
+> **Figma variable names** appear in slash form (`--content/text/default`). To match a token in this doc, drop the leading `--` and replace `/` with `.` → `content.text.default`. The Token Studio JSON / Figma names are authoritative; older Notion labels are out of date. See `../fundamentals/layout.md` for the full naming crosswalk.
 
 ## 3-tier model
 
@@ -116,7 +116,7 @@ Three foundational surface tokens build app layout hierarchy: `base`, `default`,
 | Input container | `default` |
 | Tile / card container | `elevated` / `elevated-alpha` |
 
-See `../patterns/layout.md` for spacing/insets on these surfaces and `../patterns/settings-utility.md` for settings-screen structure.
+See `../fundamentals/layout.md` for spacing/insets on these surfaces and `../patterns/settings-utility.md` for settings-screen structure.
 
 ## Content — Border, Shadow, Scrim
 

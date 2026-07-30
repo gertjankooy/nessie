@@ -29,11 +29,11 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 | **Fundamentals → Style** (`6693107`) + **TOKENS → Style/Dimension** (`6699361`/`6694971`) | `reference/tokens/shape.md` · `spacing.md` | Token |
 | **Fundamentals → Motion** (`6693108`) + **TOKENS → Motion** (`6699072`) | `reference/tokens/motion.md` | Token |
 | **TOKENS → Overview / applied** | `reference/tokens/applied.md` | Token |
-| **Fundamentals → Composition → Layout for App** (`6693137`) | `reference/patterns/layout.md` | Pattern |
+| **Fundamentals → Composition → Layout for App** (`6693137`) | `reference/fundamentals/layout.md` | Fundamental |
 | **Fundamentals → Icons** (`6693098`) | `reference/components/icon.md` + `reference/design-language.md` | mixed |
 | **Fundamentals / PRINCIPLES → Visual direction** (`5794046`), **Logo / Assets** (`6693011`) | `reference/design-language.md` | Doc |
 | **Guidelines → CONTENT** — Principles of content design (`4492224`), Content scorecard (`5784475`), per-component content (Button `4449721`, Link `4460300`, Error message `4460630`, Empty state `4885927`, Breadcrumb `4492170`) | `reference/content/index.md` + `reference/content/<kebab>.md` (`button` · `link` · `error-message` · `empty-state` · `breadcrumb`) — wording/tone source of truth referenced by patterns (`feedback-states.md`) and by the matching `reference/components/*.md`. **TODO:** Products (Ticket `5784480`) not yet synced | Doc |
-| **Guidelines → ACCESSIBILITY** — Accessibility (`5784505`), WCAG (`6221540`), Checklist per role (`5784836`), Getting started (`5868110`), Accessibility labels deep-dive (`5891441`) | `reference/patterns/accessibility.md` (design-level a11y rules; fold ZeroHeight guidance into the existing house-style doc — it has no frontmatter, preserve it) | Doc |
+| **Guidelines → ACCESSIBILITY** — Accessibility (`5784505`), WCAG (`6221540`), Checklist per role (`5784836`), Getting started (`5868110`), Accessibility labels deep-dive (`5891441`) | `reference/accessibility.md` (design-level a11y rules; fold ZeroHeight guidance into the existing house-style doc — it has no frontmatter, preserve it) | Doc |
 
 > Re-resolve page IDs with `list-pages` before trusting them — IDs can change. The token files draw from **two** ZeroHeight pages each (a Fundamentals usage page + a Tokens list page); reconcile both. The **CONTENT** and **ACCESSIBILITY** rows each cover several ZeroHeight pages under one Guidelines section — sync the section as a set, not page-by-page.
 
