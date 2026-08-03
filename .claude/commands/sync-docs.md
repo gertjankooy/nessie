@@ -48,6 +48,8 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 
    **Local-guidance exception (design changes that land here before ZeroHeight).** Sometimes a decision is documented in the skill *before* the upstream page catches up (the flow runs both ways). Any block whose heading is followed by a `> **Local guidance — keep on sync …**` line is authored here ahead of / independent of the page — **its absence from ZeroHeight is not a removal; never delete it on sync.** When the page later covers that content, reconcile the two wordings and **remove the `Local guidance` marker** (it becomes normal synced content); until then leave the block and its marker untouched. Report every `Local guidance`-marked block you passed over. (Don't confuse this with the gap cross-link phrase "…not yet in ZeroHeight — to review", which means the opposite: ZeroHeight lacks it, we cross-link the general doc.)
 
+9. **No em dashes.** Per the house writing rules in `reference/components/_component-doc-standard.md` → *Golden rules*, which apply to every file this command writes, not just components. Rewrite as you distill; verify with `grep -n '—' <file>`.
+
 ## Templates
 
 ### Component  (`reference/components/<kebab>.md`)

@@ -6,6 +6,7 @@ The canonical structure for a `reference/components/<kebab>.md` file. Follow thi
 - **ZeroHeight (App) is the source of truth** — never invent variants, props, states, or token names. If something isn't documented, mark it a gap (below), don't guess.
 - **iOS-first, US English, sentence case** in headings and body.
 - **No `---` dividers in the body**, no implementation code (SwiftUI/Compose/web), no Storybook links, no per-image style/attribute tables.
+- **Never use an em dash (`—`).** Rewrite the sentence instead: a colon to introduce, a semicolon or full stop to separate two clauses, commas or parentheses for an aside. Don't swap in a spaced hyphen (` - `) as a lookalike. En dashes in numeric ranges (`1–3 words`) are fine. **This one applies house-wide**, to every doc in the skill and not only components; `/sync-docs` and `/docs-coverage` both defer to this rule rather than restating it.
 - **Filename = kebab-case of the App page title** (e.g. "Date Picker Input" → `date-picker-input.md`).
 - After writing, **add/refresh the row in `index.md`**.
 
@@ -129,6 +130,7 @@ Put the line directly under the section/sub-section heading it protects. When Ze
 - [ ] Buttons / form controls carry the `⚠️ Missing the disabled state?` callout.
 - [ ] Cross-links resolve (paths relative to `reference/components/`); WCAG refs in backticks.
 - [ ] No implementation code, no `---` dividers, sentence case throughout.
+- [ ] **No em dash (`—`) anywhere in the file** (`grep -n '—' <file>` returns nothing).
 - [ ] Filename = kebab-case of the App page title; **`index.md` row added/refreshed** under the right category.
 
 ## Minimal skeleton
