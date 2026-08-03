@@ -1,5 +1,5 @@
 ---
-description: Read-only audit — list ZeroHeight pages that have no mapping in the /sync-docs registry or no matching reference file. Coverage overview, writes nothing.
+description: Read-only audit — list ZeroHeight pages that have no mapping in the /sync-docs registry or no matching reference file, plus reference docs that don't follow the machine-readable tag convention. Coverage overview, writes nothing.
 argument-hint: [area: components | patterns | fundamentals | all (default)]
 allowed-tools: mcp__claude_ai_ZeroHeight__list-pages, mcp__claude_ai_ZeroHeight__list-releases, Read, Bash
 ---
@@ -32,7 +32,17 @@ COMPONENTS → **Web**, TEMPLATES → Web, Fundamentals → Composition → **La
    - ⚠️ **Mapped, no file yet** — registry lists it (or marks TODO) but no reference file exists yet.
    - ❌ **Unmapped** — in scope but absent from both the registry and the reference files. **This is the headline list.**
    - 🔌 **Reverse gap** — a reference file (or section) that cites no ZeroHeight source but draws from another source (Notion App Guidelines, platform code) — flag so a source can be mapped later.
-4. **Report** as four short tables (Unmapped first), each row: `ZeroHeight page · area · id · suggested target file`. End with a one-line count summary (`X in scope · Y covered · Z unmapped · N reverse-gaps`) and, for `--`-style brevity, list only ❌ and 🔌 when everything else is green.
+4. **Convention audit** (local files only — no ZeroHeight needed). Report every reference doc that doesn't follow the machine-readable tag convention in `reference/components/_component-doc-standard.md` → *Machine-readable tags*:
+   - **Components** — a `reference/components/*.md` with a `## Configurations` section but **no** `` `variant:` `` or `` `state:` `` tag in it. Exclude `index.md` and `_component-doc-standard.md`.
+     `for f in reference/components/*.md; do case "$f" in *index.md|*_component-doc-standard.md) continue;; esac; grep -q '^## Configurations' "$f" && ! grep -qE '`(variant|state): [a-z0-9-]+`' "$f" && echo "$f"; done`
+   - **Patterns** — a `reference/patterns/*.md` with no `` `pattern:` `` tag.
+     `for f in reference/patterns/*.md; do grep -qE '`pattern: [a-z0-9-]+`' "$f" || echo "$f"; done`
+   - **Malformed tags** — anything matching `variant:`/`state:`/`pattern:` that isn't backticked kebab-case, or a slug used twice in the same file.
+     `grep -rnoE '\b(variant|state|pattern): [A-Za-z0-9 _-]+' reference/ | grep -vE '`(variant|state|pattern): [a-z0-9-]+`'`
+
+   Also flag docs missing the other standard-mandated slots, since they're cheap to check in the same pass: a component that animates but has no `### Motion` sub-header, an `## Accessibility` section with no font-scaling/`1.4.4` statement, and a `## Content guidelines` with no length limit. Report these as **⚙️ Convention gap** — they are *not* ZeroHeight coverage gaps and should stay in their own table.
+
+5. **Report** as five short tables (Unmapped first, Convention gaps last), each coverage row: `ZeroHeight page · area · id · suggested target file`; each convention row: `file · which convention · what's missing`. End with a one-line count summary (`X in scope · Y covered · Z unmapped · N reverse-gaps · M convention gaps`) and, for `--`-style brevity, list only ❌, 🔌 and ⚙️ when everything else is green.
 
 ## Notes
 - IDs drift — always resolve fresh from `list-pages`, don't trust cached numbers.

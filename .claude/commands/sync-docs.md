@@ -59,6 +59,10 @@ Filename = kebab-case of the App page title. After writing, update the row in `i
 ### Pattern  (`reference/patterns/*.md`)
 Frontmatter (`pattern, zeroheight_page_id, zeroheight_url, last_synced, platforms, related, gaps`) + a pattern-appropriate structure (overview/principles, the patterns themselves with use-when/rules, a "choosing the right pattern" table, `## Source`). iOS-first; `> **Android:**` / `> **iOS 26+:**` callouts for divergence. No frontmatter-template lock-in — follow the page's own shape, distilled.
 
+Every pattern carries an inline `` `pattern: <kebab-slug>` `` tag on the line under its heading, and each sub-variant a `` `variant: <kebab-slug>` `` tag — the same machine-readable convention components use (`reference/components/_component-doc-standard.md` → *Machine-readable tags*). `/docs-coverage` reports untagged pattern docs.
+
+A pattern is **components + connections + function**: the building blocks, the interactions between them, and the purpose that emerges. Each documented pattern should make all three legible — name the **components it requires to function** (linked to `../components/*.md`), how they connect, and what the combination is for. A pattern that names no components is usually a guideline, not a pattern.
+
 ### Token / Fundamentals  (`reference/tokens/*.md`, `design-language.md`)
 These files have an established house style (3-tier tables, usage columns, the Figma-slash callout) and **no YAML frontmatter** — **preserve it**. Fold changes in:
 - New/changed semantic or applied tokens → the right tier table, described by meaning.

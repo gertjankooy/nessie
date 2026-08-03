@@ -40,12 +40,12 @@ Use exactly these headers, in this order. Keep a header even when its content is
 | 1 | `# <Component>` | The H1, matching `component:`. |
 | 2 | `## Usage` → `### Use when` / `### Don't use when` | Bulleted when-to-use / when-not-to. A short prose line after the lists is fine (e.g. button-vs-link). |
 | 3 | `## Anatomy` | The parts of the component, each **bolded** with a one-line role. Mark optional parts "(optional)". |
-| 4 | `## Configurations` | Variants, types, sizes, widths, states. Group under `###` sub-headers (Type / Size / Width / …). Buttons & form controls carry the disabled-state callout (below). |
+| 4 | `## Configurations` | Variants, types, sizes, widths, states. Group under `###` sub-headers (Type / Size / Width / …). Every variant and state carries a **machine-readable tag** (below). Buttons & form controls carry the disabled-state callout (below). |
 | 5 | `## Placement` | Where it sits, spacing to neighbours, backgrounds/surfaces, pairing with other components. |
-| 6 | `## Behavior` | Interactive/dynamic behaviour — loading, expand/collapse, selection, transitions. |
+| 6 | `## Behavior` | Interactive/dynamic behaviour — loading, expand/collapse, selection, transitions. Covers **sizing** (min/max, truncation, multi-line) and **scroll behaviour** where they apply, plus a `### Motion` sub-header (below). Input components also document their **keyboard/input triggers** here (keyboard type, autocapitalisation, return key, input masks). |
 | 7 | `## Best practices` | Do/consider guidance that isn't a hard rule. |
-| 8 | `## Content guidelines` | Copy rules. Cross-link to the matching `../content/<kebab>.md` (or `../content/index.md`) — see Cross-links. |
-| 9 | `## Accessibility` | A11y specifics with **WCAG refs in backticks** (e.g. `` `2.5.8` ``). Cross-link to `../accessibility.md` for the cross-cutting rules. |
+| 8 | `## Content guidelines` | Copy rules, including **length limits** — max characters or a word-count target where one exists. Cross-link to the matching `../content/<kebab>.md` (or `../content/index.md`) — see Cross-links. |
+| 9 | `## Accessibility` | A11y specifics with **WCAG refs in backticks** (e.g. `` `2.5.8` ``). Always state **font-scaling behaviour at 200%** — what reflows, what truncates, what the component must not do (`1.4.4`). Cross-link to `../accessibility.md` for the cross-cutting rules. |
 | 10 | `## Source` | ZeroHeight URL + `(page <id>, synced <date>)`, and `Figma: <node>` when known. |
 
 ### The disabled-state callout (buttons & form controls)
@@ -54,6 +54,40 @@ When a component *could* have a disabled state, include this after Configuration
 ```
 ⚠️ **Missing the disabled state?** Disabled states are intentionally omitted: not all users recognize them, greyed-out styling causes contrast issues, and disabled controls can't receive focus so screen readers skip them. Instead, let users interact and respond with a message inline and/or error message.
 ```
+
+## Machine-readable tags
+
+Docs in this skill carry inline tags so an agent can address a specific variant or state without parsing prose. The pattern docs already do this (`` `pattern: sheet` ``, `` `variant: full-height` `` in `../patterns/interaction-models.md`); components use the same convention.
+
+**Rule: every variant and every state documented under `## Configurations` carries a tag.** Put it in the bullet, directly after the bolded name:
+
+```markdown
+### Type
+- **Default** `variant: default`: the standard appearance.
+- **Compact** `variant: compact`: for dense layouts.
+
+### State
+- **Pressed** `state: pressed`: while the control is held.
+```
+
+- Two tag types only: `variant:` for variants, types, sizes, and widths; `state:` for interaction states.
+- The slug is **kebab-case of the variant name** (`Full height` → `full-height`) and must be unique within the file.
+- Tags are backticked so they read as code and stay greppable: `grep -rhoE '\`(variant|state): [a-z0-9-]+\`'`.
+- A doc whose `## Configurations` has no tags is reported by `/docs-coverage` as a convention gap.
+
+Anatomy parts, placement rules, and behaviour are **not** tagged — only the addressable configuration surface.
+
+## Deliberately out of scope (don't add, don't report as gaps)
+
+These belong to ZeroHeight or the platform repos, not to this skill. They're excluded on purpose, so a checklist comparison shouldn't flag them:
+
+- **Implementation code** — SwiftUI / Compose / web snippets, Storybook links, package names.
+- **Per-platform status and resources** — availability tables, version numbers, "coming to Android" notes. iOS-first *design* divergence uses a `> **Android:**` callout instead.
+- **Visual examples** — instance galleries, annotated anatomy images, in-context screenshots. The docs describe; ZeroHeight and Figma show.
+
+## Motion
+
+When a component animates, document it under a `### Motion` sub-header inside `## Behavior`, naming the semantic tokens rather than raw values (`motion.duration.default`, `motion.ease.default` — see `../tokens/motion.md`). State reduced-motion behaviour. Where a platform diverges, use a `> **Android:**` callout. If the motion can't be expressed with existing tokens, say so and mark the block `Local guidance` so the gap survives the next sync.
 
 ## Cross-links (paths are relative to `reference/components/`)
 - Content → `../content/<kebab>.md` if a matching content file exists, else `../content/index.md`.
@@ -86,6 +120,11 @@ Put the line directly under the section/sub-section heading it protects. When Ze
 - [ ] **Frontmatter** complete; `zeroheight_page_id` / `zeroheight_url` match the App page; `last_synced` = today; `related` uses name-slugs.
 - [ ] **All 10 section headers present and in order** — gaps kept (header + marker), not dropped.
 - [ ] Every variant / state / token name is traceable to the source.
+- [ ] **Every variant and state under `## Configurations` carries a `variant:` / `state:` tag**, kebab-case and unique in the file.
+- [ ] If the component animates, `## Behavior` has a `### Motion` sub-header naming semantic motion tokens and reduced-motion behaviour.
+- [ ] `## Accessibility` states **font-scaling behaviour at 200%** (`1.4.4`).
+- [ ] `## Content guidelines` gives a **length limit** (max characters or word target) where one exists.
+- [ ] `## Behavior` covers **sizing** and **scroll** where they apply; input components document **keyboard/input triggers**.
 - [ ] `## Accessibility` and `## Content guidelines` gaps are **cross-linked** (`../accessibility.md` / `../content/index.md`), not bare markers — and still listed in `gaps:`.
 - [ ] Buttons / form controls carry the `⚠️ Missing the disabled state?` callout.
 - [ ] Cross-links resolve (paths relative to `reference/components/`); WCAG refs in backticks.
@@ -121,22 +160,31 @@ gaps: [Behavior]
 
 ## Configurations
 ### Type
-- **Default**: …
+- **Default** `variant: default`: …
+
+### State
+- **Pressed** `state: pressed`: …
 
 ## Placement
 - …
 
 ## Behavior
-_Not available in ZeroHeight — to review._
+- …
+
+### Motion
+- Uses `motion.duration.default` with `motion.ease.default`. Degrades to an instant change under reduced motion.
 
 ## Best practices
 - …
 
 ## Content guidelines
+- Keep the label to N characters / 1–3 words.
+
 Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md).
 
 ## Accessibility
 - … `[1.4.3]`
+- At 200% font scaling the label wraps rather than truncating. `[1.4.4]`
 
 ## Source
 - ZeroHeight: https://design.ns.nl/…/example (page `0000000`, synced 2026-01-01)
