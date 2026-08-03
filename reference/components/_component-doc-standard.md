@@ -45,7 +45,7 @@ Use exactly these headers, in this order. Keep a header even when its content is
 | 6 | `## Behavior` | Interactive/dynamic behaviour — loading, expand/collapse, selection, transitions. Covers **sizing** (min/max, truncation, multi-line) and **scroll behaviour** where they apply, plus a `### Motion` sub-header (below). Input components also document their **keyboard/input triggers** here (keyboard type, autocapitalisation, return key, input masks). |
 | 7 | `## Best practices` | Do/consider guidance that isn't a hard rule. |
 | 8 | `## Content guidelines` | Copy rules, including **length limits** — max characters or a word-count target where one exists. Cross-link to the matching `../content/<kebab>.md` (or `../content/index.md`) — see Cross-links. |
-| 9 | `## Accessibility` | A11y specifics with **WCAG refs in backticks** (e.g. `` `2.5.8` ``). Always state **font-scaling behaviour at 200%** — what reflows, what truncates, what the component must not do (`1.4.4`). Cross-link to `../accessibility.md` for the cross-cutting rules. |
+| 9 | `## Accessibility` | A11y specifics with **WCAG refs in backticks** (e.g. `` `2.5.8` ``). Three items are always stated: **touch areas** (the component's own target size, and any deliberate exception to the ≥48 default, `2.5.8`), **accessibility labels** (what is announced, in what order — with a worked example where the label is composed from several parts, `1.1.1` `4.1.2`), and **font-scaling behaviour at 200%** (what reflows, what truncates, what the component must not do, `1.4.4`). Cross-link to `../accessibility.md` for the cross-cutting rules. |
 | 10 | `## Source` | ZeroHeight URL + `(page <id>, synced <date>)`, and `Figma: <node>` when known. |
 
 ### The disabled-state callout (buttons & form controls)
@@ -122,7 +122,7 @@ Put the line directly under the section/sub-section heading it protects. When Ze
 - [ ] Every variant / state / token name is traceable to the source.
 - [ ] **Every variant and state under `## Configurations` carries a `variant:` / `state:` tag**, kebab-case and unique in the file.
 - [ ] If the component animates, `## Behavior` has a `### Motion` sub-header naming semantic motion tokens and reduced-motion behaviour.
-- [ ] `## Accessibility` states **font-scaling behaviour at 200%** (`1.4.4`).
+- [ ] `## Accessibility` states **touch areas** (`2.5.8`), **accessibility labels** — what's announced and in what order, with a worked example where the label is composed (`1.1.1` `4.1.2`) — and **font-scaling behaviour at 200%** (`1.4.4`).
 - [ ] `## Content guidelines` gives a **length limit** (max characters or word target) where one exists.
 - [ ] `## Behavior` covers **sizing** and **scroll** where they apply; input components document **keyboard/input triggers**.
 - [ ] `## Accessibility` and `## Content guidelines` gaps are **cross-linked** (`../accessibility.md` / `../content/index.md`), not bare markers — and still listed in `gaps:`.
@@ -184,6 +184,8 @@ Follow the UX-writing scorecard and NS voice in [../content/index.md](../content
 
 ## Accessibility
 - … `[1.4.3]`
+- Touch area is `size.component.control.height.default` (48). `[2.5.8]`
+- Announced as "<label>, <role>, <state>" — e.g. "Tickets, button, collapsed". `[1.1.1]` `[4.1.2]`
 - At 200% font scaling the label wraps rather than truncating. `[1.4.4]`
 
 ## Source

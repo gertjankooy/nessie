@@ -40,7 +40,10 @@ COMPONENTS → **Web**, TEMPLATES → Web, Fundamentals → Composition → **La
    - **Malformed tags** — anything matching `variant:`/`state:`/`pattern:` that isn't backticked kebab-case, or a slug used twice in the same file.
      `grep -rnoE '\b(variant|state|pattern): [A-Za-z0-9 _-]+' reference/ | grep -vE '`(variant|state|pattern): [a-z0-9-]+`'`
 
-   Also flag docs missing the other standard-mandated slots, since they're cheap to check in the same pass: a component that animates but has no `### Motion` sub-header, an `## Accessibility` section with no font-scaling/`1.4.4` statement, and a `## Content guidelines` with no length limit. Report these as **⚙️ Convention gap** — they are *not* ZeroHeight coverage gaps and should stay in their own table.
+   Also flag docs missing the other standard-mandated slots, since they're cheap to check in the same pass: a component that animates but has no `### Motion` sub-header, a `## Content guidelines` with no length limit, and an `## Accessibility` section missing any of its three required statements — **touch areas** (`2.5.8`), **accessibility labels** (`1.1.1`/`4.1.2`, what's announced and in what order), or **font scaling at 200%** (`1.4.4`). A quick first pass on the accessibility trio:
+   `for f in reference/components/*.md; do case "$f" in *index.md|*_component-doc-standard.md) continue;; esac; m=""; grep -qiE 'touch|2\.5\.8' "$f" || m="$m touch-areas"; grep -qiE 'announce|4\.1\.2|1\.1\.1' "$f" || m="$m a11y-labels"; grep -qiE '200%|1\.4\.4|scal' "$f" || m="$m font-scaling"; [ -n "$m" ] && echo "$f:$m"; done`
+
+   Treat that grep as a shortlist, not a verdict — confirm by reading before reporting. Report these as **⚙️ Convention gap**; they are *not* ZeroHeight coverage gaps and stay in their own table.
 
 5. **Report** as five short tables (Unmapped first, Convention gaps last), each coverage row: `ZeroHeight page · area · id · suggested target file`; each convention row: `file · which convention · what's missing`. End with a one-line count summary (`X in scope · Y covered · Z unmapped · N reverse-gaps · M convention gaps`) and, for `--`-style brevity, list only ❌, 🔌 and ⚙️ when everything else is green.
 
