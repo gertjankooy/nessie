@@ -36,7 +36,7 @@ images: {<name>: "<node>"}  # push docs only: image name to Figma node id
 
 ## Body — fixed section order
 
-Use exactly these headers, in this order. Keep a header even when its content is a gap.
+Use these headers, in this order, for the sections you include (see "Say each thing once" below for when a section may be left out). In a pull doc, keep a header even when its content is a gap.
 
 | # | Section | What it holds |
 | :-- | :--- | :--- |
@@ -53,6 +53,8 @@ Use exactly these headers, in this order. Keep a header even when its content is
 | 11 | `## Source` | ZeroHeight URL + `(page <id>, synced <date>)`, and `Figma: <node>` when known. |
 
 The section order above is authored order. On ZeroHeight the push build regroups it into tabs: **Examples** (`## Examples`), **Design guidelines** (intro through Best practices), **A11y**, and **Content**. See Sync direction.
+
+**Say each thing once; fill a section only when it adds something.** A section earns its place by carrying information no other section already states. Don't restate in Behavior what Anatomy or Configurations covered, or repeat a placement rule under both Placement and Best practices — put each fact in its most natural home and cross-reference if another section needs to point at it. If a section would only echo others, cut it to what is genuinely new. A section with nothing to add: in a **push** doc, omit it (the repo owns the content, so an absent section just means "nothing to say"); in a **pull** doc, keep the header and mark a gap per the Gaps convention, since there an empty section means ZeroHeight has content not yet synced. The fixed order still governs whatever sections you do include.
 
 ### The disabled-state callout (buttons & form controls)
 When a component *could* have a disabled state, include this after Configurations:
@@ -172,7 +174,7 @@ Put the line directly under the section/sub-section heading it protects. When Ze
 
 - [ ] It's an **App** component (not Web); source is ZeroHeight (+ Figma), nothing invented.
 - [ ] **Frontmatter** complete; `zeroheight_page_id` / `zeroheight_url` match the App page; `last_synced` = today; `related` uses name-slugs.
-- [ ] **All 10 section headers present and in order** — gaps kept (header + marker), not dropped.
+- [ ] **Sections in the fixed order, none repeating another.** Pull docs keep every header (gaps marked, not dropped); push docs may omit a section that would only echo others.
 - [ ] Every variant / state / token name is traceable to the source.
 - [ ] **Every configuration under `## Configurations` carries a `variant:` / `state:` / `property:` tag**, kebab-case and unique in the file (`property:` for boolean toggles like a divider or badge).
 - [ ] If the component animates, `## Behavior` has a `### Motion` sub-header naming semantic motion tokens and reduced-motion behaviour.
