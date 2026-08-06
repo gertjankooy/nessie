@@ -65,6 +65,12 @@ All paths are **relative to the repository root**. Re-read files every session; 
 - `reference/accessibility.md` — cross-cutting accessibility guidance (WCAG 2.2 AA: contrast pairings, touch targets, headings/structure, labels, focus & status). *ZeroHeight: Guidelines → Accessibility.*
 - `reference/patterns/` — `interaction-models.md` (transient **surfaces**: menus, sheets, dialogs, flows, panels — iOS vs Android) · `feedback-states.md` (empty / loading / error / offline states: which surface for empty vs error vs stale content, and error-handling rules) · `settings-utility.md` (settings list layout/behaviour/states)
 
+### Where docs come from (and what never to edit)
+
+Reference docs flow in two directions, set per file by the `sync:` frontmatter key. **`pull` (the default, and any file without the key) means ZeroHeight is the source.** **`push` means this repo is the source** and ZeroHeight renders it.
+
+Either way, `reference/**` is the only place to read from and the only place to edit. The `zeroheight/` folder is **generated output** built from the push docs, one file per ZeroHeight tab: never read it for guidance, never edit it, and never cite it. It exists only to be published. Regenerate it with `node tools/zeroheight/zh.mjs build`; `zh.mjs check` fails the build if it drifts.
+
 ### Token doc convention (always follow when adding/editing tokens)
 
 Token names have two shapes that must never be confused: **Figma binds variables in slash form with a `--` prefix** (e.g. `--content/text/default`), while **these docs use dotted JSON form** (e.g. `content.text.default`). Convert by dropping the leading `--` and replacing `/` with `.`. The Token Studio JSON / Figma variable names are authoritative; older Notion labels are out of date.

@@ -26,6 +26,8 @@ figma_node: "<node>"        # e.g. "1437:8588"; omit if unknown
 last_synced: <YYYY-MM-DD>   # date of this sync
 related: [<kebab slugs>]    # sibling docs by name-slug (not paths), e.g. [button-group, link]
 gaps: [<Section names>]     # sections with no ZeroHeight content; [] if complete
+sync: <pull | push>         # who owns this doc; omit = pull. See Sync direction below
+images: {<name>: "<node>"}  # push docs only: image name to Figma node id
 ---
 ```
 
@@ -55,6 +57,50 @@ When a component *could* have a disabled state, include this after Configuration
 ```
 ⚠️ **Missing the disabled state?** Disabled states are intentionally omitted: not all users recognize them, greyed-out styling causes contrast issues, and disabled controls can't receive focus so screen readers skip them. Instead, let users interact and respond with a message inline and/or error message.
 ```
+
+## Sync direction
+
+Every doc is owned by exactly one side. The `sync:` key says which, and an absent key means `pull`.
+
+| `sync:` | Who owns it | What happens |
+| :--- | :--- | :--- |
+| `pull` (default) | ZeroHeight | `/sync-docs` pulls the page into this file, as it always has. |
+| `push` | This repo | The file is generated into `zeroheight/` and ZeroHeight renders it. **`/sync-docs` never writes to it.** |
+
+**This file stays the single canonical copy either way.** For `push` docs the tab files under `zeroheight/` are generated output: never hand-edited, never read by an agent, and enforced by a pre-commit check that regenerates and diffs. They carry no "generated" marker, because the file's whole content is published.
+
+### What a push doc keeps in frontmatter
+`zeroheight_page_id` / `zeroheight_url` are dropped: the ZeroHeight pages are linked once by hand in the git integration and there is nothing to resolve. Add `images:` mapping a name to the Figma node id it exports from, which is what the image export reads.
+
+### What the generator strips on the way out
+Repo-only scaffolding that would be meaningless to a reader on ZeroHeight:
+
+- The **frontmatter block** in full.
+- The **`## Source`** section (ZeroHeight is the output now, not the source).
+- **`Local guidance` markers**: the marker line only; the content it protects is kept.
+- **Gap markers** (`_Not available in ZeroHeight — to review._`) and their empty sections.
+- The **H1**, since each ZeroHeight tab supplies its own page title. Generated files start at `##`.
+
+### Tab mapping (push docs)
+The ten sections split across four generated files. The Dev tab is authored in ZeroHeight and never generated, because implementation code is out of scope here.
+
+| Tab file | Sections |
+| :--- | :--- |
+| `overview.md` | intro, Usage, Anatomy |
+| `guidelines.md` | Configurations, Placement, Behavior, Best practices |
+| `a11y.md` | Accessibility |
+| `content.md` | Content guidelines |
+
+When a tab holds exactly one section, its `##` header is dropped and the content promoted, so the tab doesn't repeat its own name.
+
+### Writing for both audiences
+A push doc is read by agents *and* published to designers, so it must satisfy both. In practice that means images are allowed and useful (see below), while implementation code still isn't.
+
+**Images.** ZeroHeight's markdown sync renders images only from **absolute URLs**; relative paths don't resolve, raw HTML is escaped, and there is no inline width syntax. So:
+
+- Reference exported PNGs by full URL, with a bold title and an italic caption line beneath.
+- Size images by **layout, not attributes**: a two-column markdown table gives a side-by-side do/don't pair, a single-cell table narrows one image, and no table means full width.
+- Register every image in `images:` so the export can regenerate it from Figma.
 
 ## Machine-readable tags
 

@@ -50,6 +50,8 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 
 9. **No em dashes.** Per the house writing rules in `reference/components/_component-doc-standard.md` → *Golden rules*, which apply to every file this command writes, not just components. Rewrite as you distill; verify with `grep -n '—' <file>`.
 
+10. **Never write to a `sync: push` doc.** Frontmatter `sync: push` means the repo owns the file and ZeroHeight renders it, the opposite of this command's direction. Read it if you need context, never modify it, and list it under "skipped (push)" in the report. An absent `sync:` key means `pull`, so every existing doc is unaffected. See `reference/components/_component-doc-standard.md` → *Sync direction*.
+
 ## Templates
 
 ### Component  (`reference/components/<kebab>.md`)

@@ -70,6 +70,7 @@ Routing/lookup table for the NESSIE (NS Dutch Railways) **App** component librar
 | Text List Items | Text-only list; Ordered/Unordered/Checked. | [text-list-items.md](text-list-items.md) |
 | Tiles | Group related info/actions as a card; entry point to detail. | [tiles.md](tiles.md) |
 | Bottom Sheet | Supplementary content surface over the primary UI. | [bottom-sheet.md](bottom-sheet.md) |
+| Section Heading | Name a section and host actions scoped to it (show all, collapse, dismiss); optional content slot. | [section-heading.md](section-heading.md) |
 | Expandable | Show/hide sections; List or Stand-alone. | [expandable.md](expandable.md) |
 | Chips | Filter content, trigger actions, or dismiss a choice. | [chips.md](chips.md) |
 | Sticker | Highlight contextual info on a nearby element. | [sticker.md](sticker.md) |

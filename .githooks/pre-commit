@@ -38,9 +38,33 @@ paths=$(printf '%s\n' "$added" | grep -nE '/Users/[a-z]|/home/[a-z]|C:\\Users' |
 intern=$(printf '%s\n' "$added" | grep -nE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}|atlassian\.net|sharepoint\.com|slack\.com/share|[A-Za-z0-9.-]+\.ns\.nl' | grep -viE 'design\.ns\.nl' || true)
 [ -n "$intern" ] && { printf '%s\n' "${YEL}SECURITY REVIEW: internal reference / contact in staged changes:${NC}"; printf '   %s\n' "$intern"; }
 
+# 5) generated ZeroHeight output must match its source  -> BLOCK
+# Only runs when something in the push pipeline is staged, so ordinary commits
+# pay nothing. See tools/zeroheight/README.md.
+if printf '%s\n' "$staged" | grep -qE '^(reference/components/|zeroheight/|tools/zeroheight/)'; then
+  if command -v node >/dev/null 2>&1; then
+    if ! zh=$(node tools/zeroheight/zh.mjs check 2>&1); then
+      printf '%s\n' "${RED}BLOCKED: zeroheight/ does not match reference/components/:${NC}"
+      printf '%s\n' "$zh" | sed 's/^/   /'
+      fail=1
+    fi
+    # Output regenerated but left unstaged would commit source without its build.
+    zhdirty=$( { git diff --name-only -- zeroheight/; \
+                 git ls-files --others --exclude-standard -- zeroheight/; } 2>/dev/null )
+    if [ -n "$zhdirty" ]; then
+      printf '%s\n' "${RED}BLOCKED: zeroheight/ has unstaged changes:${NC}"
+      printf '   %s\n' $zhdirty
+      printf '%s\n' "   Stage them so the generated output travels with its source."
+      fail=1
+    fi
+  else
+    printf '%s\n' "${YEL}SKIPPED: node not found, could not verify zeroheight/ is current.${NC}"
+  fi
+fi
+
 if [ "$fail" -ne 0 ]; then
-  printf '%s\n' "${RED}Commit blocked by the pre-commit security gate. Fix the above, or bypass with: git commit --no-verify${NC}"
+  printf '%s\n' "${RED}Commit blocked by the pre-commit gate. Fix the above, or bypass with: git commit --no-verify${NC}"
   exit 1
 fi
-printf '%s\n' "${GRN}pre-commit security gate: passed${NC}"
+printf '%s\n' "${GRN}pre-commit gate: passed${NC}"
 exit 0

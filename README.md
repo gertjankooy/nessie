@@ -36,12 +36,21 @@ reference/                 Source-of-truth knowledge (self-contained, skimmable)
   content/                   UX writing — index + per-component wording
   accessibility.md           Cross-cutting a11y guidance (WCAG 2.2 AA)
   patterns/                  interaction-models, feedback-states, settings-utility
+zeroheight/                Generated ZeroHeight tab files + image assets (never hand-edited)
+tools/zeroheight/          Build tooling for the repo → ZeroHeight push pipeline
 .claude/commands/          Maintainer tooling (Claude Code only; not part of the distributed skill)
 ```
 
 ## Sources
 
 Reference content is distilled from the NESSIE ZeroHeight, the design-tokens Token Studio export, Notion layout guidelines, and the platform code references. iOS-first; Android and iOS-26+ distinctions are slotted into marked sections as they're discovered.
+
+Docs flow in **both** directions, decided per file by the `sync:` frontmatter key:
+
+- **`sync: pull`** (the default, and every doc that omits the key) — ZeroHeight is the source, and `/sync-docs` pulls pages into `reference/`.
+- **`sync: push`** — this repo is the source. `reference/components/<name>.md` stays the single editable copy, `tools/zeroheight/zh.mjs build` generates one file per ZeroHeight tab into `zeroheight/`, and ZeroHeight syncs those from git. `/sync-docs` never writes to a push doc.
+
+See [`tools/zeroheight/`](tools/zeroheight/) for the commands, what the build strips, and the constraints ZeroHeight imposes on synced markdown.
 
 ## Updating
 
