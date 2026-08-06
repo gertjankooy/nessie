@@ -107,9 +107,9 @@ Established by a capability probe, not assumption:
 
 ## Adding an image
 
-There is no Figma link in the markdown body. The connection is made in two halves.
+There is no Figma link or asset path in the markdown body. The connection is made in two halves, and the body only ever names a key.
 
-**1. Frontmatter holds the Figma node id.** Give the image a name; the value is the node id, taken from the Figma URL's `?node-id=20332-2425` with the dash changed to a colon:
+**1. Frontmatter holds the Figma node id.** Give the image a key; the value is the node id, taken from the Figma URL's `?node-id=20332-2425` with the dash changed to a colon:
 
 ```yaml
 images:
@@ -117,13 +117,15 @@ images:
   badge-placement: "20332:2425"
 ```
 
-**2. The body references the exported PNG**, at the path the export writes to. The filename is the name from step 1:
+**2. The body references the image by that key**, not by path:
 
 ```markdown
-![Section Heading anatomy](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/section-heading/anatomy.png)
+![Anatomy, expanded and collapsed](anatomy)
 
 *Caption in italics, directly beneath.*
 ```
+
+The build expands the key to the full asset URL, so you never look up or type a path. Two forms are accepted: `![alt](key)` (preferred, keeps meaningful alt text) and the shorthand `![key]`. Because the source holds a key rather than a URL, the reference file does not render the image on GitHub, which is fine: only the generated ZeroHeight copy is meant to display.
 
 Then rebuild. `/build-zeroheight section-heading` in Claude Code, or the script directly:
 
@@ -131,7 +133,7 @@ Then rebuild. `/build-zeroheight section-heading` in Claude Code, or the script 
 node tools/zeroheight/zh.mjs all section-heading
 ```
 
-Always write the URL against `main`. The build retargets it to the branch you are on, so testing from a branch needs no source edits.
+The build stamps the URL against the checked-out branch. A referenced key with no `images:` entry, or a declared key never referenced, is reported as a warning.
 
 ## Adding a component to the pipeline
 

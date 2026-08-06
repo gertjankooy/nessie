@@ -171,9 +171,37 @@ function zeroheightUrls() {
   return urlMap;
 }
 
+// Expand image references written by their `images:` key into full asset URLs,
+// so the author never types or looks up a raw path. Two forms:
+//   ![key]              -> ![key](url)          quick, alt = key
+//   ![descriptive](key) -> ![descriptive](url)  preferred, keeps real alt text
+// URLs are stamped against main and retargeted to the branch afterwards, exactly
+// like a hand-written asset URL. Runs before resolveLinks, whose http lookahead
+// then leaves these alone.
+function expandImages(text, manifest, component, referenced, missing) {
+  const keys = new Set(Object.keys(manifest || {}));
+  const url = key => `${RAW_BASE}main/zeroheight/assets/${component}/${key}.png`;
+
+  // ![alt](key) where key is a bare token matching a declared image.
+  text = text.replace(/!\[([^\]]*)\]\(([A-Za-z0-9_-]+)\)/g, (whole, alt, key) => {
+    if (!keys.has(key)) return whole;
+    referenced.add(key);
+    return `![${alt || key}](${url(key)})`;
+  });
+
+  // ![key] collapsed form, not already followed by a ( or [.
+  text = text.replace(/!\[([A-Za-z0-9_-]+)\](?![([])/g, (whole, key) => {
+    if (keys.has(key)) { referenced.add(key); return `![${key}](${url(key)})`; }
+    missing.add(key);
+    return whole;
+  });
+
+  return text;
+}
+
 function resolveLinks(text, flattened) {
   const urls = zeroheightUrls();
-  return text.replace(/\[([^\]]+)\]\((?!https?:)([^)]+)\)/g, (whole, label, target) => {
+  return text.replace(/(?<!!)\[([^\]]+)\]\((?!https?:)([^)]+)\)/g, (whole, label, target) => {
     // Only same-directory component links can be resolved. A target containing
     // a slash points outside reference/components/ (../content/link.md is a
     // different file from link.md) and must never collide with a component of
@@ -188,7 +216,7 @@ function resolveLinks(text, flattened) {
 
 // -------------------------------------------------------------------- build
 
-function renderTabs(source, flattened = new Set(), ref = 'main') {
+function renderTabs(source, flattened = new Set(), ref = 'main', component = '', imageIssues = {}) {
   const { data, body } = parseFrontmatter(source);
   if (data.sync !== 'push') return null;
 
@@ -216,7 +244,10 @@ function renderTabs(source, flattened = new Set(), ref = 'main') {
       return `## ${name}\n\n${trimBlank(lines).join('\n')}`;
     });
     const joined = parts.join('\n\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
-    files[tab] = retargetAssets(resolveLinks(joined, flattened), ref);
+    const referenced = imageIssues.referenced ||= new Set();
+    const missing = imageIssues.missing ||= new Set();
+    const expanded = expandImages(joined, data.images, component, referenced, missing);
+    files[tab] = retargetAssets(resolveLinks(expanded, flattened), ref);
   }
   return { data, files };
 }
@@ -248,7 +279,8 @@ function currentRef() {
 function build(filter, { write = true, flattened = new Set(), ref = currentRef() } = {}) {
   const results = [];
   for (const doc of pushDocs(filter)) {
-    const rendered = renderTabs(doc.source, flattened, ref);
+    const imageIssues = {};
+    const rendered = renderTabs(doc.source, flattened, ref, doc.name, imageIssues);
     if (!rendered) continue;
     for (const [tab, content] of Object.entries(rendered.files)) {
       const path = join(OUT, doc.name, `${tab}.md`);
@@ -257,6 +289,17 @@ function build(filter, { write = true, flattened = new Set(), ref = currentRef()
         mkdirSync(dirname(path), { recursive: true });
         writeFileSync(path, content);
       }
+    }
+    // A key referenced in the body but not declared in images: renders as a
+    // literal ![key] on ZeroHeight. A key declared but never referenced is
+    // usually a leftover. Both are worth surfacing, neither blocks the build.
+    const declared = new Set(Object.keys(rendered.data.images || {}));
+    const unused = [...declared].filter(k => !imageIssues.referenced?.has(k));
+    if (write && imageIssues.missing?.size) {
+      console.warn(`  ${doc.name}: image key(s) referenced but not in images: ${[...imageIssues.missing].join(', ')}`);
+    }
+    if (write && unused.length) {
+      console.warn(`  ${doc.name}: image(s) declared but never referenced in the body: ${unused.join(', ')}`);
     }
   }
   return results;

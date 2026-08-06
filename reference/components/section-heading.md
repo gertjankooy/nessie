@@ -10,6 +10,7 @@ related: [expandable, list-items, tiles, badge, dividers, button]
 gaps: []
 sync: push
 images:
+  examples: "6219:6383"
   anatomy: "20300:26476"
   icon-variants: "20300:26499"
   section-rhythm: "20305:30234"
@@ -21,7 +22,9 @@ Names a section of content and hosts the actions that belong to that section as 
 
 ## Examples
 
-[Image: **A section heading in context.** A homepage "Tickets" section with the heading, an "All tickets" label action, and a ticket beneath it. Placeholder until the Figma example frame exists.]
+![examples]
+
+*Collapsed variants of Section Heading using various leading actions.*
 
 [Image: **Collapsed and expanded.** The same section in both states, showing the divider on the collapsed one. Placeholder until the Figma example frame exists.]
 
@@ -46,7 +49,7 @@ The number of visible items is not the deciding factor. A homepage widget showin
 
 ## Anatomy
 
-![Section Heading anatomy](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/section-heading/anatomy.png)
+![Section Heading anatomy, expanded and collapsed](anatomy)
 
 *Expanded and collapsed. The divider belongs to the collapsed state only.*
 
@@ -65,7 +68,7 @@ The content slot exists for composition in Figma. In code the slot is optional, 
 
 ### Section action (icon)
 
-![The four icon actions](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/section-heading/icon-variants.png)
+![The four icon actions](icon-variants)
 
 *Expand, collapse, dismiss, and more options.*
 
@@ -95,7 +98,7 @@ Available on the collapsed state only. When the section expands, the content its
 
 ## Placement
 
-![Section rhythm](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/section-heading/section-rhythm.png)
+![Section rhythm](section-rhythm)
 
 *The gap between sections stays constant whether a section is collapsed or expanded.*
 

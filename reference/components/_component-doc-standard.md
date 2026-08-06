@@ -101,9 +101,10 @@ A push doc is read by agents *and* published to designers, so it must satisfy bo
 
 **Images.** ZeroHeight's markdown sync renders images only from **absolute URLs**; relative paths don't resolve, raw HTML is escaped, and there is no inline width syntax. So:
 
-- Reference exported PNGs by full URL, with a bold title and an italic caption line beneath.
+- **Reference an image by its `images:` key, not a raw path.** Write `![descriptive alt](key)` (preferred, keeps real alt text) or the shorthand `![key]`. The push build expands the key to the full asset URL; the source file stays short and needs no lookup. Put an italic caption line beneath.
+- Because the source uses a key, the reference file itself does not render the image on GitHub. That is fine: `reference/**` is read by agents, and only the generated ZeroHeight copy is meant to display.
 - Size images by **layout, not attributes**: a two-column markdown table gives a side-by-side do/don't pair, a single-cell table narrows one image, and no table means full width.
-- Register every image in `images:` so the export can regenerate it from Figma.
+- Every referenced key must exist in `images:`, and every declared key should be referenced. The build warns about either mismatch.
 
 ## Machine-readable tags
 
@@ -201,7 +202,7 @@ gaps: [Behavior]
 # Example
 
 ## Examples
-![Example in context](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/example/in-context.png)
+![Example in context](in-context)
 
 *A one-line caption naming what the image shows.*
 
