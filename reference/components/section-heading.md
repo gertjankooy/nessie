@@ -15,6 +15,9 @@ images:
   expanded: "6219:9863"
   anatomy: "6219:12734"
   rules: "6223:12971"
+  icon-actions: "6223:14140"
+  label-actions: "6223:14426"
+
 ---
 
 # Section Heading
@@ -63,18 +66,17 @@ The number of visible items is not the deciding factor. A homepage widget showin
 | 5 | **Content slot** (optional) | Holds the section's content when expanded. |
 | — | **Spacer** (optional) | The gap between the heading row and the content slot; not called out in the diagram. |
 
-The content slot is a content composable that stacks against the heading when the spacer is enabled. It is optional: content may instead be stacked directly after the heading at the section spacing given under Placement.
+The content slot exists for composition in Figma. In code the slot is optional, and content may be stacked directly after the heading at the section spacing given under Placement.
 
 ## Configurations
 ### Content slot
-- **Collapsed** `variant: collapsed`: the heading row on its own. The divider is available in this state.
+- **Collapsed** `variant: collapsed`: the heading row on its own. The divider is available, but optional, in this state.
 - **Expanded** `variant: expanded`: heading row, spacer, then the content slot. The divider is hidden.
 
 ### Section action (icon)
 
-![The four icon actions](icon-variants)
-
-*Expand, collapse, dismiss, and more options.*
+![The four icon actions](icon-actions)
+*from left to right: Expand, Collapse, Dismiss, and More options.*
 
 - **Expand** `variant: chev-down`: opens the section.
 - **Collapse** `variant: chev-up`: closes the section.
@@ -82,6 +84,9 @@ The content slot is a content composable that stacks against the heading when th
 - **More options** `variant: dots`: opens further actions.
 
 ### Section action (label)
+
+![Label actions states](label-actions)
+
 A text action trailing the heading. It is a purpose-built action rather than a [Link](link.md) or [Button](button.md) instance, so it can carry its own background without inheriting the offsets those components apply elsewhere.
 
 - **Default** `state: default`: at rest.
@@ -90,6 +95,8 @@ A text action trailing the heading. It is a purpose-built action rather than a [
 
 ### Badge
 - **Dot** `variant: dot`: on the icon action only, offset 2 from the top and 2 from the right, sitting outside the component bounds.
+
+Use the dot to flag that a collapsed section holds new or changed content worth expanding, such as a section that gained items since the user last looked. Reserve it for genuinely new content and clear it once the section is opened; it never conveys a count.
 
 Restricted to the dot variant. A counter or text badge overlaps the icon at this size and must not be used here. See [Badge](badge.md).
 
