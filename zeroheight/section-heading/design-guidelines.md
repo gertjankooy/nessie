@@ -96,7 +96,7 @@ See the layout fundamentals for the Group and SubGroup model this sits in.
 
 | Do | Don't |
 | :--- | :--- |
-| [do] | [dont] |
+| ![Heading outside the container](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/do.png) | ![Heading nested inside the container](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/dont.png) |
 | **Do.** Keep the heading outside the container it labels. | **Don't.** Don't nest the heading inside the container. |
 
 ## Behavior

@@ -132,7 +132,7 @@ See [the layout fundamentals](../fundamentals/layout.md) for the Group and SubGr
 
 | Do | Don't |
 | :--- | :--- |
-| [do] | [dont] |
+| ![Heading outside the container](do) | ![Heading nested inside the container](dont) |
 | **Do.** Keep the heading outside the container it labels. | **Don't.** Don't nest the heading inside the container. |
 
 ## Behavior
