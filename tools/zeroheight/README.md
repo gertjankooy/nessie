@@ -67,7 +67,7 @@ Create the token at **Figma > Settings > Security > Personal access tokens**. It
 
 **Canonical source** is `reference/components/<name>.md`, exactly as before. That single file is what agents read and what humans edit. It is never generated.
 
-**Generated output** is `zeroheight/<name>/{overview,guidelines,a11y,content}.md`, one file per ZeroHeight tab. These are never hand-edited and carry no "generated" marker, because their whole content is published to ZeroHeight and a marker would show up there. `check` enforces this by regenerating and diffing.
+**Generated output** is `zeroheight/<name>/{examples,design-guidelines,a11y,content}.md`, one file per ZeroHeight tab. These are never hand-edited and carry no "generated" marker, because their whole content is published to ZeroHeight and a marker would show up there. `check` enforces this by regenerating and diffing.
 
 **Images** live in `zeroheight/assets/<name>/<image>.png`, exported from the Figma node ids declared in the doc's `images:` frontmatter. Only the declared frames are fetched, not the whole file, which is why it is much faster than a full ZeroHeight Figma sync.
 

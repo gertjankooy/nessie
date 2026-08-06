@@ -41,15 +41,18 @@ Use exactly these headers, in this order. Keep a header even when its content is
 | # | Section | What it holds |
 | :-- | :--- | :--- |
 | 1 | `# <Component>` | The H1, matching `component:`. |
-| 2 | `## Usage` → `### Use when` / `### Don't use when` | Bulleted when-to-use / when-not-to. A short prose line after the lists is fine (e.g. button-vs-link). |
-| 3 | `## Anatomy` | The parts of the component, each **bolded** with a one-line role. Mark optional parts "(optional)". |
-| 4 | `## Configurations` | Variants, types, sizes, widths, states. Group under `###` sub-headers (Type / Size / Width / …). Every variant and state carries a **machine-readable tag** (below). Buttons & form controls carry the disabled-state callout (below). |
-| 5 | `## Placement` | Where it sits, spacing to neighbours, backgrounds/surfaces, pairing with other components. |
-| 6 | `## Behavior` | Interactive/dynamic behaviour — loading, expand/collapse, selection, transitions. Covers **sizing** (min/max, truncation, multi-line) and **scroll behaviour** where they apply, plus a `### Motion` sub-header (below). Input components also document their **keyboard/input triggers** here (keyboard type, autocapitalisation, return key, input masks). |
-| 7 | `## Best practices` | Do/consider guidance that isn't a hard rule. |
-| 8 | `## Content guidelines` | Copy rules, including **length limits** — max characters or a word-count target where one exists. Cross-link to the matching `../content/<kebab>.md` (or `../content/index.md`) — see Cross-links. |
-| 9 | `## Accessibility` | A11y specifics with **WCAG refs in backticks** (e.g. `` `2.5.8` ``). Three items are always stated: **touch areas** (the component's own target size, and any deliberate exception to the ≥48 default, `2.5.8`), **accessibility labels** (what is announced, in what order — with a worked example where the label is composed from several parts, `1.1.1` `4.1.2`), and **font-scaling behaviour at 200%** (what reflows, what truncates, what the component must not do, `1.4.4`). Cross-link to `../accessibility.md` for the cross-cutting rules. |
-| 10 | `## Source` | ZeroHeight URL + `(page <id>, synced <date>)`, and `Figma: <node>` when known. |
+| 2 | `## Examples` | One or two representative images with a caption each, no prose beyond the captions. On ZeroHeight this becomes the **Examples** tab. Every image is a declared `images:` entry (see Sync direction). New docs start with 1-2 placeholder `[Image: …]` briefs here. |
+| 3 | `## Usage` → `### Use when` / `### Don't use when` | Bulleted when-to-use / when-not-to. A short prose line after the lists is fine (e.g. button-vs-link). |
+| 4 | `## Anatomy` | The parts of the component, each **bolded** with a one-line role. Mark optional parts "(optional)". |
+| 5 | `## Configurations` | Variants, types, sizes, widths, states. Group under `###` sub-headers (Type / Size / Width / …). Every variant and state carries a **machine-readable tag** (below). Buttons & form controls carry the disabled-state callout (below). |
+| 6 | `## Placement` | Where it sits, spacing to neighbours, backgrounds/surfaces, pairing with other components. |
+| 7 | `## Behavior` | Interactive/dynamic behaviour — loading, expand/collapse, selection, transitions. Covers **sizing** (min/max, truncation, multi-line) and **scroll behaviour** where they apply, plus a `### Motion` sub-header (below). Input components also document their **keyboard/input triggers** here (keyboard type, autocapitalisation, return key, input masks). |
+| 8 | `## Best practices` | Do/consider guidance that isn't a hard rule. |
+| 9 | `## Content guidelines` | Copy rules, including **length limits** — max characters or a word-count target where one exists. Cross-link to the matching `../content/<kebab>.md` (or `../content/index.md`) — see Cross-links. |
+| 10 | `## Accessibility` | A11y specifics with **WCAG refs in backticks** (e.g. `` `2.5.8` ``). Three items are always stated: **touch areas** (the component's own target size, and any deliberate exception to the ≥48 default, `2.5.8`), **accessibility labels** (what is announced, in what order — with a worked example where the label is composed from several parts, `1.1.1` `4.1.2`), and **font-scaling behaviour at 200%** (what reflows, what truncates, what the component must not do, `1.4.4`). Cross-link to `../accessibility.md` for the cross-cutting rules. |
+| 11 | `## Source` | ZeroHeight URL + `(page <id>, synced <date>)`, and `Figma: <node>` when known. |
+
+The section order above is authored order. On ZeroHeight the push build regroups it into tabs: **Examples** (`## Examples`), **Design guidelines** (intro through Best practices), **A11y**, and **Content**. See Sync direction.
 
 ### The disabled-state callout (buttons & form controls)
 When a component *could* have a disabled state, include this after Configurations:
@@ -82,12 +85,12 @@ Repo-only scaffolding that would be meaningless to a reader on ZeroHeight:
 - The **H1**, since each ZeroHeight tab supplies its own page title. Generated files start at `##`.
 
 ### Tab mapping (push docs)
-The ten sections split across four generated files. The Dev tab is authored in ZeroHeight and never generated, because implementation code is out of scope here.
+The sections split across four generated files. The Dev tab is authored in ZeroHeight and never generated, because implementation code is out of scope here.
 
 | Tab file | Sections |
 | :--- | :--- |
-| `overview.md` | intro, Usage, Anatomy |
-| `guidelines.md` | Configurations, Placement, Behavior, Best practices |
+| `examples.md` | Examples |
+| `design-guidelines.md` | intro, Usage, Anatomy, Configurations, Placement, Behavior, Best practices |
 | `a11y.md` | Accessibility |
 | `content.md` | Content guidelines |
 
@@ -196,6 +199,11 @@ gaps: [Behavior]
 ---
 
 # Example
+
+## Examples
+![Example in context](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/example/in-context.png)
+
+*A one-line caption naming what the image shows.*
 
 ## Usage
 ### Use when

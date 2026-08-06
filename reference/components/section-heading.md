@@ -4,7 +4,7 @@ category: content
 status: partial
 aliases: [Section Header, Headings, Subhead]
 figma_node: "20300:26476"
-figma_file: "KsSrdx1GQvt1kRfXhsPiT6"
+figma_file: "9IVBrRosRzeEh57s0wqT8Q"
 last_synced: 2026-08-05
 related: [expandable, list-items, tiles, badge, dividers, button]
 gaps: []
@@ -18,6 +18,12 @@ images:
 # Section Heading
 
 Names a section of content and hosts the actions that belong to that section as a whole.
+
+## Examples
+
+[Image: **A section heading in context.** A homepage "Tickets" section with the heading, an "All tickets" label action, and a ticket beneath it. Placeholder until the Figma example frame exists.]
+
+[Image: **Collapsed and expanded.** The same section in both states, showing the divider on the collapsed one. Placeholder until the Figma example frame exists.]
 
 ## Usage
 ### Use when

@@ -47,10 +47,10 @@ const retargetAssets = (text, ref) =>
 
 // Which sections land in which tab. Dev is authored in ZeroHeight, never generated.
 const TABS = {
-  overview:   ['__intro__', 'Usage', 'Anatomy'],
-  guidelines: ['Configurations', 'Placement', 'Behavior', 'Best practices'],
-  a11y:       ['Accessibility'],
-  content:    ['Content guidelines'],
+  examples:            ['Examples'],
+  'design-guidelines': ['__intro__', 'Usage', 'Anatomy', 'Configurations', 'Placement', 'Behavior', 'Best practices'],
+  a11y:                ['Accessibility'],
+  content:             ['Content guidelines'],
 };
 
 // Repo-only scaffolding that must not reach ZeroHeight.
@@ -298,17 +298,40 @@ async function images(filter) {
     // pool keeps a full rebuild bounded without hammering the CDN.
     const CONCURRENCY = 6;
     const queue = names.slice();
+    const failed = [];
     const workers = Array.from({ length: Math.min(CONCURRENCY, queue.length) }, async () => {
       for (let name = queue.shift(); name !== undefined; name = queue.shift()) {
         const src = rendered[manifest[name]];
-        if (!src) { console.warn(`  ${name}: node ${manifest[name]} returned no image`); continue; }
+        const target = join(dir, `${name}.png`);
+        if (!src) {
+          // Delete rather than leave the previous render in place: a stale image
+          // that still renders is worse than a missing one, because nothing
+          // downstream can tell it is wrong.
+          if (existsSync(target)) rmSync(target);
+          failed.push(`${name}: node ${manifest[name]} not found in file ${fileKey}`);
+          continue;
+        }
         const png = await fetch(src);
         if (!png.ok) throw new Error(`download failed for ${name}: ${png.status}`);
-        writeFileSync(join(dir, `${name}.png`), Buffer.from(await png.arrayBuffer()));
+        writeFileSync(target, Buffer.from(await png.arrayBuffer()));
         console.log(`  ${doc.name}/${name}.png`);
       }
     });
     await Promise.all(workers);
+
+    // Prune assets no longer declared, so removing an images: entry removes the
+    // file too and zeroheight/ never accumulates orphans.
+    const keep = new Set(names.map(n => `${n}.png`));
+    for (const f of readdirSync(dir)) {
+      if (!keep.has(f)) { rmSync(join(dir, f)); console.log(`  removed orphan ${doc.name}/${f}`); }
+    }
+
+    if (failed.length) {
+      console.error(`\n${doc.name}: ${failed.length} image(s) could not be exported:`);
+      for (const f of failed) console.error(`  ${f}`);
+      console.error('Fix the node id in the doc\'s images: block, or figma_file: if the frame lives elsewhere.');
+      process.exitCode = 1;
+    }
   }
 }
 
