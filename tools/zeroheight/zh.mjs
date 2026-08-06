@@ -343,7 +343,33 @@ const rel = p => p.replace(ROOT + '/', '');
 
 // ---------------------------------------------------------------------- main
 
-const [cmd, arg] = process.argv.slice(2);
+const argv = process.argv.slice(2).filter(a => a !== '--ref' && !a.startsWith('--'));
+const [cmd, arg] = argv;
+const skipImages = process.argv.includes('--skip-images');
+
+// Everything, in the order that matters: refresh the PNGs from Figma, then
+// regenerate the tab files that reference them, then verify the result.
+async function all(filter) {
+  if (skipImages) {
+    console.log('Skipping image export (--skip-images)\n');
+  } else {
+    console.log('1/3  Exporting images from Figma');
+    await images(filter);
+    console.log('');
+  }
+  console.log(`${skipImages ? '1/2' : '2/3'}  Generating ZeroHeight tab files`);
+  const flattened = new Set();
+  const ref = currentRef();
+  console.log(`     targeting ref: ${ref}`);
+  const written = build(filter, { flattened, ref });
+  for (const { path } of written) console.log(`     ${rel(path)}`);
+  if (flattened.size) {
+    console.log(`\n     ${flattened.size} link target(s) had no ZeroHeight URL and were flattened to plain text:`);
+    for (const t of [...flattened].sort()) console.log(`       ${t}`);
+  }
+  console.log(`\n${skipImages ? '2/2' : '3/3'}  Verifying`);
+  check();
+}
 
 if (cmd === 'build') {
   // Rebuild from scratch so renames and removals don't leave orphans behind.
@@ -367,10 +393,17 @@ if (cmd === 'build') {
   await images(arg);
 } else if (cmd === 'check') {
   check();
+} else if (cmd === 'all') {
+  await all(arg);
 } else {
   console.log(`Usage:
+  node tools/zeroheight/zh.mjs all    [name]   images + build + check (what /build-zeroheight runs)
   node tools/zeroheight/zh.mjs build  [name]   generate zeroheight/ tab files
   node tools/zeroheight/zh.mjs images [name]   export Figma frames to PNG (needs FIGMA_TOKEN)
-  node tools/zeroheight/zh.mjs check           verify generated output is current`);
+  node tools/zeroheight/zh.mjs check           verify generated output is current
+
+Options:
+  --skip-images    with 'all', reuse the PNGs already exported
+  --ref <branch>   override the ref image URLs point at (default: current branch)`);
   process.exit(cmd ? 1 : 0);
 }

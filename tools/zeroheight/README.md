@@ -18,6 +18,7 @@ Both directions coexist. A doc's `sync:` frontmatter key decides which one appli
 ## Commands
 
 ```bash
+node tools/zeroheight/zh.mjs all     [name]   # images + build + check (what /build-zeroheight runs)
 node tools/zeroheight/zh.mjs build   [name]   # generate zeroheight/ tab files
 node tools/zeroheight/zh.mjs images  [name]   # export Figma frames to PNG
 node tools/zeroheight/zh.mjs check            # verify generated output is current
@@ -27,15 +28,15 @@ No dependencies; Node 18+ only.
 
 ### Setting up the Figma token
 
-`images` needs a Figma personal access token. One-time setup:
+`images` needs a Figma personal access token. One-time setup: create a `.env` in the repo root containing
 
-```bash
-cp .env.example .env      # then paste your token into it
+```
+FIGMA_TOKEN="figd_..."
 ```
 
-Create the token at **Figma > Settings > Security > Personal access tokens**; it needs read access to the NES App Components file. `zh.mjs` loads the repo-root `.env` itself, so no `--env-file` flag is needed, and a real environment variable always takes precedence so CI can set `FIGMA_TOKEN` without a file.
+Create the token at **Figma > Settings > Security > Personal access tokens**. It needs `file_content:read` on the NES App Components file; `current_user:read` is not required. `zh.mjs` loads the repo-root `.env` itself, so no `--env-file` flag is needed, and a real environment variable always takes precedence so CI can set `FIGMA_TOKEN` without a file.
 
-`.env` is gitignored (`.env.example` is the committed template, kept via a `!.env.example` exception), and the pre-commit gate blocks `figd_` tokens if one ever slips into a staged diff.
+`.env` is gitignored, and the pre-commit gate blocks `figd_` tokens if one ever slips into a staged diff.
 
 ## How it works
 
@@ -99,11 +100,10 @@ images:
 *Caption in italics, directly beneath.*
 ```
 
-Then run the two commands. `images` fetches the declared nodes and writes the PNGs; `build` regenerates the tab files:
+Then rebuild. `/build-zeroheight section-heading` in Claude Code, or the script directly:
 
 ```bash
-node tools/zeroheight/zh.mjs images section-heading
-node tools/zeroheight/zh.mjs build  section-heading
+node tools/zeroheight/zh.mjs all section-heading
 ```
 
 Always write the URL against `main`. The build retargets it to the branch you are on, so testing from a branch needs no source edits.
@@ -112,8 +112,8 @@ Always write the URL against `main`. The build retargets it to the branch you ar
 
 1. Set `sync: push` in the doc's frontmatter and drop `zeroheight_page_id` / `zeroheight_url`.
 2. Declare `images:` as name to Figma node id, and `figma_file:` if it is not the default NES App Components file.
-3. Run `zh.mjs images <name>` then `zh.mjs build <name>`.
-4. Commit and push. The image URLs point at `raw.githubusercontent.com/.../main/...`, so they only resolve once the commit is on `main`.
+3. Run `/build-zeroheight <name>` (or `node tools/zeroheight/zh.mjs all <name>`).
+4. Commit and **push the branch**. Image URLs are stamped with the checked-out branch, so they resolve as soon as GitHub has that branch; point ZeroHeight at the same one.
 5. In ZeroHeight, create the four tab pages and point each at its generated file. Author the Dev tab there directly.
 
 ## Known gaps
