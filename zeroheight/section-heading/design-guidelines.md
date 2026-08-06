@@ -48,6 +48,8 @@ The content slot exists for composition in Figma. In code the slot is optional, 
 ![The four icon actions](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/icon-actions.png)
 *from left to right: Expand, Collapse, Dismiss, and More options.*
 
+An icon-only [Button](https://design.ns.nl/4a05a30ad/v/latest/p/15d4f2-button) at the tiny (32) size, inheriting its states, touch behavior, and disabled handling. Only the glyph changes:
+
 - **Expand** `variant: chev-down`: opens the section.
 - **Collapse** `variant: chev-up`: closes the section.
 - **Dismiss** `variant: close`: removes the section.
@@ -80,8 +82,7 @@ Available on the collapsed state only. When the section expands, the content its
 
 ## Placement
 
-![Section rhythm](section-rhythm)
-
+![Section rhythm example 1](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/section-rhythm-1.png)
 *The gap between sections stays constant whether a section is collapsed or expanded.*
 
 - Default spacing between sections is `applied.space.app.container.stack.control` (32), whether the section is collapsed or expanded, so the rhythm doesn't change as sections open and close.
@@ -89,11 +90,13 @@ Available on the collapsed state only. When the section expands, the content its
 - Place the heading **outside** the content container it labels, directly against it, with no extra spacing and 0 stacking.
 - Keep the heading larger than any heading inside the container below it. The Section Heading is `heading4` (18), a following subheading is `labelDefaultStrong` (16), and labels inside the section's own items are smaller again.
 
+![Section rhythm example 2](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/section-rhythm-2.png)
+
 See the layout fundamentals for the Group and SubGroup model this sits in.
 
 | Do | Don't |
 | :--- | :--- |
-| [Image: heading above and outside the container, flush at 0 stacking] | [Image: the same heading placed inside the container's padding] |
+| [do] | [dont] |
 | **Do.** Keep the heading outside the container it labels. | **Don't.** Don't nest the heading inside the container. |
 
 ## Behavior
@@ -104,7 +107,6 @@ See the layout fundamentals for the Group and SubGroup model this sits in.
 ### Sizing
 - The title takes up to 2 lines when expanded. Actions bottom-align so they stay close to the content slot.
 - When collapsed, the title truncates to 1 line.
-- The icon action is `size.component.control.height.tiny` (32).
 
 ### Motion
 Expanding and collapsing use `motion.duration.default` (300ms) with `motion.ease.default`, the existing NESSIE defaults. Under reduced motion the section changes state instantly. See the motion tokens.
