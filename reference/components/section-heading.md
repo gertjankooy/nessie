@@ -5,6 +5,7 @@ status: partial
 aliases: [Section Header, Headings, Subhead]
 figma_node: "20300:26476"
 figma_file: "9IVBrRosRzeEh57s0wqT8Q"
+zeroheight_url: https://design.ns.nl/4a05a30ad/p/306244-section-heading
 last_synced: 2026-08-05
 related: [expandable, list-items, tiles, badge, dividers, button]
 gaps: []
@@ -12,9 +13,7 @@ sync: push
 images:
   collapsed: "6219:6383"
   expanded: "6219:9863"
-  anatomy: "20300:26476"
-  icon-variants: "20300:26499"
-  section-rhythm: "20305:30234"
+  anatomy: "6219:12734"
 ---
 
 # Section Heading
@@ -51,7 +50,6 @@ The number of visible items is not the deciding factor. A homepage widget showin
 ## Anatomy
 
 ![Section Heading anatomy, expanded and collapsed](anatomy)
-
 *Expanded and collapsed. The divider belongs to the collapsed state only.*
 
 | # | Part | Role |

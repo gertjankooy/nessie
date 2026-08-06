@@ -11,6 +11,7 @@ Follow **[`reference/components/_component-doc-standard.md`](../reference/compon
 1. **Confirm it's an App component.** Use `COMPONENTS → App` on ZeroHeight — never the `Web` group. If it exists only under Web, stop and say so.
 2. **Get the source.** Read the ZeroHeight App page (via the ZeroHeight MCP `get-page`, or from content the user pastes). Optionally read the Figma node for anatomy/variants. **ZeroHeight is the source of truth — never invent variants, states, props, or token names.**
 3. **Check for an existing file.** If `reference/components/<kebab>.md` already exists, edit it (reconcile both directions — fold in new/changed content *and* remove what the source dropped); don't create a duplicate.
+   - **For a `sync: push` doc** (authored here, rendered by ZeroHeight), include a `zeroheight_url:` field even when the page doesn't exist yet — leave it blank and fill it once created. Other docs need it to resolve a cross-link to this one.
 
 ## Write it
 Open the spec and follow it for the **frontmatter, section order, disabled-state callout, gaps convention, and cross-links** — this skill does not restate them. While filling the doc from the source:

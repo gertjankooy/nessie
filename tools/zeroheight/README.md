@@ -137,7 +137,7 @@ The build stamps the URL against the checked-out branch. A referenced key with n
 
 ## Adding a component to the pipeline
 
-1. Set `sync: push` in the doc's frontmatter and drop `zeroheight_page_id` / `zeroheight_url`.
+1. Set `sync: push` in the doc's frontmatter and drop `zeroheight_page_id`. Keep `zeroheight_url` as a blank field; fill it with the component's ZeroHeight page URL once that page exists, so other docs can resolve a cross-link to this one.
 2. Declare `images:` as name to Figma node id, and `figma_file:` if it is not the default NES App Components file.
 3. Run `/build-zeroheight <name>` (or `node tools/zeroheight/zh.mjs all <name>`).
 4. Commit and **push the branch**. Image URLs are stamped with the checked-out branch, so they resolve as soon as GitHub has that branch; point ZeroHeight at the same one.

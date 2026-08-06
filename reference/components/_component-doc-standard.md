@@ -73,7 +73,7 @@ Every doc is owned by exactly one side. The `sync:` key says which, and an absen
 **This file stays the single canonical copy either way.** For `push` docs the tab files under `zeroheight/` are generated output: never hand-edited, never read by an agent, and enforced by a pre-commit check that regenerates and diffs. They carry no "generated" marker, because the file's whole content is published.
 
 ### What a push doc keeps in frontmatter
-`zeroheight_page_id` / `zeroheight_url` are dropped: the ZeroHeight pages are linked once by hand in the git integration and there is nothing to resolve. Add `images:` mapping a name to the Figma node id it exports from, which is what the image export reads.
+Drop `zeroheight_page_id`: a push component becomes several tab pages, so no single id applies. **Keep `zeroheight_url`**, pointing at the component's ZeroHeight page — it is what lets *other* docs resolve a cross-link to this one (see Link resolution under Cross-links). On a brand-new push doc, add it as a blank field and fill it once the ZeroHeight page exists. Add `images:` mapping a name to the Figma node id it exports from, which is what the image export reads.
 
 ### What the generator strips on the way out
 Repo-only scaffolding that would be meaningless to a reader on ZeroHeight:

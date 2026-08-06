@@ -23,7 +23,6 @@ The number of visible items is not the deciding factor. A homepage widget showin
 ## Anatomy
 
 ![Section Heading anatomy, expanded and collapsed](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/anatomy.png)
-
 *Expanded and collapsed. The divider belongs to the collapsed state only.*
 
 | # | Part | Role |
@@ -45,7 +44,7 @@ The content slot exists for composition in Figma. In code the slot is optional, 
 
 ### Section action (icon)
 
-![The four icon actions](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/icon-variants.png)
+![The four icon actions](icon-variants)
 
 *Expand, collapse, dismiss, and more options.*
 
@@ -75,7 +74,7 @@ Available on the collapsed state only. When the section expands, the content its
 
 ## Placement
 
-![Section rhythm](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/section-rhythm.png)
+![Section rhythm](section-rhythm)
 
 *The gap between sections stays constant whether a section is collapsed or expanded.*
 
