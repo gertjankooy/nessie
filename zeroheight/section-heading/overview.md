@@ -22,7 +22,7 @@ The number of visible items is not the deciding factor. A homepage widget showin
 
 ## Anatomy
 
-![Section Heading anatomy](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/section-heading/anatomy.png)
+![Section Heading anatomy](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/anatomy.png)
 
 *Expanded and collapsed. The divider belongs to the collapsed state only.*
 

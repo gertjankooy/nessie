@@ -11,6 +11,7 @@
 
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
+import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -35,6 +36,14 @@ const ASSETS = join(OUT, 'assets');
 
 // Default Figma file: NES App Components. Override per doc with `figma_file:`.
 const DEFAULT_FIGMA_FILE = 'KsSrdx1GQvt1kRfXhsPiT6';
+
+// Image URLs are written against `main` in the source, because that is where
+// they resolve once merged. The build retargets them to whatever ref is checked
+// out, so pointing ZeroHeight at a branch works without editing any source.
+// Override with --ref <branch> or ZH_REF.
+const RAW_BASE = 'https://raw.githubusercontent.com/gertjankooy/nessie/';
+const retargetAssets = (text, ref) =>
+  ref === 'main' ? text : text.replaceAll(`${RAW_BASE}main/`, `${RAW_BASE}${ref}/`);
 
 // Which sections land in which tab. Dev is authored in ZeroHeight, never generated.
 const TABS = {
@@ -179,7 +188,7 @@ function resolveLinks(text, flattened) {
 
 // -------------------------------------------------------------------- build
 
-function renderTabs(source, flattened = new Set()) {
+function renderTabs(source, flattened = new Set(), ref = 'main') {
   const { data, body } = parseFrontmatter(source);
   if (data.sync !== 'push') return null;
 
@@ -207,7 +216,7 @@ function renderTabs(source, flattened = new Set()) {
       return `## ${name}\n\n${trimBlank(lines).join('\n')}`;
     });
     const joined = parts.join('\n\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
-    files[tab] = resolveLinks(joined, flattened);
+    files[tab] = retargetAssets(resolveLinks(joined, flattened), ref);
   }
   return { data, files };
 }
@@ -224,10 +233,22 @@ function pushDocs(filter) {
     });
 }
 
-function build(filter, { write = true, flattened = new Set() } = {}) {
+// Default to the branch actually checked out, so `build` and `check` always
+// agree. Merging to main leaves the output pointing at the old branch, which
+// `check` then flags as stale, prompting the rebuild that fixes it.
+function currentRef() {
+  if (process.env.ZH_REF) return process.env.ZH_REF;
+  const i = process.argv.indexOf('--ref');
+  if (i !== -1 && process.argv[i + 1]) return process.argv[i + 1];
+  try {
+    return execSync('git rev-parse --abbrev-ref HEAD', { cwd: ROOT, encoding: 'utf8' }).trim() || 'main';
+  } catch { return 'main'; }
+}
+
+function build(filter, { write = true, flattened = new Set(), ref = currentRef() } = {}) {
   const results = [];
   for (const doc of pushDocs(filter)) {
-    const rendered = renderTabs(doc.source, flattened);
+    const rendered = renderTabs(doc.source, flattened, ref);
     if (!rendered) continue;
     for (const [tab, content] of Object.entries(rendered.files)) {
       const path = join(OUT, doc.name, `${tab}.md`);
@@ -332,6 +353,8 @@ if (cmd === 'build') {
     }
   }
   const flattened = new Set();
+  const ref = currentRef();
+  console.log(`targeting ref: ${ref}`);
   const written = build(arg, { flattened });
   for (const { path } of written) console.log(`  ${rel(path)}`);
   console.log(`${written.length} file(s) generated`);

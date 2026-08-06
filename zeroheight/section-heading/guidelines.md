@@ -6,7 +6,7 @@
 
 ### Section action (icon)
 
-![The four icon actions](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/section-heading/icon-variants.png)
+![The four icon actions](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/icon-variants.png)
 
 *Expand, collapse, dismiss, and more options.*
 
@@ -36,7 +36,7 @@ Available on the collapsed state only. When the section expands, the content its
 
 ## Placement
 
-![Section rhythm](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/section-heading/section-rhythm.png)
+![Section rhythm](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/section-rhythm.png)
 
 *The gap between sections stays constant whether a section is collapsed or expanded.*
 

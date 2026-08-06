@@ -79,6 +79,35 @@ Established by a capability probe, not assumption:
 - **A synced file wholly owns its page.** You cannot edit a synced page in ZeroHeight, so there is no mixed-authoring escape hatch. This is why the Dev tab is authored in ZeroHeight as its own page and never generated.
 - **No H1.** It becomes the page title.
 
+## Adding an image
+
+There is no Figma link in the markdown body. The connection is made in two halves.
+
+**1. Frontmatter holds the Figma node id.** Give the image a name; the value is the node id, taken from the Figma URL's `?node-id=20332-2425` with the dash changed to a colon:
+
+```yaml
+images:
+  anatomy: "20300:26476"
+  badge-placement: "20332:2425"
+```
+
+**2. The body references the exported PNG**, at the path the export writes to. The filename is the name from step 1:
+
+```markdown
+![Section Heading anatomy](https://raw.githubusercontent.com/gertjankooy/nessie/main/zeroheight/assets/section-heading/anatomy.png)
+
+*Caption in italics, directly beneath.*
+```
+
+Then run the two commands. `images` fetches the declared nodes and writes the PNGs; `build` regenerates the tab files:
+
+```bash
+node tools/zeroheight/zh.mjs images section-heading
+node tools/zeroheight/zh.mjs build  section-heading
+```
+
+Always write the URL against `main`. The build retargets it to the branch you are on, so testing from a branch needs no source edits.
+
 ## Adding a component to the pipeline
 
 1. Set `sync: push` in the doc's frontmatter and drop `zeroheight_page_id` / `zeroheight_url`.
@@ -90,7 +119,7 @@ Established by a capability probe, not assumption:
 ## Known gaps
 
 - The image export is run by hand. A GitHub Action with manual dispatch is the next step, and a scheduled version checking the Figma file version after that.
-- Image URLs assume the `main` branch, so they do not resolve while work sits on a feature branch.
+- A branch name containing a slash produces a raw URL that GitHub has to disambiguate. If images 404 while testing from a branch, use a branch name with no slash.
 - Exports carry whatever chrome the Figma frame has, including the component-set boundary. Point `images:` at purpose-built presentation frames rather than at component nodes.
 
 ## Enforcement
