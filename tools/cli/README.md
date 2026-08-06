@@ -58,7 +58,7 @@ published version.
 - The source repo is **public and read-only** — no token or auth needed.
 - To read an actual Figma design (audits, design-to-code), your tool still needs the
   **Figma MCP / Dev Mode MCP server** connected — the skill files can't provide that.
-- Maintainer commands (`/sync-docs`, `/sync-tokens`, `/docs-coverage`) live in the skill
+- Maintainer commands (`/pull-from-zeroheight`, `/sync-tokens`, `/docs-coverage`) live in the skill
   repo's `.claude/` and are intentionally **not** vendored by this installer.
 
 ## License

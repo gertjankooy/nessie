@@ -47,8 +47,8 @@ Reference content is distilled from the NESSIE ZeroHeight, the design-tokens Tok
 
 Docs flow in **both** directions, decided per file by the `sync:` frontmatter key:
 
-- **`sync: pull`** (the default, and every doc that omits the key) — ZeroHeight is the source, and `/sync-docs` pulls pages into `reference/`.
-- **`sync: push`** — this repo is the source. `reference/components/<name>.md` stays the single editable copy, `tools/zeroheight/zh.mjs build` generates one file per ZeroHeight tab into `zeroheight/`, and ZeroHeight syncs those from git. `/sync-docs` never writes to a push doc.
+- **`sync: pull`** (the default, and every doc that omits the key) — ZeroHeight is the source, and `/pull-from-zeroheight` pulls pages into `reference/`.
+- **`sync: push`** — this repo is the source. `reference/components/<name>.md` stays the single editable copy, `tools/zeroheight/zh.mjs build` generates one file per ZeroHeight tab into `zeroheight/`, and ZeroHeight syncs those from git. `/pull-from-zeroheight` never writes to a push doc.
 
 See [`tools/zeroheight/`](tools/zeroheight/) for the commands, what the build strips, and the constraints ZeroHeight imposes on synced markdown.
 

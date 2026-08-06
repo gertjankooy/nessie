@@ -1,12 +1,12 @@
 # Component Doc Standard
 
-The canonical structure for a `reference/components/<kebab>.md` file. Follow this when **creating or editing** a component doc so every component reads the same way and stays machine-navigable. [button.md](button.md) is the reference example. This spec is the single source of truth — the `/sync-docs` Component template points here.
+The canonical structure for a `reference/components/<kebab>.md` file. Follow this when **creating or editing** a component doc so every component reads the same way and stays machine-navigable. [button.md](button.md) is the reference example. This spec is the single source of truth — the `/pull-from-zeroheight` Component template points here.
 
 **Golden rules**
 - **ZeroHeight (App) is the source of truth** — never invent variants, props, states, or token names. If something isn't documented, mark it a gap (below), don't guess.
 - **iOS-first, US English, sentence case** in headings and body.
 - **No `---` dividers in the body**, no implementation code (SwiftUI/Compose/web), no Storybook links, no per-image style/attribute tables.
-- **Never use an em dash (`—`).** Rewrite the sentence instead: a colon to introduce, a semicolon or full stop to separate two clauses, commas or parentheses for an aside. Don't swap in a spaced hyphen (` - `) as a lookalike. En dashes in numeric ranges (`1–3 words`) are fine. **This one applies house-wide**, to every doc in the skill and not only components; `/sync-docs` and `/docs-coverage` both defer to this rule rather than restating it.
+- **Never use an em dash (`—`).** Rewrite the sentence instead: a colon to introduce, a semicolon or full stop to separate two clauses, commas or parentheses for an aside. Don't swap in a spaced hyphen (` - `) as a lookalike. En dashes in numeric ranges (`1–3 words`) are fine. **This one applies house-wide**, to every doc in the skill and not only components; `/pull-from-zeroheight` and `/docs-coverage` both defer to this rule rather than restating it.
 - **Filename = kebab-case of the App page title** (e.g. "Date Picker Input" → `date-picker-input.md`).
 - After writing, **add/refresh the row in `index.md`**.
 
@@ -64,8 +64,8 @@ Every doc is owned by exactly one side. The `sync:` key says which, and an absen
 
 | `sync:` | Who owns it | What happens |
 | :--- | :--- | :--- |
-| `pull` (default) | ZeroHeight | `/sync-docs` pulls the page into this file, as it always has. |
-| `push` | This repo | The file is generated into `zeroheight/` and ZeroHeight renders it. **`/sync-docs` never writes to it.** |
+| `pull` (default) | ZeroHeight | `/pull-from-zeroheight` pulls the page into this file, as it always has. |
+| `push` | This repo | The file is generated into `zeroheight/` and ZeroHeight renders it. **`/pull-from-zeroheight` never writes to it.** |
 
 **This file stays the single canonical copy either way.** For `push` docs the tab files under `zeroheight/` are generated output: never hand-edited, never read by an agent, and enforced by a pre-commit check that regenerates and diffs. They carry no "generated" marker, because the file's whole content is published.
 
@@ -153,7 +153,7 @@ _Not available in ZeroHeight — to review._
 
 ## Local guidance (authored ahead of ZeroHeight)
 
-**Rule: any content you add that is not sourced from ZeroHeight MUST carry this marker.** Sometimes a decision is documented here *before* the ZeroHeight page catches up (design changes flow both ways). Mark every such block so `/sync-docs` doesn't mistake its absence upstream for a removal and delete it:
+**Rule: any content you add that is not sourced from ZeroHeight MUST carry this marker.** Sometimes a decision is documented here *before* the ZeroHeight page catches up (design changes flow both ways). Mark every such block so `/pull-from-zeroheight` doesn't mistake its absence upstream for a removal and delete it:
 
 ```
 > **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).**

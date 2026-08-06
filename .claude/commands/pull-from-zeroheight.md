@@ -1,15 +1,15 @@
 ---
-description: Sync NESSIE skill docs from ZeroHeight — App components, app patterns, and fundamentals — into the matching reference files. Flags undocumented gaps.
+description: Pull docs INTO the repo from ZeroHeight (App components, patterns, fundamentals) for `sync: pull` files. Flags undocumented gaps. The opposite direction is /build-zeroheight.
 argument-hint: <name | "all" | "components" | "patterns" | "fundamentals" | comma-list> [--check]
 allowed-tools: mcp__claude_ai_ZeroHeight__list-pages, mcp__claude_ai_ZeroHeight__search-pages, mcp__claude_ai_ZeroHeight__get-page, mcp__claude_ai_ZeroHeight__list-releases, Read, Write, Edit
 ---
 
-# /sync-docs
+# /pull-from-zeroheight
 
 Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design System`). One run can check **all** relevant ZeroHeight pages — App components, app patterns, and fundamentals — and fold changes into the matching files. Write in **US English**, **App / iOS-first**, ZeroHeight as the source of truth.
 
 **Argument:** `$ARGUMENTS`
-- A name → sync that one component/pattern/fundamental (e.g. `/sync-docs Tag`, `/sync-docs Interaction Models`, `/sync-docs Color`).
+- A name → sync that one component/pattern/fundamental (e.g. `/pull-from-zeroheight Tag`, `/pull-from-zeroheight Interaction Models`, `/pull-from-zeroheight Color`).
 - A **category** → `components` · `patterns` · `fundamentals` · `guidelines` (Content + Accessibility).
 - `all` → everything in the registry below.
 - A comma-list → each in turn.
@@ -72,7 +72,7 @@ These files have an established house style (3-tier tables, usage columns, the F
 - New/changed semantic or applied tokens → the right tier table, described by meaning.
 - Usage guidance (e.g. Color's *Visual hierarchy*, variant scale, when-to-use concepts) → the matching prose section.
 - **Always keep the `--slash/form` vs dotted-JSON callout** at the top of every `reference/tokens/` file (token-doc convention in `CLAUDE.md`); add it to any new token file/category.
-- Token **values** come from the design-tokens repo, not ZeroHeight prose — prefer `/sync-tokens` for the numeric source of truth; `/sync-docs` handles the *guidance and names*.
+- Token **values** come from the design-tokens repo, not ZeroHeight prose — prefer `/sync-tokens` for the numeric source of truth; `/pull-from-zeroheight` handles the *guidance and names*.
 
 ## Workflow (per item)
 1. `list-pages` (or `search-pages`) → resolve the page in the right area; confirm it's App, not Web.

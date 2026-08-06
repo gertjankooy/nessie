@@ -4,16 +4,16 @@ Maintainer tooling for docs where **the repo is the source and ZeroHeight render
 
 ## Why this exists
 
-Docs used to flow one way: author in ZeroHeight, pull into the repo with `/sync-docs`. Authoring a new component meant writing here, copy-pasting into ZeroHeight, waiting on a full Figma file sync, then pulling back. This pipeline reverses the direction for docs that are authored here, so the loop becomes: write the markdown, run the build, push.
+Docs used to flow one way: author in ZeroHeight, pull into the repo with `/pull-from-zeroheight`. Authoring a new component meant writing here, copy-pasting into ZeroHeight, waiting on a full Figma file sync, then pulling back. This pipeline reverses the direction for docs that are authored here, so the loop becomes: write the markdown, run the build, push.
 
 Both directions coexist. A doc's `sync:` frontmatter key decides which one applies, and an absent key means `pull`, so every pre-existing doc is untouched.
 
 | `sync:` | Owner | Tooling |
 | :--- | :--- | :--- |
-| `pull` (default) | ZeroHeight | `/sync-docs` pulls the page into the file |
+| `pull` (default) | ZeroHeight | `/pull-from-zeroheight` pulls the page into the file |
 | `push` | This repo | `zh.mjs build` generates `zeroheight/`, ZeroHeight syncs from git |
 
-`/sync-docs` hard rule 10 forbids writing to a `push` doc, which is what keeps the two from fighting.
+`/pull-from-zeroheight` hard rule 10 forbids writing to a `push` doc, which is what keeps the two from fighting.
 
 ## Commands
 

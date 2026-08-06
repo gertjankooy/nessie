@@ -1,12 +1,12 @@
 ---
-description: Read-only audit — list ZeroHeight pages that have no mapping in the /sync-docs registry or no matching reference file, plus reference docs that don't follow the machine-readable tag convention. Coverage overview, writes nothing.
+description: Read-only audit — list ZeroHeight pages that have no mapping in the /pull-from-zeroheight registry or no matching reference file, plus reference docs that don't follow the machine-readable tag convention. Coverage overview, writes nothing.
 argument-hint: [area: components | patterns | fundamentals | all (default)]
 allowed-tools: mcp__claude_ai_ZeroHeight__list-pages, mcp__claude_ai_ZeroHeight__list-releases, Read, Bash
 ---
 
 # /docs-coverage
 
-Give a coverage overview of the NESSIE ZeroHeight (`Nessie Design System`) against this skill's reference docs: **which in-scope ZeroHeight pages are not yet mapped or documented.** Pure audit — **never writes**. Run it after new ZeroHeight pages land (e.g. Error Handling, Search) to see what's worth adding to the `/sync-docs` registry.
+Give a coverage overview of the NESSIE ZeroHeight (`Nessie Design System`) against this skill's reference docs: **which in-scope ZeroHeight pages are not yet mapped or documented.** Pure audit — **never writes**. Run it after new ZeroHeight pages land (e.g. Error Handling, Search) to see what's worth adding to the `/pull-from-zeroheight` registry.
 
 **Argument:** `$ARGUMENTS` — optional area filter (`components`, `patterns`, `fundamentals`); default `all`.
 
@@ -24,7 +24,7 @@ COMPONENTS → **Web**, TEMPLATES → Web, Fundamentals → Composition → **La
 ## Workflow (read-only)
 1. `list-pages` → full ZeroHeight tree (current IDs/titles).
 2. Build the **repo inventory**:
-   - Registry entries: read `.claude/commands/sync-docs.md` (the source registry table).
+   - Registry entries: read `.claude/commands/pull-from-zeroheight.md` (the source registry table).
    - Covered page IDs: collect `zeroheight_page_id` from `reference/**/*.md` frontmatter (components, patterns, fundamentals, content, accessibility), and the `zeroheight_url` page slugs cited in `reference/tokens/*.md` / `design-language.md`. A quick way to list component/pattern coverage:
      `grep -rhoE 'zeroheight_page_id: [0-9]+' reference | grep -oE '[0-9]+' | sort -u`
 3. For every **in-scope** ZeroHeight page, classify:
@@ -54,5 +54,5 @@ COMPONENTS → **Web**, TEMPLATES → Web, Fundamentals → Composition → **La
 
 ## Notes
 - IDs drift — always resolve fresh from `list-pages`, don't trust cached numbers.
-- This command is the inverse of `/sync-docs`: `/sync-docs` pulls content for **mapped** pages; `/docs-coverage` finds the pages **not yet mapped**. Neither touches token *values* — that's `/sync-tokens`.
+- This command is the inverse of `/pull-from-zeroheight`: `/pull-from-zeroheight` pulls content for **mapped** pages; `/docs-coverage` finds the pages **not yet mapped**. Neither touches token *values* — that's `/sync-tokens`.
 - Treat a same-named **Web** page as out of scope even when an App page is missing; never suggest mapping the Web variant.

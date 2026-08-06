@@ -50,7 +50,7 @@ Component-specific writing guidance lives in its own file:
 | Breadcrumb | `breadcrumb.md` | Page vs step-in-flow wording, "Ga terug naar…" for screen readers |
 
 ## What this area does not cover
-- Product terminology (Ticket, Season ticket, OV-pas). _ZeroHeight has these under CONTENT → Products (`5784480`); not mirrored yet — tracked in the `/sync-docs` registry._
+- Product terminology (Ticket, Season ticket, OV-pas). _ZeroHeight has these under CONTENT → Products (`5784480`); not mirrored yet — tracked in the `/pull-from-zeroheight` registry._
 - Component anatomy, variants, and tokens → `reference/components/`.
 - Accessibility requirements → `reference/accessibility.md`.
 

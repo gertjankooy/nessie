@@ -1,5 +1,5 @@
 ---
-description: Export Figma images and generate the ZeroHeight tab files for every `sync: push` doc, then verify the result.
+description: Push docs OUT to ZeroHeight. Re-exports Figma images and regenerates the ZeroHeight tab files for every `sync: push` doc, then verifies. The opposite direction is /pull-from-zeroheight.
 argument-hint: [component name | blank for all] [--skip-images]
 allowed-tools: Bash, Read, Edit
 ---
