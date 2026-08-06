@@ -15,6 +15,23 @@ Both directions coexist. A doc's `sync:` frontmatter key decides which one appli
 
 `/pull-from-zeroheight` hard rule 10 forbids writing to a `push` doc, which is what keeps the two from fighting.
 
+## What to run when
+
+In Claude Code use `/build-zeroheight`; everything below works the same from a terminal as `node tools/zeroheight/zh.mjs all …`.
+
+| Situation | Run |
+| :--- | :--- |
+| Edited prose in one component's reference file | `/build-zeroheight <name> --skip-images` |
+| Edited a Figma frame that a doc already declares | `/build-zeroheight <name>` |
+| Added a new image (new `images:` entry + markdown) | `/build-zeroheight <name>` |
+| Changed the doc standard, tab mapping, or the generator | `/build-zeroheight` |
+| Merged to `main`, need image URLs restamped off the branch | `/build-zeroheight --skip-images` |
+| Just want to know whether anything drifted | `node tools/zeroheight/zh.mjs check` |
+
+`--skip-images` is the one worth remembering: it skips the Figma round trip, which is the only slow part. Reach for it whenever no Figma frame changed.
+
+A bare `/build-zeroheight` does every push doc. That is the right call after a change to shared machinery and the wrong call for routine edits, where naming the component keeps it to a couple of seconds.
+
 ## Commands
 
 ```bash
@@ -25,6 +42,10 @@ node tools/zeroheight/zh.mjs check            # verify generated output is curre
 ```
 
 No dependencies; Node 18+ only.
+
+### Cost
+
+Re-exporting is cheap and safe to repeat. Node ids are batched into one Figma API call per document, and Figma returns byte-identical renders for unchanged frames, so re-exports produce no git churn. Roughly 2.5 seconds for three images. If a full rebuild across a migrated library ever gets slow, the fix is to cache the Figma file's `lastModified` and skip the export when it has not changed.
 
 ### Setting up the Figma token
 

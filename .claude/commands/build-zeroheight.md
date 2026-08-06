@@ -11,7 +11,9 @@ Refresh everything ZeroHeight reads from this repo. Finds every `reference/compo
 **Argument:** `$ARGUMENTS`
 - A component name → just that one (e.g. `/build-zeroheight section-heading`).
 - Blank → every push doc.
-- `--skip-images` → reuse the PNGs already exported and only rebuild the pages. Use when you changed prose but no Figma frame.
+- `--skip-images` → reuse the PNGs already exported and only rebuild the pages.
+
+The situation-by-situation table lives in `tools/zeroheight/README.md` → *What to run when*. If the user is unsure which to run, read it there rather than guessing, and suggest `--skip-images` whenever no Figma frame changed.
 
 ## Run
 
