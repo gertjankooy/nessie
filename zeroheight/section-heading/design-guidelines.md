@@ -14,11 +14,12 @@ Names a section of content and hosts the actions that belong to that section as 
 
 Either trigger above is sufficient on its own. The test for the second one: if you deleted the heading, would a user still know what this group is? For a ticket, no. For a disruption tile, yes.
 
+![section-heading-rules](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/rules.png)
+*Tickets takes a heading because the collection could grow and has a "Show all" action. The disruption tile names itself, so it gets none.*
+
 The number of visible items is not the deciding factor. A homepage widget showing one ticket is still a window into "Tickets" and keeps its heading, while a single disruption tile is the section itself and doesn't get one.
 
 **Stability.** If a section could hold more than one item on another day, keep the heading permanently rather than showing it only once a second item arrives. A heading that appears and disappears as data changes shifts the layout and breaks the section map that screen-reader users build between sessions.
-
-[Image: **The two cases, side by side.** Two phone screens at the same scale, both showing exactly one item. Left: a homepage "Tickets" section with an "All tickets" label action and one ticket tile. Right: a disruption section, a single dynamic tile carrying its own title, with no Section Heading above it. Caption each: "Window into a collection, so it takes a heading" and "The section itself, so it doesn't".]
 
 ## Anatomy
 
@@ -34,7 +35,7 @@ The number of visible items is not the deciding factor. A homepage widget showin
 | 5 | **Content slot** (optional) | Holds the section's content when expanded. |
 | — | **Spacer** (optional) | The gap between the heading row and the content slot; not called out in the diagram. |
 
-The content slot exists for composition in Figma. In code the slot is optional, and content may be stacked directly after the heading at the section spacing given under Placement.
+The content slot is a content composable that stacks against the heading when the spacer is enabled. It is optional: content may instead be stacked directly after the heading at the section spacing given under Placement.
 
 ## Configurations
 
