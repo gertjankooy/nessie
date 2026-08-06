@@ -22,8 +22,7 @@ images:
   section-rhythm-2: "6223:14571"
   do: "6223:18406"
   dont: "6223:18823"
-
-
+  truncation: "6223:19049"
 ---
 
 # Section Heading
@@ -130,7 +129,7 @@ Available on the collapsed state only. When the section expands, the content its
 
 | Do | Don't |
 | :--- | :--- |
-| [do] | [dont] |
+| ![Heading outside the container](do) | ![Heading nested inside the container](dont) |
 | **Do.** Keep the heading outside the container it labels. | **Don't.** Don't nest the heading inside the container. |
 
 See [the layout fundamentals](../fundamentals/layout.md) for the Group and SubGroup model this sits in.
@@ -139,6 +138,9 @@ See [the layout fundamentals](../fundamentals/layout.md) for the Group and SubGr
 - Sections expand independently, so several can be open at once. Accordion behavior, where opening one closes another, is deliberately avoided, matching [Expandable](expandable.md).
 
 ### Sizing
+
+![truncation rules](truncation)
+
 - The title takes up to 2 lines when expanded. Actions bottom-align so they stay close to the content slot.
 - When collapsed, the title truncates to 1 line.
 
@@ -147,13 +149,8 @@ Expanding and collapsing use `motion.duration.default` (300ms) with `motion.ease
 
 > **Android:** uses a spring animation with stiffness 400 rather than a duration-and-curve pair.
 
-**Motion debt.** NESSIE has no spring token, so the Android stiffness above can't currently be expressed as a token. The iOS side needs no new token: `motion.duration.default` and `motion.ease.default` already resolve to exactly the intended 300ms and `(0.2, 0.9, 0.4, 1)` curve. A spring token is the only outstanding motion work for this component.
-
 ## Best practices
-- Put the heading outside the content container, never inside it.
-- Don't use a Section Heading to label a single self-describing item. Let the item speak for itself.
-- When one section in a group has actions, give every sibling section a heading too, so the group reads as one rhythm.
-- Keep to one section-scoped action where possible. Two are supported, but each needs its own distinct label.
+- Prefer a single section-scoped action; two are supported where genuinely needed.
 - Don't nest Section Headings.
 
 ## Content guidelines
@@ -185,5 +182,4 @@ Follow the cross-cutting rules in [the accessibility guidelines](../accessibilit
 
 ## Source
 - ZeroHeight: not applicable. This doc is `sync: push`; the repo is the source and ZeroHeight renders it.
-- Figma: `20300:26476` (🚄 NES App Components → Heading)
-- Refined 2026-08-03 by Gertjan Kooy with Paul and Dheeraj Chahar.
+- Figma: `20300:26476` (🚄 NES App Components → Section Heading)

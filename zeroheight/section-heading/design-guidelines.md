@@ -94,7 +94,7 @@ Available on the collapsed state only. When the section expands, the content its
 
 | Do | Don't |
 | :--- | :--- |
-| [do] | [dont] |
+| ![Heading outside the container](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/do.png) | ![Heading nested inside the container](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/dont.png) |
 | **Do.** Keep the heading outside the container it labels. | **Don't.** Don't nest the heading inside the container. |
 
 See the layout fundamentals for the Group and SubGroup model this sits in.
@@ -104,6 +104,9 @@ See the layout fundamentals for the Group and SubGroup model this sits in.
 - Sections expand independently, so several can be open at once. Accordion behavior, where opening one closes another, is deliberately avoided, matching [Expandable](https://design.ns.nl/4a05a30ad/v/latest/p/90132b-expandable).
 
 ### Sizing
+
+![truncation rules](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/truncation.png)
+
 - The title takes up to 2 lines when expanded. Actions bottom-align so they stay close to the content slot.
 - When collapsed, the title truncates to 1 line.
 
@@ -112,12 +115,7 @@ Expanding and collapsing use `motion.duration.default` (300ms) with `motion.ease
 
 > **Android:** uses a spring animation with stiffness 400 rather than a duration-and-curve pair.
 
-**Motion debt.** NESSIE has no spring token, so the Android stiffness above can't currently be expressed as a token. The iOS side needs no new token: `motion.duration.default` and `motion.ease.default` already resolve to exactly the intended 300ms and `(0.2, 0.9, 0.4, 1)` curve. A spring token is the only outstanding motion work for this component.
-
 ## Best practices
 
-- Put the heading outside the content container, never inside it.
-- Don't use a Section Heading to label a single self-describing item. Let the item speak for itself.
-- When one section in a group has actions, give every sibling section a heading too, so the group reads as one rhythm.
-- Keep to one section-scoped action where possible. Two are supported, but each needs its own distinct label.
+- Prefer a single section-scoped action; two are supported where genuinely needed.
 - Don't nest Section Headings.
