@@ -64,16 +64,17 @@ A text action trailing the heading. It is a purpose-built action rather than a [
 - **Focus** `state: focus`: while focused.
 
 ### Badge
-- **Dot** `variant: dot`: on the icon action only, offset 2 from the top and 2 from the right, sitting outside the component bounds.
+
+![Badge on icon action](https://raw.githubusercontent.com/gertjankooy/nessie/docs/zeroheight-push-pipeline/zeroheight/assets/section-heading/badge.png)
+
+- **Dot** `property: badge`: a boolean on the icon action; the dot is its only permitted form, offset 2 from the top and 2 from the right, sitting outside the component bounds.
 
 Use the dot to flag that a collapsed section holds new or changed content worth expanding, such as a section that gained items since the user last looked. Reserve it for genuinely new content and clear it once the section is opened; it never conveys a count.
 
-Restricted to the dot variant. A counter or text badge overlaps the icon at this size and must not be used here. See [Badge](https://design.ns.nl/4a05a30ad/v/latest/p/540677-badge).
-
-[Image: **Badge placement and the numeric exclusion.** Zoomed detail of the icon action carrying a dot badge, with the 2 top and 2 right offsets dimensioned and the component bounds drawn as a dashed rectangle. Beside it, the same action with a numeric badge, crossed out.]
+Restricted to the dot form. A counter or text badge overlaps the icon at this size and must not be used here. See [Badge](https://design.ns.nl/4a05a30ad/v/latest/p/540677-badge).
 
 ### Divider
-- **Divider** `variant: divider`: a rule closing a collapsed section against what follows.
+- **Divider** `property: divider`: a boolean rule closing a collapsed section against what follows.
 
 Available on the collapsed state only. When the section expands, the content itself provides that separation and the divider is hidden.
 

@@ -34,11 +34,11 @@ COMPONENTS → **Web**, TEMPLATES → Web, Fundamentals → Composition → **La
    - 🔌 **Reverse gap** — a reference file (or section) that cites no ZeroHeight source but draws from another source (Notion App Guidelines, platform code) — flag so a source can be mapped later.
 4. **Convention audit** (local files only — no ZeroHeight needed). Report every reference doc that doesn't follow the machine-readable tag convention in `reference/components/_component-doc-standard.md` → *Machine-readable tags*:
    - **Components** — a `reference/components/*.md` with a `## Configurations` section but **no** `` `variant:` `` or `` `state:` `` tag in it. Exclude `index.md` and `_component-doc-standard.md`.
-     `for f in reference/components/*.md; do case "$f" in *index.md|*_component-doc-standard.md) continue;; esac; grep -q '^## Configurations' "$f" && ! grep -qE '`(variant|state): [a-z0-9-]+`' "$f" && echo "$f"; done`
+     `for f in reference/components/*.md; do case "$f" in *index.md|*_component-doc-standard.md) continue;; esac; grep -q '^## Configurations' "$f" && ! grep -qE '`(variant|state|property): [a-z0-9-]+`' "$f" && echo "$f"; done`
    - **Patterns** — a `reference/patterns/*.md` with no `` `pattern:` `` tag.
      `for f in reference/patterns/*.md; do grep -qE '`pattern: [a-z0-9-]+`' "$f" || echo "$f"; done`
    - **Malformed tags** — anything matching `variant:`/`state:`/`pattern:` that isn't backticked kebab-case, or a slug used twice in the same file.
-     `grep -rnoE '\b(variant|state|pattern): [A-Za-z0-9 _-]+' reference/ | grep -vE '`(variant|state|pattern): [a-z0-9-]+`'`
+     `grep -rnoE '\b(variant|state|property|pattern): [A-Za-z0-9 _-]+' reference/ | grep -vE '`(variant|state|property|pattern): [a-z0-9-]+`'`
 
    Also flag docs missing the other slots the standard mandates, since they're cheap to check in the same pass. The standard is the authority on what each requires; don't restate its rules here, just report what's absent. Check the `### Motion` sub-header on components that animate, the length limit under `## Content guidelines`, and the three required `## Accessibility` statements (touch areas, accessibility labels, font scaling at 200%). A quick first pass on the accessibility trio:
    `for f in reference/components/*.md; do case "$f" in *index.md|*_component-doc-standard.md) continue;; esac; m=""; grep -qiE 'touch|2\.5\.8' "$f" || m="$m touch-areas"; grep -qiE 'announce|4\.1\.2|1\.1\.1' "$f" || m="$m a11y-labels"; grep -qiE '200%|1\.4\.4|scal' "$f" || m="$m font-scaling"; [ -n "$m" ] && echo "$f:$m"; done`
