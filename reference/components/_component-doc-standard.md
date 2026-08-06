@@ -43,7 +43,7 @@ Use exactly these headers, in this order. Keep a header even when its content is
 | 1 | `# <Component>` | The H1, matching `component:`. |
 | 2 | `## Examples` | One or two representative images with a caption each, no prose beyond the captions. On ZeroHeight this becomes the **Examples** tab. Every image is a declared `images:` entry (see Sync direction). New docs start with 1-2 placeholder `[Image: …]` briefs here. |
 | 3 | `## Usage` → `### Use when` / `### Don't use when` | Bulleted when-to-use / when-not-to. A short prose line after the lists is fine (e.g. button-vs-link). |
-| 4 | `## Anatomy` | The parts of the component, each **bolded** with a one-line role. Mark optional parts "(optional)". |
+| 4 | `## Anatomy` | The parts of the component, each **bolded** with a one-line role. Mark optional parts "(optional)". When the anatomy image has numbered callouts, use a `# / Part / Role` table whose numbers match the callouts (parts not called out get `—`); otherwise a bulleted list. |
 | 5 | `## Configurations` | Variants, types, sizes, widths, states. Group under `###` sub-headers (Type / Size / Width / …). Every variant and state carries a **machine-readable tag** (below). Buttons & form controls carry the disabled-state callout (below). |
 | 6 | `## Placement` | Where it sits, spacing to neighbours, backgrounds/surfaces, pairing with other components. |
 | 7 | `## Behavior` | Interactive/dynamic behaviour — loading, expand/collapse, selection, transitions. Covers **sizing** (min/max, truncation, multi-line) and **scroll behaviour** where they apply, plus a `### Motion` sub-header (below). Input components also document their **keyboard/input triggers** here (keyboard type, autocapitalisation, return key, input masks). |
