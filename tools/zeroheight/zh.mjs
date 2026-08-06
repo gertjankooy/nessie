@@ -293,14 +293,22 @@ async function images(filter) {
     const dir = join(ASSETS, doc.name);
     mkdirSync(dir, { recursive: true });
 
-    for (const name of names) {
-      const src = rendered[manifest[name]];
-      if (!src) { console.warn(`  ${name}: node ${manifest[name]} returned no image`); continue; }
-      const png = await fetch(src);
-      if (!png.ok) throw new Error(`download failed for ${name}: ${png.status}`);
-      writeFileSync(join(dir, `${name}.png`), Buffer.from(await png.arrayBuffer()));
-      console.log(`  ${doc.name}/${name}.png`);
-    }
+    // Downloads are the whole cost here: one API call yields N render URLs, and
+    // fetching them serially scales linearly with image count. A small worker
+    // pool keeps a full rebuild bounded without hammering the CDN.
+    const CONCURRENCY = 6;
+    const queue = names.slice();
+    const workers = Array.from({ length: Math.min(CONCURRENCY, queue.length) }, async () => {
+      for (let name = queue.shift(); name !== undefined; name = queue.shift()) {
+        const src = rendered[manifest[name]];
+        if (!src) { console.warn(`  ${name}: node ${manifest[name]} returned no image`); continue; }
+        const png = await fetch(src);
+        if (!png.ok) throw new Error(`download failed for ${name}: ${png.status}`);
+        writeFileSync(join(dir, `${name}.png`), Buffer.from(await png.arrayBuffer()));
+        console.log(`  ${doc.name}/${name}.png`);
+      }
+    });
+    await Promise.all(workers);
   }
 }
 

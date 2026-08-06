@@ -45,7 +45,11 @@ No dependencies; Node 18+ only.
 
 ### Cost
 
-Re-exporting is cheap and safe to repeat. Node ids are batched into one Figma API call per document, and Figma returns byte-identical renders for unchanged frames, so re-exports produce no git churn. Roughly 2.5 seconds for three images. If a full rebuild across a migrated library ever gets slow, the fix is to cache the Figma file's `lastModified` and skip the export when it has not changed.
+Re-exporting is cheap and safe to repeat. Node ids are batched into one Figma API call per document, downloads run six at a time, and Figma returns byte-identical renders for unchanged frames, so re-exports produce no git churn.
+
+**Why there is no caching layer.** The obvious optimisation is to cache the Figma file's `lastModified` and skip the export when it has not changed, and it was deliberately not built. `lastModified` covers the whole file, and in an actively edited library something changes most days, so the cache would miss almost every run. Worse, a cache that wrongly reports "unchanged" publishes stale images with nothing to signal it, and the cache file itself either churns in git or goes stale per machine. Always fetching cannot be wrong.
+
+The real cost was serial downloads, which is why they are parallel instead. That scales with image count, carries no correctness risk, and keeps no state. If a full rebuild ever does get slow, raise the concurrency before reaching for a cache.
 
 ### Setting up the Figma token
 
@@ -139,7 +143,7 @@ Always write the URL against `main`. The build retargets it to the branch you ar
 
 ## Known gaps
 
-- The image export is run by hand. A GitHub Action with manual dispatch is the next step, and a scheduled version checking the Figma file version after that.
+- The image export is run by hand. A GitHub Action with manual dispatch is the next step.
 - A branch name containing a slash produces a raw URL that GitHub has to disambiguate. If images 404 while testing from a branch, use a branch name with no slash.
 - Exports carry whatever chrome the Figma frame has, including the component-set boundary. Point `images:` at purpose-built presentation frames rather than at component nodes.
 
