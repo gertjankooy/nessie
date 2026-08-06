@@ -106,7 +106,6 @@ See the layout fundamentals for the Group and SubGroup model this sits in.
 ### Sizing
 - The title takes up to 2 lines when expanded. Actions bottom-align so they stay close to the content slot.
 - When collapsed, the title truncates to 1 line.
-- The icon action is `size.component.control.height.tiny` (32).
 
 ### Motion
 Expanding and collapsing use `motion.duration.default` (300ms) with `motion.ease.default`, the existing NESSIE defaults. Under reduced motion the section changes state instantly. See the motion tokens.
