@@ -3,7 +3,6 @@ component: Section Heading
 category: content
 status: partial
 aliases: [Section Header, Headings, Subhead]
-figma_node: "20300:26476"
 figma_file: "9IVBrRosRzeEh57s0wqT8Q"
 zeroheight_url: https://design.ns.nl/4a05a30ad/p/306244-section-heading
 last_synced: 2026-08-05
@@ -182,4 +181,3 @@ Follow the cross-cutting rules in [the accessibility guidelines](../accessibilit
 
 ## Source
 - ZeroHeight: not applicable. This doc is `sync: push`; the repo is the source and ZeroHeight renders it.
-- Figma: `20300:26476` (🚄 NES App Components → Section Heading)
