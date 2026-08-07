@@ -94,7 +94,7 @@ Sections expand independently, so several can be open at once. Accordion behavio
 - When collapsed, the title truncates to 1 line.
 
 ### Motion
-Expanding and collapsing use 350ms with `motion.ease.easeInOutQuint`. Under reduced motion the section changes state instantly. See [Motion](../tokens/motion.md) guidelines.
+Expanding and collapsing use 350ms with `ease.in-out-quint`. Under reduced motion the section changes state instantly. See [Motion](../tokens/motion.md) guidelines.
 
 > **Android:** uses a spring animation with stiffness 400 rather than a duration-and-curve pair.
 
@@ -125,7 +125,7 @@ Follow the UX-writing scorecard and NS voice in [../content/index.md](../content
 - Icon-only actions need a text alternative naming the section they act on: "Collapse tickets", not "Collapse". `1.1.1`
 - **Font scaling at 200%:** the title wraps to its second line rather than truncating. The second line exists for this reason, because at 150% on a small screen a truncated title leaves almost nothing readable. Actions stay bottom-aligned as the title grows and never overlap it. `1.4.4` `1.4.10`
 - Respect reduced motion. Expanding and collapsing degrade to an instant state change when the OS requests it.
-- **Touch area.** The icon action is 32×32, which clears the 24 minimum but sits below NESSIE's 48 default. Treat it as a deliberate exception for a dense secondary control, and keep surrounding spacing clear of it. `2.5.8`
+- **Touch area.** The icon action measures 32×32 but carries a minimum 44×44 touch area, extending beyond the visible control on all sides. That clears the 24 minimum comfortably. Keep surrounding spacing clear so the touch areas of neighbouring controls never overlap. `2.5.8`
 
 Follow the cross-cutting rules in [../accessibility.md](../accessibility.md).
 
