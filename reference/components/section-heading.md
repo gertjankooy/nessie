@@ -94,7 +94,7 @@ Sections expand independently, so several can be open at once. Accordion behavio
 - When collapsed, the title truncates to 1 line.
 
 ### Motion
-Expanding and collapsing use 350ms with `ease.in-out-quint`. Under reduced motion the section changes state instantly. See [Motion](../tokens/motion.md) guidelines.
+Expanding and collapsing use 350ms with `motion.ease.in-out-quint`. Under reduced motion the section changes state instantly. See [Motion](../tokens/motion.md) guidelines.
 
 > **Android:** uses a spring animation with stiffness 400 rather than a duration-and-curve pair.
 
@@ -115,9 +115,9 @@ Follow the UX-writing scorecard and NS voice in [../content/index.md](../content
 - Focus is **per element inside a traversal group**, so the heading and each action are separately focusable. Do not merge the section into one focusable node: it always contains interactive children, and merging fails outright once there are two actions. `1.3.2`
 - Announce the action **after** the heading text, so the section is identified before the thing you can do to it.
 - **Reading order.** Take a Tickets section with a "Show all" label action and a collapse control, currently expanded. A screen reader steps through three separate nodes:
-  1. "Tickets, heading"
-  2. "All tickets, button"
-  3. "Collapse tickets, button, expanded"
+  1. "Tickets, `heading`"
+  2. "All tickets, `button`"
+  3. "Collapse tickets, `button`, expanded"
 
   The heading never absorbs the action labels into one announcement. Keeping them separate is the point of the traversal group. `1.1.1` `4.1.2`
 - With two actions, each needs its own distinct, specific label: "Expand tickets" and "Dismiss tickets", not two controls both announced as "button". `2.5.3`
