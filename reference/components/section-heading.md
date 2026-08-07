@@ -94,7 +94,7 @@ Sections expand independently, so several can be open at once. Accordion behavio
 - When collapsed, the title truncates to 1 line.
 
 ### Motion
-Expanding and collapsing use 350ms with `motion.ease.in-out-quint`. Under reduced motion the section changes state instantly. See [Motion](../tokens/motion.md) guidelines.
+Expanding and collapsing use 350ms with `ease.in-out-quint`. Under reduced motion the section changes state instantly. See [Motion](../tokens/motion.md) guidelines.
 
 > **Android:** uses a spring animation with stiffness 400 rather than a duration-and-curve pair.
 
