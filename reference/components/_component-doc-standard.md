@@ -40,7 +40,7 @@ Use exactly these headers, in this order. Keep a header even when its content is
 | :-- | :--- | :--- |
 | 1 | `# <Component>` | The H1, matching `component:`. |
 | 2 | `## Usage` → `### Use when` / `### Don't use when` | Bulleted when-to-use / when-not-to. A short prose line after the lists is fine (e.g. button-vs-link). |
-| 3 | `## Anatomy` | The parts of the component, each **bolded** with a one-line role. Mark optional parts "(optional)". |
+| 3 | `## Anatomy` | The parts of the component, each **bolded** with a one-line role. Mark optional parts "(optional)". When the anatomy diagram has numbered callouts, use a `# / Part / Role` table whose numbers match them, and leave the `#` cell empty for a part the diagram doesn't call out; otherwise a bulleted list. |
 | 4 | `## Configurations` | Variants, types, sizes, widths, states. Group under `###` sub-headers (Type / Size / Width / …). Every variant and state carries a **machine-readable tag** (below). Buttons & form controls carry the disabled-state callout (below). |
 | 5 | `## Placement` | Where it sits, spacing to neighbours, backgrounds/surfaces, pairing with other components. |
 | 6 | `## Behavior` | Interactive/dynamic behaviour — loading, expand/collapse, selection, transitions. Covers **sizing** (min/max, truncation, multi-line) and **scroll behaviour** where they apply, plus a `### Motion` sub-header (below). Input components also document their **keyboard/input triggers** here (keyboard type, autocapitalisation, return key, input masks). |

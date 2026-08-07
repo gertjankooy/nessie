@@ -33,11 +33,16 @@ The number of visible items is not the deciding factor. A homepage widget showin
 **Stability.** If a section could hold more than one item on another day, keep the heading permanently rather than showing it only once a second item arrives. A heading that appears and disappears as data changes shifts the layout and breaks the section map that screen-reader users build between sessions.
 
 ## Anatomy
-- **Heading**: the section title, `heading4` carrying the heading role.
-- **Section action** (optional): a label action, an icon action, or both, trailing the heading.
-- **Spacer** (optional): the gap between the heading row and the content slot.
-- **Divider** (optional): a rule closing the section, available on the collapsed state only.
-- **Content slot** (optional): holds the section's content when expanded.
+Numbers match the callouts in the anatomy diagram.
+
+| # | Part | Role |
+| :-- | :--- | :--- |
+| 1 | **Heading** | The section title, `heading4` carrying the heading role. |
+| 2 | **Section action, label** (optional) | A text action trailing the heading. |
+| 3 | **Section action, icon** (optional) | An icon action trailing the heading. |
+| 4 | **Divider** (optional) | A rule closing the section, available on the collapsed state only. |
+| 5 | **Content slot** (optional) | Holds the section's content when expanded. |
+| | **Spacer** (optional) | The gap between the heading row and the content slot; not called out in the diagram. |
 
 The content slot is a content composable that stacks against the heading when the spacer is enabled. It is optional: content may instead be stacked directly after the heading at the section spacing given under Placement.
 
