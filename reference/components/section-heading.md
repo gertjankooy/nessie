@@ -3,8 +3,8 @@ component: Section Heading
 category: content
 status: partial
 aliases: [Section Header, Headings, Subhead]
-zeroheight_page_id: 306244
-zeroheight_url: https://design.ns.nl/4a05a30ad/p/306244-section-heading
+zeroheight_page_id: 8842376
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/57cffa-section-heading
 figma_node: "20300:25645"
 last_synced: 2026-08-07
 related: [expandable, list-items, tiles, badge, dividers, button]
@@ -125,6 +125,6 @@ Follow the UX-writing scorecard and NS voice in [../content/index.md](../content
 Follow the cross-cutting rules in [../accessibility.md](../accessibility.md).
 
 ## Source
-- ZeroHeight: https://design.ns.nl/4a05a30ad/p/306244-section-heading (page `306244`, synced 2026-08-07)
+- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/57cffa-section-heading (page `8842376`, synced 2026-08-07)
 - Figma: `20300:25645` (🚄 NES App Components → Section Heading)
 - Authored from the 2026-08-03 refinement (Gertjan Kooy with Paul and Dheeraj Chahar).
