@@ -49,6 +49,8 @@ Use exactly these headers, in this order. Keep a header even when its content is
 | 9 | `## Accessibility` | A11y specifics with **WCAG refs in backticks** (e.g. `` `2.5.8` ``). Three items are always stated: **touch areas** (the component's own target size, and any deliberate exception to the ≥48 default, `2.5.8`), **accessibility labels** (what is announced, in what order — with a worked example where the label is composed from several parts, `1.1.1` `4.1.2`), and **font-scaling behaviour at 200%** (what reflows, what truncates, what the component must not do, `1.4.4`). Cross-link to `../accessibility.md` for the cross-cutting rules. |
 | 10 | `## Source` | ZeroHeight URL + `(page <id>, synced <date>)`, and `Figma: <node>` when known. |
 
+**Say each thing once; fill a section only when it adds something.** A section earns its place by carrying information no other section already states. Don't restate in Behavior what Anatomy or Configurations covered, or repeat a placement rule under both Placement and Best practices — put each fact in its most natural home and cross-reference if another section needs to point at it. If a section would only echo others, cut it to what is genuinely new. A section with nothing in ZeroHeight keeps its header and a gap marker per the Gaps convention (an empty section there means content not yet synced). The fixed order still governs whatever sections you include.
+
 ### The disabled-state callout (buttons & form controls)
 When a component *could* have a disabled state, include this after Configurations:
 
@@ -69,11 +71,14 @@ Docs in this skill carry inline tags so an agent can address a specific variant 
 
 ### State
 - **Pressed** `state: pressed`: while the control is held.
+
+### Divider
+- **Divider** `property: divider`: an optional part toggled on or off.
 ```
 
-- Two tag types only: `variant:` for variants, types, sizes, and widths; `state:` for interaction states.
-- The slug is **kebab-case of the variant name** (`Full height` → `full-height`) and must be unique within the file.
-- Tags are backticked so they read as code and stay greppable: `grep -rhoE '\`(variant|state): [a-z0-9-]+\`'`.
+- Three tag types, chosen by meaning not by Figma's internal property type: `variant:` for one of two or more mutually exclusive named configurations (types, sizes, widths, an icon glyph, collapsed vs expanded); `state:` for interaction states; `property:` for a boolean that toggles an optional part on or off (a divider, a badge). Tag a `property:` once, on the part it adds; the off case is not separately tagged. So collapsed/expanded are `variant:` even though Figma models the axis as a boolean, while the divider is `property:` because it is an optional part, not a chosen configuration.
+- The slug is **kebab-case of the name** (`Full height` → `full-height`) and must be unique within the file. For a `property:`, slug the part it toggles (`property: divider`, `property: badge`).
+- Tags are backticked so they read as code and stay greppable: `grep -rhoE '\`(variant|state|property): [a-z0-9-]+\`'`.
 - A doc whose `## Configurations` has no tags is reported by `/docs-coverage` as a convention gap.
 
 Anatomy parts, placement rules, and behaviour are **not** tagged — only the addressable configuration surface.
@@ -121,7 +126,7 @@ Put the line directly under the section/sub-section heading it protects. When Ze
 - [ ] **Frontmatter** complete; `zeroheight_page_id` / `zeroheight_url` match the App page; `last_synced` = today; `related` uses name-slugs.
 - [ ] **All 10 section headers present and in order** — gaps kept (header + marker), not dropped.
 - [ ] Every variant / state / token name is traceable to the source.
-- [ ] **Every variant and state under `## Configurations` carries a `variant:` / `state:` tag**, kebab-case and unique in the file.
+- [ ] **Every configuration under `## Configurations` carries a `variant:` / `state:` / `property:` tag**, kebab-case and unique in the file (`property:` for boolean toggles like a divider or badge).
 - [ ] If the component animates, `## Behavior` has a `### Motion` sub-header naming semantic motion tokens and reduced-motion behaviour.
 - [ ] `## Accessibility` states **touch areas** (`2.5.8`), **accessibility labels** — what's announced and in what order, with a worked example where the label is composed (`1.1.1` `4.1.2`) — and **font-scaling behaviour at 200%** (`1.4.4`).
 - [ ] `## Content guidelines` gives a **length limit** (max characters or word target) where one exists.
