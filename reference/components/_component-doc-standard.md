@@ -100,6 +100,7 @@ When a component animates, document it under a `### Motion` sub-header inside `#
 - Accessibility → `../accessibility.md`.
 - Other components → same-dir bare slug link, e.g. `[Button group](button-group.md)`.
 - Layout/spacing → `../fundamentals/layout.md`; interaction/surfaces → `../patterns/interaction-models.md`.
+- **Links are always repo-relative here, never ZeroHeight URLs.** A page will often link to another page by its `design.ns.nl` URL, which is correct there and wrong here. On sync, rewrite every inbound ZeroHeight URL that points at a documented component, pattern, or guideline to its repo-relative equivalent (match on the page's `zeroheight_url` in frontmatter). Leave a URL as-is only when nothing in `reference/**` documents that page.
 
 ## Gaps (kept, not dropped)
 A section with nothing in ZeroHeight keeps its header and is added to `gaps:`. Mark it:
