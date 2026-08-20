@@ -1,12 +1,12 @@
 ---
 component: Section Heading
 category: content
-status: partial
+status: stable
 aliases: [Section Header, Headings, Subhead]
 zeroheight_page_id: 8842376
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/57cffa-section-heading
 figma_node: "20300:25645"
-last_synced: 2026-08-07
+last_synced: 2026-08-20
 related: [expandable, list-items, tiles, badge, dividers, button]
 gaps: []
 ---
@@ -40,24 +40,32 @@ Numbers match the callouts in the anatomy diagram.
 | 1 | **Heading** | The section title, `heading4` carrying the heading role. |
 | 2 | **Section action, label** (optional) | A text action trailing the heading. |
 | 3 | **Section action, icon** (optional) | An icon action trailing the heading. |
-| 4 | **Divider** (optional) | A rule closing the section, available on the collapsed state only. |
-| 5 | **Content slot** (optional) | Holds the section's content when expanded. |
+| 4 | **Divider** (optional) | A rule closing the section against what follows. |
+| 5 | **Content slot** (optional) | Holds the section's content. |
 | | **Spacer** (optional) | The gap between the heading row and the content slot; not called out in the diagram. |
 
 The content slot is a content composable that stacks against the heading when the spacer is enabled. It is optional: content may instead be stacked directly after the heading at the section spacing given under Placement.
 
 ## Configurations
+Section Heading is a **composable**: one base component whose parts you show or hide, plus **prefabs** that ship the common combinations already configured. Reach for a prefab first and drop to the base only when none of them fits.
+
+### Prefabs
+- **Disclosure** `variant: disclosure`: the action opens and closes the content slot, animating the transition, flipping the chevron, and hiding the divider while open. States: `variant: collapsed`, `variant: expanded`.
+- **Dismissable** `variant: dismissable`: a close action.
+- **Options** `variant: options`: a more-options action.
+
+Disclosure is the only prefab with built-in behavior; on the other two you wire the action yourself.
+
 ### Content slot
-- **Collapsed** `variant: collapsed`: the heading row on its own. The divider is available, but optional, in this state.
-- **Expanded** `variant: expanded`: heading row, spacer, then the content slot. The divider is hidden.
+- **Content slot** `property: content-slot`: holds the section's content and keeps the heading spaced from it. A plain container except on Disclosure, which opens and closes it.
 
 ### Section action (icon)
-An icon-only [Button](button.md) at the tiny (32) size, inheriting its states, touch behavior, and disabled handling. Only the glyph changes:
+An icon-only [Button](button.md) at the tiny (32) size, inheriting its states, touch behavior, and disabled handling. Prefabs preset the glyph; on the base you pick it.
 
-- **Expand** `variant: chev-down`: opens the section.
-- **Collapse** `variant: chev-up`: closes the section.
-- **Dismiss** `variant: close`: removes the section.
-- **More options** `variant: dots`: opens further actions.
+- **Expand** `variant: chev-down`
+- **Collapse** `variant: chev-up`
+- **Dismiss** `variant: close`
+- **More options** `variant: dots`
 
 ### Section action (label)
 A text action trailing the heading. It is a purpose-built action rather than a [Link](link.md) or [Button](button.md) instance, so it can carry its own background without inheriting the offsets those components apply elsewhere.
@@ -67,34 +75,32 @@ A text action trailing the heading. It is a purpose-built action rather than a [
 - **Focus** `state: focus`: while focused.
 
 ### Badge
-- **Dot** `property: badge`: a boolean on the icon action; the dot is its only permitted form.
+- **Dot** `property: badge`: on the icon action; the dot is its only permitted form.
 
-Use the dot to flag that a collapsed section holds new or changed content worth expanding, such as a section that gained items since the user last looked. Reserve it for genuinely new content and clear it once the section is opened; it never conveys a count.
-
-Restricted to the dot form. A counter or text badge overlaps the icon at this size and must not be used here. See [Badge](badge.md).
+Disclosure only. Use it to flag that a collapsed section gained content since the user last looked, and clear it once the section is opened. It never conveys a count, and a counter or text badge overlaps the icon at this size. See [Badge](badge.md).
 
 ### Divider
-- **Divider** `property: divider`: a boolean rule closing a collapsed section against what follows.
+- **Divider** `property: divider`: a rule closing the section against what follows.
 
-Available on the collapsed state only. When the section expands, the content itself provides that separation and the divider is hidden.
+Disclosure manages it automatically; on the other prefabs it is yours to set.
 
 ## Placement
-- Default spacing between sections is `applied.space.app.container.stack.control` (32), whether the section is collapsed or expanded, so the rhythm doesn't change as sections open and close.
-- Override to `applied.space.app.container.stack.default` (24) for denser layouts where keeping content scrollable matters more, such as search results.
-- Place the heading **outside** the content container it labels, directly against it, with no extra spacing and 0 stacking.
+- Default spacing between sections is `space.app.container.stack.control` (32), whether the section is collapsed or expanded, so the rhythm doesn't change as sections open and close.
+- Override to `space.app.container.stack.default` (24) for denser layouts where keeping content scrollable matters more, such as search results.
+- Place the heading **outside** the content container it labels, directly against it, with no extra spacing and 0 stacking. Don't nest it inside the container.
 - Keep the heading larger than any heading inside the container below it. The Section Heading is `heading4` (18), a following subheading is `labelDefaultStrong` (16), and labels inside the section's own items are smaller again.
 
 See [App Layout](../fundamentals/layout.md) for the Group and SubGroup model this sits in.
 
 ## Behavior
-Sections expand independently, so several can be open at once. Accordion behavior, where opening one closes another, is deliberately avoided, matching [Expandable](expandable.md).
+**Disclosure** sections expand independently, so several can be open at once. Accordion behavior, where opening one closes another, is deliberately avoided, matching [Expandable](expandable.md).
 
 ### Sizing
-- The title takes up to 2 lines when expanded. Actions bottom-align so they stay close to the content slot.
-- When collapsed, the title truncates to 1 line.
+- When the title wraps to multiple lines, the actions bottom-align so they stay close to the content slot.
+- For title length, see Content guidelines.
 
 ### Motion
-Expanding and collapsing use 350ms with `ease.in-out-quint`. Under reduced motion the section changes state instantly. See [Motion](../tokens/motion.md) guidelines.
+Expanding and collapsing use 350ms with `ease.in-out-quint`. Under reduced motion the section changes state instantly. See [Motion](../fundamentals/motion.md) guidelines.
 
 > **Android:** uses a spring animation with stiffness 400 rather than a duration-and-curve pair.
 
@@ -103,9 +109,9 @@ Expanding and collapsing use 350ms with `ease.in-out-quint`. Under reduced motio
 - Don't nest Section Headings.
 
 ## Content guidelines
-- Write the title as a noun or noun phrase naming the category of content below it, never a question.
-- Sentence case, no ending punctuation.
-- **Length:** aim for 1–3 words and a single line. Treat roughly 25 characters as the practical ceiling before the collapsed title starts truncating on a small screen.
+- Write the title as a noun or noun phrase naming the category of content below it, never a question. "Tickets", not "Where are my tickets?" Avoid verb phrases too: the heading names what the content is, the action beside it names what you can do, so "Travel cards" with a "Manage" action, not a "Manage cards" heading.
+- Sentence case, no ending punctuation: "Travel cards", not "Travel Cards" or "Travel cards." NS product names keep their capitals ("NS Flex Dal Voordeel").
+- **Length:** aim for 1–3 words and a single line. Treat roughly 25 characters as the practical ceiling.
 - Name the destination rather than the gesture in a label action. Prefer "All tickets" over "Show all" when the heading alone doesn't make the destination obvious, and fall back to "Show all" when it does.
 
 Follow the UX-writing scorecard and NS voice in [../content/index.md](../content/index.md), and the link wording rules in [../content/link.md](../content/link.md).
@@ -121,7 +127,7 @@ Follow the UX-writing scorecard and NS voice in [../content/index.md](../content
 
   The heading never absorbs the action labels into one announcement. Keeping them separate is the point of the traversal group. `1.1.1` `4.1.2`
 - With two actions, each needs its own distinct, specific label: "Expand tickets" and "Dismiss tickets", not two controls both announced as "button". `2.5.3`
-- Expose the expanded and collapsed state of an expandable section, and update it on toggle. `4.1.2` `4.1.3`
+- Expose the expanded and collapsed state of a **Disclosure** section, and update it on toggle. `4.1.2` `4.1.3`
 - Icon-only actions need a text alternative naming the section they act on: "Collapse tickets", not "Collapse". `1.1.1`
 - **Font scaling at 200%:** the title wraps to its second line rather than truncating. The second line exists for this reason, because at 150% on a small screen a truncated title leaves almost nothing readable. Actions stay bottom-aligned as the title grows and never overlap it. `1.4.4` `1.4.10`
 - Respect reduced motion. Expanding and collapsing degrade to an instant state change when the OS requests it.
@@ -130,5 +136,5 @@ Follow the UX-writing scorecard and NS voice in [../content/index.md](../content
 Follow the cross-cutting rules in [../accessibility.md](../accessibility.md).
 
 ## Source
-- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/57cffa-section-heading (page `8842376`, synced 2026-08-07)
+- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/57cffa-section-heading (page `8842376`, synced 2026-08-20)
 - Figma: `20300:25645` (🚄 NES App Components → Section Heading)
