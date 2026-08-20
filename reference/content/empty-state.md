@@ -8,7 +8,7 @@ related: [empty-state, feedback-states]
 
 # Content — Empty state
 
-Wording for an empty content area. For *when* to use an Empty State vs another surface, and its variants, see `reference/patterns/feedback-states.md`. (The Empty State component itself is still WIP — no component page yet.)
+Wording for an empty content area. For *when* to use an Empty State vs another surface, and its variants, see `../patterns/feedback-states.md`. (The Empty State component itself is still WIP — no component page yet.)
 
 ## Structure
 Use the **same three-part structure as an error message** (`error-message.md`): Observation → Cause (when clear) → Solution.
@@ -19,7 +19,7 @@ There are no strict rules here — be a little creative, within these:
 - **Convey service** — show you tried: "Het lukt ons niet om…" gives a sense of effort on the user's behalf.
 - **A small branded joke is allowed**, as long as it never gets in the way of helping — e.g. "NS Flex beweegt even niet mee."
 
-> Tone still follows the variant: the *error*/*offline* readings stay plain (no jokes when money or a journey is involved); *empty*/*all-clear* can be lighter. See `reference/patterns/feedback-states.md` → Tone.
+> Tone still follows the variant: the *error*/*offline* readings stay plain (no jokes when money or a journey is involved); *empty*/*all-clear* can be lighter. See `../patterns/feedback-states.md` → Tone.
 
 ## Source
 - ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/4620ce-empty-state (page `4885927`, synced 2026-07-22)

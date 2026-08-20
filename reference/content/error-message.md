@@ -8,7 +8,7 @@ related: [error-message, message-inline, message-toast, message-bar, feedback-st
 
 # Content — Error message
 
-Wording for errors that surface in Message Inline, Message Toast, or Message Bar. For *which surface* to use, see `reference/patterns/feedback-states.md`; for the components, see `reference/components/`.
+Wording for errors that surface in Message Inline, Message Toast, or Message Bar. For *which surface* to use, see `../patterns/feedback-states.md`; for the components, see `reference/components/`.
 
 **Length:** title **1–2 lines**, body **1–3 lines**. Mobile design is leading.
 

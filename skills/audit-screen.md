@@ -16,7 +16,7 @@ Auditing a real Figma screen means reading it through the **Figma MCP tools** (`
 
 ## What to check (run all five passes)
 1. **Components** — Is every element an actual NESSIE App component, used with a valid variant? Flag hand-built elements that duplicate a `Nes*` component. Cross-check against `reference/components/index.md` and the relevant component file.
-2. **Tokens** — Every color, type style, spacing, radius, and motion value must map to a NESSIE token. Flag raw hex, off-scale spacing, non-token type. See `reference/tokens/*` (or run the focused `/audit-tokens` skill).
+2. **Tokens** — Every color, type style, spacing, radius, and motion value must map to a NESSIE token. Flag raw hex, off-scale spacing, non-token type. See `reference/tokens/*` for the values and `reference/fundamentals/*` for whether the right token was picked (or run the focused `/audit-tokens` skill).
 3. **Layout** — Correct surface (base/default/elevated), app inset/stack/gap tokens, safe areas, list density. See `reference/fundamentals/layout.md`.
    - **States** — Where the screen shows empty / loading / error / stale content, is the right surface used (Empty State vs Message Inline vs Toast vs Skeleton), and do the error-handling rules hold (content preserved, a way forward, scope-appropriate placement)? See `reference/patterns/feedback-states.md`.
 4. **Accessibility** — Contrast pairings (`*Contrast` families, 4.5:1), touch-target minimums, heading structure, color-not-alone, meaningful labels. See `reference/accessibility.md`.

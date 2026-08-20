@@ -91,3 +91,5 @@ iOS also exposes `spacing10`=40, `spacing14`=56, `spacing20`=80, `spacing24`=96,
 - **Default touch targets ≥ 48** — use `control.height.default`; don't shrink below for primary actions.
 - **iOS scale is sparse/non-contiguous** — there is no `spacing7`; map to nearest existing step.
 - **Use app.* intent tokens for screen structure** (inset/stack/inline) over picking bare `space.md` ad hoc, when an intent token fits.
+
+> **Applying spacing to screen structure** (inset / stack / inline, body levels): see `../fundamentals/layout.md`. Radius and border usage: `../fundamentals/style.md`.

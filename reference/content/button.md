@@ -8,7 +8,7 @@ related: [button, link]
 
 # Content — Button
 
-Button copy is **2–4 words** and always leads to action. See the component itself in `reference/components/button.md`.
+Button copy is **2–4 words** and always leads to action. See the component itself in `../components/button.md`.
 
 ## Use verbs
 A button is an action, so start with an **active verb** (what you're going to do) and, when needed, a **noun** that defines it — `[verb] + [noun]`. Urgency/scarcity words (`nu`, `tijdelijk`, `gratis`) also work.

@@ -10,7 +10,7 @@ gaps: [Products]
 
 # Content — UX writing for NESSIE
 
-How we write for web and app. This is **UX writing**, not copywriting: functional text that helps a traveller reach their goal, in the voice of NS. Wording rules referenced from patterns (e.g. `reference/patterns/feedback-states.md`) and components live here.
+How we write for web and app. This is **UX writing**, not copywriting: functional text that helps a traveller reach their goal, in the voice of NS. Wording rules referenced from patterns (e.g. `../patterns/feedback-states.md`) and components live here.
 
 **Language & reading level:** every element is available in **Dutch and English**. Write at **B1** reading level — present tense, active voice, short sentences; avoid ambiguous words and abbreviations ("Huisnr.", "n.v.t."). Dutch compounds are written as one word or hyphenated (`NS-abonnement`, `pannenkoekenboot`).
 
@@ -25,7 +25,7 @@ How we write for web and app. This is **UX writing**, not copywriting: functiona
 ## Content scorecard — usability heuristics
 Challenge every piece of content against these (score 0–10 each; it's a writing aid, not admin):
 
-- **Accessible** — NL + EN, B1 level, correct compound spelling, and every element has text a screen reader can speak (button labels, image alt text, video subtitles). See `reference/accessibility.md`.
+- **Accessible** — NL + EN, B1 level, correct compound spelling, and every element has text a screen reader can speak (button labels, image alt text, video subtitles). See `../accessibility.md`.
 - **Purposeful** — the user can clearly reach their goal and the business goal is met.
 - **Concise** — buttons **2–4 words**; error title **1–2 lines**, error body **1–3 lines**; the mobile (XS) viewport is leading. Only present information that's relevant right now.
 - **Conversational** — familiar words and ideas, presented in logical order ("To allow location, go to Settings, then turn on Location" — not the reverse). Read it aloud; it should sound human, not robotic. Don't use NS jargon (e.g. *daluren*) without explaining it.
@@ -52,7 +52,7 @@ Component-specific writing guidance lives in its own file:
 ## What this area does not cover
 - Product terminology (Ticket, Season ticket, OV-pas). _ZeroHeight has these under CONTENT → Products (`5784480`); not mirrored yet — tracked in the `/sync-docs` registry._
 - Component anatomy, variants, and tokens → `reference/components/`.
-- Accessibility requirements → `reference/accessibility.md`.
+- Accessibility requirements → `../accessibility.md`.
 
 ## Source
 - ZeroHeight: CONTENT (`5784474`) — Principles of content design (`4492224`), Content scorecard (`5784475`), and per-component content pages. Synced 2026-07-22.

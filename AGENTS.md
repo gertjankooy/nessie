@@ -48,19 +48,25 @@ This file (`AGENTS.md`) is the entry point. **Read the relevant skill file befor
 
 | User intent | Read this skill file first — before any output | Then load |
 | :--- | :--- | :--- |
-| Design / generate a new screen, view, or flow | **`skills/build-screen.md`** | `reference/components/index.md`, then specific component + token + layout files |
+| Design / generate a new screen, view, or flow | **`skills/build-screen.md`** | `reference/components/index.md`, then specific component files + the `reference/fundamentals/` file for what you're deciding (layout, color, typography, motion, style) + its matching `reference/tokens/` file for the values |
 | Review / check an existing screen against NESSIE | **`skills/audit-screen.md`** | the five reference areas it lists |
-| Check only token usage | **`skills/audit-tokens.md`** | `reference/tokens/*` |
+| Check only token usage | **`skills/audit-tokens.md`** | `reference/tokens/*` for the values, `reference/fundamentals/*` for whether the right one was picked |
 | Create / update a component's reference doc | **`skills/document-component.md`** | `reference/components/_component-doc-standard.md` |
 
-All paths are **relative to the repository root**. Re-read files every session; never assume you remember them.
+All paths **in this file** are relative to the repository root. Cross-links **inside `reference/`** are relative to the linking file's own directory (`../tokens/color.md`, `layout.md`); keep new links in that form. Re-read files every session; never assume you remember them.
 
 ## Reference map
 
 - `reference/design-language.md` — brand personality, visual direction, iconography, brand-color usage. (The "what makes it feel NESSIE" doc.)
 - `reference/components/index.md` — **master catalog**: every App component, when to use it, and a link to its own file. **Start here to pick components**, then open the linked `reference/components/<component>.md` (one file per component — e.g. `button.md`, `input.md`, `route.md`). Each is synced from ZeroHeight and carries `zeroheight_page_id` / `last_synced` / `gaps` frontmatter. (Maintainers refresh docs with the `/sync-docs` command in Claude Code.)
-- `reference/tokens/` — `color.md` · `typography.md` · `spacing.md` · `shape.md` · `motion.md` · `applied.md`
-- `reference/fundamentals/` — `layout.md` (composition: app insets/stacks/surfaces, safe areas, screen-type patterns, the **navigation region** — header/tabs/bottom-nav/back-nav — and the token `--slash` ↔ dotted naming crosswalk). *ZeroHeight: Fundamentals → Composition.*
+- `reference/tokens/` — the **token lists** (vocabulary): `color.md` · `typography.md` · `spacing.md` · `shape.md` · `motion.md` · `applied.md`. *ZeroHeight: TOKENS → …*
+  > **Pairing:** each token file has a matching `reference/fundamentals/` file that says **which token to pick when**. Load both: `tokens/color.md` + `fundamentals/color.md`, and so on. Values live in tokens, usage lives in fundamentals.
+- `reference/fundamentals/` — **how to apply** the system to a screen, one file per ZeroHeight *Fundamentals* page:
+  - `layout.md` (composition: app insets/stacks/surfaces, safe areas, screen-type patterns, the **navigation region** — header/tabs/bottom-nav/back-nav — and the token `--slash` ↔ dotted naming crosswalk). *ZeroHeight: Fundamentals → Composition.*
+  - `color.md` (visual hierarchy: which background for which screen job; applying color by meaning). *Fundamentals → Color.*
+  - `typography.md` (picking guide: which preset for which role). *Fundamentals → Typography.*
+  - `motion.md` (which **transition** for which navigation — tabs, pages, sheets, focused flows — iOS vs Android; direction and behaviour only, timing & easing pending). *Fundamentals → Motion.*
+  - `style.md` (choosing radius and border width per surface). *Fundamentals → Style.*
 - `reference/content/` — **UX writing**: `index.md` (six principles, content scorecard, NS voice — Sympathetic/Professional/Inspiring, NL+EN B1) plus per-component wording (`button.md`, `link.md`, `error-message.md`, `empty-state.md`, `breadcrumb.md`). The source of truth for tone and copy referenced by patterns and components.
 - `reference/accessibility.md` — cross-cutting accessibility guidance (WCAG 2.2 AA: contrast pairings, touch targets, headings/structure, labels, focus & status). *ZeroHeight: Guidelines → Accessibility.*
 - `reference/patterns/` — `interaction-models.md` (transient **surfaces**: menus, sheets, dialogs, flows, panels — iOS vs Android) · `feedback-states.md` (empty / loading / error / offline states: which surface for empty vs error vs stale content, and error-handling rules) · `settings-utility.md` (settings list layout/behaviour/states)

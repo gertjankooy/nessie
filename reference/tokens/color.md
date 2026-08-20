@@ -92,32 +92,6 @@ Use `.pale` for the tinted background of an alert, `.default` for icon/border, `
 | `content.background.alpha-subtle/-subdued/-strong/-heavy/-alt/-inverse-subtle` | alpha steps | Adaptive overlays over any surface. |
 | `content.background.pure` | white → black | True white/black surface (rare). |
 
-## Visual hierarchy — choosing a background
-
-Three foundational surface tokens build app layout hierarchy: `base`, `default`, and `elevated` (each with an `-alt` for a different dark-mode tone). Pick by the screen's job, not by looks.
-
-- **`default`** — content-first screens (forms, reading, flows), rich text, and primary containers. **Modals and bottom sheets always use `default`** — they're content-heavy and need clarity across modes.
-- **`base`** — utility / navigation-dominant screens (settings, search, overview/filter panels), and as the canvas to **visually group** `default` containers placed on top.
-- **`elevated`** — components that must lift off the surface (cards, tiles, inputs). In **dark mode** use a border (shadows barely read) — shadow *or* border, never both.
-
-**Nesting & combinations**
-- Nest `default` containers inside a `base` screen (e.g. settings: `base` page + `default` grouped containers). Inside a container, separate items with dividers — don't wrap every item in its own container.
-- **Avoid full-page `elevated`** — it's reserved for components only.
-- Use `background-alpha` tokens for overlays / semi-transparent components (badges, tooltips, overlays) so they adapt across elevations and modes.
-
-**Quick reference**
-
-| Use case | Background |
-| :--- | :--- |
-| Settings screen | `base` + `default` for list containers |
-| Grouped list sections | `default` on `base` |
-| Search / filter view | `base` (results: `default` on `base`) |
-| Modal / bottom sheet | `default` |
-| Input container | `default` |
-| Tile / card container | `elevated` / `elevated-alpha` |
-
-See `../fundamentals/layout.md` for spacing/insets on these surfaces and `../patterns/settings-utility.md` for settings-screen structure.
-
 ## Content — Border, Shadow, Scrim
 
 | Token | Light → Dark | Usage |
@@ -144,7 +118,5 @@ Prefer these over re-composing base tokens for forms, interaction, skeleton, mod
 - **Never core/raw** (`color.brand.yellow`, `color.gray.*`, `NesColor.*`, `--nes-core-*`) in a design — only base/applied.
 - **Never hex.** Every fill, text, and border must trace to a semantic token.
 - **Dark mode is automatic.** Don't hand-pick light-mode steps or set dark overrides — the token remaps itself.
-- **Pick by meaning, not by swatch** — matching colors is not a reason to reuse a token.
-- **`on-default` for foreground on a filled surface** — don't reuse `content.text.default` on a colored button.
-- **Modality colors are scoped** to transport/travel-planner surfaces; never use them as generic accents.
-- **Disabled** = opacity token (`interaction.opacity.disabled-component` 50%), not a greyed color.
+
+> **Choosing a background, and applying color by meaning:** see `../fundamentals/color.md`. This file is the token list; that file is the usage guidance.

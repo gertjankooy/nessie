@@ -61,27 +61,11 @@ Body default max-width = prose 65ch; article = 75ch.
 
 Labels use `font.label.leading` (normal) or `leading-tight` for single-line controls; tracking normal.
 
-## Picking guide
-
-| Need | Preset |
-| :--- | :--- |
-| Page title | `heading1` (or `heading2` if compact) |
-| Section header | `heading2` / `heading3` |
-| Card title | `heading4` |
-| Prose / paragraph | `bodyDefault` |
-| Long article | `bodyArticle` |
-| List item title | `labelDefault` |
-| Button text | `labelDefault` |
-| Form field label | `labelSm` |
-| Subtitle / metadata | `caption` |
-| Legal / fine print | `footnote` |
-| Inline link | `link` |
-| Category lead-in | `eyebrow` |
-
 ## Rules / Don'ts
 
 - **Never raw `font.size.*` / `font.weight.*`** in a design — pick a preset; the preset carries size + weight + leading + tracking together.
 - **Don't recombine** a size with a different weight/leading — use the matched preset.
 - **NS Sans only** — Regular 400 / Demi 550 / Bold 700. No other weights.
 - **iOS:** target `NesTextStyle` presets; don't introduce new uses of the deprecated `NesTypography.TextStyle` factories.
-- **Type color** comes from `content.text.*` (see color.md), never baked into the type style.
+
+> **Which preset for which role, and applying type:** see `../fundamentals/typography.md`. This file is the preset list; that file is the usage guidance.

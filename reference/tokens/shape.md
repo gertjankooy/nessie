@@ -51,6 +51,5 @@ Usage column reflects the **app layout-token system** (authoritative — `NesTok
 
 - **Never raw `border.radius.*` numeric steps** in a design — pick a semantic radius.
 - **Never invent radii** (4, 8, 10). The scale is sparse by design; round to nearest token and flag.
-- **Cards/list items/containers → `container` (12).** Bottom sheets/interactive overlays → `interaction` (16). Modals/large panels → `panel` (24). Text fields/compact controls → `default` (6). Pills/chips → `particle` (3) or `entire`.
-- **Focused/selected state uses `border.width.active` (2)** — don't thicken arbitrarily.
-- **Shadow OR border on elevated surfaces, never both** (see color.md `content.background.elevated`).
+
+> **Which radius for which surface, and applying shape:** see `../fundamentals/style.md`. This file is the token list; that file is the usage guidance.

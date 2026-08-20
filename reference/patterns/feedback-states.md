@@ -74,7 +74,7 @@ It fills the content area only; the top bar and bottom nav stay in place — and
 - The illustration or icon is decorative; the **title must carry the meaning on its own**.
 
 ### Tone
-Wording follows the Content scorecard (`reference/content/index.md`); what's specific here is which variant gets which tone.
+Wording follows the Content scorecard (`../content/index.md`); what's specific here is which variant gets which tone.
 - `empty` and `no-results` are neutral. A short line in the NS voice is welcome — warm, human, positive words. The *all clear* reading of `empty` (e.g. no disruptions) can lean a little more positive, since it's good news.
 - `error` and `offline` stay plain and factual. Keep the NS voice, but no jokes, and never make light of money or a missed journey.
 

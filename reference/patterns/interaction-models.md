@@ -15,6 +15,8 @@ How users perform actions that require a choice, adjustment, or task completion 
 > iOS uses native SwiftUI APIs directly; Android uses Nessie's `Nes`-prefixed implementations (e.g. `NesAlertDialog`, `NesPopupMenu`). This page is iOS/Android only — not web. It does not cover motion, toast/snackbar feedback, or onboarding.
 >
 > Navigation **structure** — top bar, tabs vs bottom navigation, and back navigation — lives in `../fundamentals/layout.md` (Navigation region). This page owns the transient surfaces and actions layered on top of that structure.
+>
+> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).** How these surfaces arrive and leave (direction and per-platform behaviour) is documented in `../fundamentals/motion.md`. That page supersedes the "does not cover motion" note above.
 
 ## Menus & actions
 

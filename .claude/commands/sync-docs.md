@@ -23,10 +23,14 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 | **Design System → PATTERNS → Interaction Models** (`8100862`) | `reference/patterns/interaction-models.md` | Pattern |
 | **Design System → PATTERNS → Settings & Utility** (`8094399`) | `reference/patterns/settings-utility.md` | Pattern |
 | **Design System → PATTERNS → Feedback & States** (`8773720`) | `reference/patterns/feedback-states.md` (folds in the page's Overview + Empty States + Error Handling tabs) | Pattern |
-| **Fundamentals → Color** (`6693013`) + **TOKENS → Color** (`6694970`) | `reference/tokens/color.md` (usage + Visual hierarchy + token list) | Token |
-| **Fundamentals → Typography** (`6693097`) + **TOKENS → Typography** (`6694972`) | `reference/tokens/typography.md` | Token |
-| **Fundamentals → Style** (`6693107`) + **TOKENS → Style/Dimension** (`6699361`/`6694971`) | `reference/tokens/shape.md` · `spacing.md` | Token |
-| **Fundamentals → Motion** (`6693108`) + **TOKENS → Motion** (`6699072`) | `reference/tokens/motion.md` | Token |
+| **Fundamentals → Color** (`6693013`) | `reference/fundamentals/color.md` (usage: Visual hierarchy, applying color) | Fundamental |
+| **TOKENS → Color** (`6694970`) | `reference/tokens/color.md` (token list) | Token |
+| **Fundamentals → Typography** (`6693097`) | `reference/fundamentals/typography.md` (usage: picking guide, applying type) | Fundamental |
+| **TOKENS → Typography** (`6694972`) | `reference/tokens/typography.md` (preset list) | Token |
+| **Fundamentals → Style** (`6693107`) | `reference/fundamentals/style.md` (usage: choosing radius/border width) | Fundamental |
+| **TOKENS → Style/Dimension** (`6699361`/`6694971`) | `reference/tokens/shape.md` · `spacing.md` (token lists) | Token |
+| **Fundamentals → Motion** (`6693108`) | `reference/fundamentals/motion.md` (usage: navigation transitions per platform) | Fundamental |
+| **TOKENS → Motion** (`6699072`) | `reference/tokens/motion.md` (duration + easing list) | Token |
 | **TOKENS → Overview / applied** | `reference/tokens/applied.md` | Token |
 | **Fundamentals → Composition → Layout for App** (`6693137`) | `reference/fundamentals/layout.md` | Fundamental |
 | **Fundamentals → Icons** (`6693098`) | `reference/components/icon.md` + `reference/design-language.md` | mixed |
@@ -34,7 +38,7 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
 | **Guidelines → CONTENT** — Principles of content design (`4492224`), Content scorecard (`5784475`), per-component content (Button `4449721`, Link `4460300`, Error message `4460630`, Empty state `4885927`, Breadcrumb `4492170`) | `reference/content/index.md` + `reference/content/<kebab>.md` (`button` · `link` · `error-message` · `empty-state` · `breadcrumb`) — wording/tone source of truth referenced by patterns (`feedback-states.md`) and by the matching `reference/components/*.md`. **TODO:** Products (Ticket `5784480`) not yet synced | Doc |
 | **Guidelines → ACCESSIBILITY** — Accessibility (`5784505`), WCAG (`6221540`), Checklist per role (`5784836`), Getting started (`5868110`), Accessibility labels deep-dive (`5891441`) | `reference/accessibility.md` (design-level a11y rules; fold ZeroHeight guidance into the existing house-style doc — it has no frontmatter, preserve it) | Doc |
 
-> Re-resolve page IDs with `list-pages` before trusting them — IDs can change. The token files draw from **two** ZeroHeight pages each (a Fundamentals usage page + a Tokens list page); reconcile both. The **CONTENT** and **ACCESSIBILITY** rows each cover several ZeroHeight pages under one Guidelines section — sync the section as a set, not page-by-page.
+> Re-resolve page IDs with `list-pages` before trusting them — IDs can change. Each category maps **one ZeroHeight page to one file**: the *Fundamentals* usage page → `reference/fundamentals/<x>.md`, the *TOKENS* list page → `reference/tokens/<x>.md`. Don't fold usage guidance back into a token file. The **CONTENT** and **ACCESSIBILITY** rows each cover several ZeroHeight pages under one Guidelines section — sync the section as a set, not page-by-page.
 
 ## Hard rules (all templates)
 1. **App only.** Use `COMPONENTS → App`, never the `Web` group. If something exists only under Web, report "no App page" and skip.
@@ -65,10 +69,10 @@ Every pattern carries an inline `` `pattern: <kebab-slug>` `` tag on the line un
 
 A pattern is **components + connections + function**: the building blocks, the interactions between them, and the purpose that emerges. Each documented pattern should make all three legible — name the **components it requires to function** (linked to `../components/*.md`), how they connect, and what the combination is for. A pattern that names no components is usually a guideline, not a pattern.
 
-### Token / Fundamentals  (`reference/tokens/*.md`, `design-language.md`)
+### Token / Fundamentals  (`reference/tokens/*.md`, `reference/fundamentals/*.md`, `design-language.md`)
 These files have an established house style (3-tier tables, usage columns, the Figma-slash callout) and **no YAML frontmatter** — **preserve it**. Fold changes in:
 - New/changed semantic or applied tokens → the right tier table, described by meaning.
-- Usage guidance (e.g. Color's *Visual hierarchy*, variant scale, when-to-use concepts) → the matching prose section.
+- Usage guidance (e.g. Color's *Visual hierarchy*, when-to-use concepts) → the matching `reference/fundamentals/<x>.md`, **not** the token file.
 - **Always keep the `--slash/form` vs dotted-JSON callout** at the top of every `reference/tokens/` file (token-doc convention in `CLAUDE.md`); add it to any new token file/category.
 - Token **values** come from the design-tokens repo, not ZeroHeight prose — prefer `/sync-tokens` for the numeric source of truth; `/sync-docs` handles the *guidance and names*.
 

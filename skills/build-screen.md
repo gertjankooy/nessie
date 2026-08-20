@@ -16,7 +16,7 @@ Use when the user wants to design or generate a new screen, view, component comp
 2. **Open the specific per-component file** linked from `index.md` (one file per component — e.g. `button.md`, `input.md`, `tiles.md`, `route.md`) for usage, configurations, anatomy, behavior, and accessibility.
 3. **Set up the screen frame first** — bind the root frame to `screenSize/width` and `screenSize/height` variables before placing any content. See `reference/fundamentals/layout.md → Screen frame setup`.
 4. **Lay it out** per `reference/fundamentals/layout.md` — use app inset/stack/gap tokens for all spacing, the right surface (base / default / elevated), and respect safe areas.
-5. **Apply tokens only** — colors, type, spacing, radius, motion all come from `reference/tokens/*`. Never a raw hex, never an off-scale number.
+5. **Apply tokens only** — colors, type, spacing, radius, motion all come from `reference/tokens/*`. Never a raw hex, never an off-scale number. To decide *which* token: `reference/fundamentals/color.md` (surface/background), `typography.md` (preset per role), `style.md` (radius per surface), `motion.md` (transition per navigation type).
 6. **Design the empty, loading, and error states too** — a screen isn't done until you've decided what it shows with no content, while loading, and on failure. See `reference/patterns/feedback-states.md` for which surface to use (Empty State vs Message Inline vs Toast vs Skeleton) and the error-handling rules.
 7. **Match the brand feel** — check `reference/design-language.md` for tone, iconography, and brand-color usage.
 8. **Bake in accessibility** — follow `reference/accessibility.md`: meaningful labels, contrast pairings, 44pt (iOS) / 48dp (Android) targets, heading structure.

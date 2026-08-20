@@ -34,6 +34,6 @@ Core curves available to the system (not picked directly): `ease.in` (1, 0.4, 0.
 ## Rules / Don'ts
 
 - **Never raw `motion.duration.NNN` / raw bezier values** in a design — pick the semantic token.
-- **Default to `duration.default` (300ms) + `ease.default`.** Faster for micro-interactions, slow/slower for large surfaces.
 - **Don't invent durations** (e.g. 250/350ms ad hoc in a design) — use the named steps.
-- **Respect reduced-motion** — animations should degrade gracefully when the OS requests reduced motion.
+
+> **Which transition for which navigation, per platform, and the general application rules:** see `../fundamentals/motion.md`. This file is the duration and easing list; that file is the usage guidance.

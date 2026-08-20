@@ -8,7 +8,7 @@ related: [link, button, accessibility]
 
 # Content — Link
 
-Link text must convey what appears once it's followed. See the component in `reference/components/link.md`.
+Link text must convey what appears once it's followed. See the component in `../components/link.md`.
 
 ## Writing good link text
 - The text says what the destination is — e.g. "Bekijk alle veelgestelde vragen over OVpay", not a bare "Lees meer".
@@ -16,7 +16,7 @@ Link text must convey what appears once it's followed. See the component in `ref
 - **Not device-specific:** avoid "Klik hier" / "Tap hier" — it's meaningless to a screen-reader or non-mouse user.
 - Avoid the non-guiding words listed in `button.md` (*Volgende, OK, Hier, Klik hier*).
 
-> **WCAG (2.4.4 Link Purpose in Context):** the purpose of each link must be clear from the link text alone, or from the link text plus its surrounding context. See `reference/accessibility.md`.
+> **WCAG (2.4.4 Link Purpose in Context):** the purpose of each link must be clear from the link text alone, or from the link text plus its surrounding context. See `../accessibility.md`.
 
 ## Internal links
 Link text should match the **topic** of the target page (a summary, not necessarily its exact title).
