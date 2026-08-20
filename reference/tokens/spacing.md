@@ -44,6 +44,7 @@ iOS also exposes `spacing10`=40, `spacing14`=56, `spacing20`=80, `spacing24`=96,
 ## App layout spacing (semantic intent — prefer these for screen structure)
 
 ### Inset (horizontal/container padding)
+
 | Token | Value | Usage |
 | :--- | :--- | :--- |
 | `space.app.inset.tight` | 8 | Compact contained content. |
@@ -53,6 +54,7 @@ iOS also exposes `spacing10`=40, `spacing14`=56, `spacing20`=80, `spacing24`=96,
 | `space.app.inset.relaxed` | 32 | Strong separation / large grouping (sparingly). |
 
 ### Stack (vertical gaps between blocks)
+
 | Token | Value | Usage |
 | :--- | :--- | :--- |
 | `space.app.stack.tiny` | 8 | Tightly related elements reading as one unit. |
@@ -62,6 +64,7 @@ iOS also exposes `spacing10`=40, `spacing14`=56, `spacing20`=80, `spacing24`=96,
 | `space.app.stack.comfy` | 32 | Forms / grouped input fields. |
 
 ### Inline (horizontal gaps between small elements)
+
 | Token | Value | Usage |
 | :--- | :--- | :--- |
 | `space.app.inline.dense` | 8 | Text items read together. |
@@ -69,6 +72,7 @@ iOS also exposes `spacing10`=40, `spacing14`=56, `spacing20`=80, `spacing24`=96,
 | `space.app.inline.comfy` | 16 | Avoid horizontal crowding. |
 
 ### Box (dynamic component padding)
+
 `space.box.xs` = 8, `space.box.sm` = 12, `space.box.md` = 16.
 
 > **Android/Web only — web layout tokens:** `space.web.gutter.*` (dense 12 / default 24 / comfy·relaxed 32), `space.web.section.inset.*` (tight 32 / default·loose 40), `space.web.container.inset.*` (24), `space.web.wrapper.stack.default` (24). Not for iOS app screens.
