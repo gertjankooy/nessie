@@ -1,5 +1,5 @@
 ---
-tokens: Style / Dimension
+tokens: Dimension
 zeroheight_page_id: 6694971
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/8634a7-dimension
 last_synced: 2026-08-20

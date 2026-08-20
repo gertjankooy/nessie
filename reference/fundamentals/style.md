@@ -43,4 +43,4 @@ Applied spacing guidance for screen structure (inset, stack, inline, and the fou
 
 ## Source
 
-- ZeroHeight: Fundamentals → Style (page `6693107`). Token lists: TOKENS → Style/Dimension (pages `6699361` / `6694971`), documented in `../tokens/shape.md` and `../tokens/spacing.md`.
+- ZeroHeight: Fundamentals → Style (page `6693107`). Token lists: TOKENS → Style (page `6699361`), documented in `../tokens/shape.md`; TOKENS → Dimension (page `6694971`), documented in `../tokens/spacing.md`.

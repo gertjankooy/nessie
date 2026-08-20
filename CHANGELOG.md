@@ -10,6 +10,8 @@ Designer-facing updates to the NESSIE skill — what's new for you when using it
 
 **🚦 What isn't decided yet says so.** Timing and easing are being researched separately, so the page tells you to let the platform supply them rather than picking a duration. Four open questions are flagged too, including whether the bottom nav stays put during a page push and what each transition becomes under reduced motion. If you ask the skill about one of these, it will tell you it's open instead of inventing an answer.
 
+**🔄 Guidance written in the skill can now be published to ZeroHeight.** Docs used to travel one way only: ZeroHeight was the source and the skill copied from it, so anything drafted in the skill first stayed there. It works in both directions now, which is what put **Using Motion** and **Layout for App** on ZeroHeight instead of leaving them inside the skill. It stays one single source either way, so what you read on ZeroHeight and what the skill tells you while auditing a screen cannot drift apart.
+
 **🎯 "Which one do I pick?" now has its own pages.** Choosing guidance sits next to, but apart from, the token lists: **Using Color** (which background suits which screen job), **Using Typography** (which preset for which text role), **Using Shape & Style** (which radius for which surface), and **Using Motion**. Look up a value in the token pages; look up the decision in these.
 
 **📐 App-only scope is now explicit.** The Motion and Layout pages state up front that they cover the NS app on iOS and Android and not web. The underlying tokens are shared across platforms, including web, but how they are applied to app navigation and app layout is not. Worth knowing before you reach for either page on a web screen.
