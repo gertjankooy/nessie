@@ -1,3 +1,14 @@
+---
+fundamental: Layout for App
+zeroheight_page_id: 6693137
+# zeroheight_url: unknown, fill in once resolved from ZeroHeight
+last_synced: 2026-08-20
+sync: pull
+platforms: [ios, android]
+related: [color, typography, style, motion]
+gaps: []
+---
+
 # NS NESSIE — App Layout System
 
 > How to space, inset, stack and scale content on an NS app screen. iOS-first; spacing is the primary tool for expressing structure and guiding focus. Source of truth: Nessie design system (design.ns.nl) + Token Studio JSON. Never invent token names. Token names below come from the Token Studio `screen.*.json` source; values are resolved to px (dp on Android).

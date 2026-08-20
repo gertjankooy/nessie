@@ -24,6 +24,7 @@ zeroheight_page_id: <id>    # numeric ZeroHeight App page id
 zeroheight_url: <url>       # canonical App page URL
 figma_node: "<node>"        # e.g. "1437:8588"; omit if unknown
 last_synced: <YYYY-MM-DD>   # date of this sync
+sync: <pull | push>         # who owns this doc; omit = pull. See Sync direction
 related: [<kebab slugs>]    # sibling docs by name-slug (not paths), e.g. [button-group, link]
 gaps: [<Section names>]     # sections with no ZeroHeight content; [] if complete
 ---
@@ -110,6 +111,21 @@ _Not available in ZeroHeight — to review._
 ```
 
 **Cross-link exception:** for `## Accessibility` and `## Content guidelines` with no component-specific ZeroHeight content, replace the bare marker with a pointer to the general doc (`../accessibility.md` / `../content/index.md`) — but **keep the section in `gaps:`**, since the component-specific detail is still pending.
+
+## Sync direction
+
+> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).**
+
+Every doc is owned by exactly one side. The `sync:` key says which, and an absent key means `pull`.
+
+| `sync:` | Who owns it | What happens |
+| :--- | :--- | :--- |
+| `pull` (default) | ZeroHeight | `/sync-docs` pulls the page into this file, as it always has. |
+| `push` | This repo | `/build-zeroheight` generates a stripped copy into `zeroheight/` and ZeroHeight renders it. **`/sync-docs` never writes to it.** |
+
+**This file stays the single canonical copy either way.** For `push` docs the files under `zeroheight/` are generated output: never hand-edited, never read by an agent, and enforced by the pre-commit check.
+
+A push doc drops `zeroheight_page_id` (the id belongs to a page this repo now writes) but **keeps `zeroheight_url`** when one exists, because that is what lets *other* docs resolve a cross-link to this one. The build strips the frontmatter, the H1, `## Source`, `Local guidance` markers, and gap markers; see `/build-zeroheight` for the full list.
 
 ## Local guidance (authored ahead of ZeroHeight)
 

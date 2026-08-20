@@ -1,3 +1,14 @@
+---
+fundamental: Using Shape & Style
+zeroheight_page_id: 6693107
+# zeroheight_url: unknown, fill in once resolved from ZeroHeight
+last_synced: 2026-08-20
+sync: pull
+platforms: [ios, android]
+related: [layout, color, shape-tokens, spacing-tokens]
+gaps: []
+---
+
 # Using Shape & Style
 
 > How to choose corner radius and border width on an NS app surface. The **token lists themselves** live in `../tokens/shape.md` (radius, border width) and `../tokens/spacing.md` (spacing scale, control heights, icon sizes); this page is about picking between them.

@@ -1,3 +1,14 @@
+---
+fundamental: Using Color
+zeroheight_page_id: 6693013
+# zeroheight_url: unknown, fill in once resolved from ZeroHeight
+last_synced: 2026-08-20
+sync: pull
+platforms: [ios, android]
+related: [layout, typography, color-tokens]
+gaps: []
+---
+
 # Using Color
 
 > How to choose color on an NS app screen: which surface carries which job, and how tokens combine. The **token list itself** (brand, system, content, applied) lives in `../tokens/color.md`; this page is about applying it.

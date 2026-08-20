@@ -1,3 +1,14 @@
+---
+fundamental: Using Typography
+zeroheight_page_id: 6693097
+# zeroheight_url: unknown, fill in once resolved from ZeroHeight
+last_synced: 2026-08-20
+sync: pull
+platforms: [ios, android]
+related: [layout, color, typography-tokens]
+gaps: []
+---
+
 # Using Typography
 
 > How to choose a type preset on an NS app screen. The **preset list itself** (headings, body, labels, caption, link, eyebrow) lives in `../tokens/typography.md`; this page is about picking between them.

@@ -1,18 +1,6 @@
----
-fundamental: Using Motion
-# zeroheight_url: unknown, fill in once resolved from ZeroHeight
-last_synced: 2026-08-20
-sync: push
-platforms: [ios, android]
-related: [layout, interaction-models, motion-tokens]
-gaps: [Timing and easing]
----
+> When and how motion is applied in the NS app: which transition belongs to which kind of navigation, and how that differs per platform. The duration and easing **tokens themselves** live in NESSIE Motion Tokens; this page is about applying them.
 
-# Using Motion
-
-> When and how motion is applied in the NS app: which transition belongs to which kind of navigation, and how that differs per platform. The duration and easing **tokens themselves** live in `../tokens/motion.md`; this page is about applying them.
-
-Navigation **structure** (top bar, tabs vs bottom navigation, back navigation) is defined in `layout.md` (Navigation region). The transient surfaces themselves (sheets, focused flows, panels, menus) are defined in `../patterns/interaction-models.md`. This page describes how those surfaces and screens arrive and leave.
+Navigation **structure** (top bar, tabs vs bottom navigation, back navigation) is defined in Layout for App (Navigation region). The transient surfaces themselves (sheets, focused flows, panels, menus) are defined in [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models). This page describes how those surfaces and screens arrive and leave.
 
 ## General rules
 
@@ -21,8 +9,6 @@ Navigation **structure** (top bar, tabs vs bottom navigation, back navigation) i
 - **Stay close to the platform.** Most navigation motion below is native behaviour on iOS and Android. That is deliberate: deviating from what the OS already does needs a reason.
 
 ## Navigation transitions
-
-> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).** The navigation-transition model below is a team decision recorded before the ZeroHeight Motion page covers it. Reconcile and remove this line once it does.
 
 ### Choosing the transition
 
@@ -43,13 +29,13 @@ The underlying rule: **parallel destinations get no motion, hierarchy gets horiz
 - Each tab keeps its own navigation stack. Returning to a tab restores the view where the user left it, not the root.
 - Tapping the tab that is already active returns to that tab's root page, also instantly.
 
-Example: Planner (tab) to Map (tab) to Tickets (tab). Uses `../components/bottom-navigation.md`.
+Example: Planner (tab) to Map (tab) to Tickets (tab). Uses [Bottom Navigation](https://design.ns.nl/4a05a30ad/v/latest/p/65dd76-bottom-navigation).
 
 ### Page navigation
 
 `transition: page-enter` `transition: page-back`
 
-Pushing and popping pages inside a tab. Uses `../components/top-bar.md` for the back affordance. Example: Tickets (tab) to My tickets (page) to Order details (page).
+Pushing and popping pages inside a tab. Uses [Top Bar](https://design.ns.nl/4a05a30ad/v/latest/p/37561d-top-bar) for the back affordance. Example: Tickets (tab) to My tickets (page) to Order details (page).
 
 **iOS**
 - Enter: the incoming page slides in from the trailing edge at full width.
@@ -70,7 +56,7 @@ Pushing and popping pages inside a tab. Uses `../components/top-bar.md` for the 
 - Close: slides down toward the bottom edge.
 - Moving between heights is a drag, not a played animation.
 
-Example: saving notifications for a trip. Uses `../components/bottom-sheet.md`; for the sheet variants and their rules see `../patterns/interaction-models.md`.
+Example: saving notifications for a trip. Uses [Bottom Sheet](https://design.ns.nl/4a05a30ad/v/latest/p/438def-bottom-sheet); for the sheet variants and their rules see [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models).
 
 ### Focused flow
 
@@ -86,13 +72,13 @@ A full-screen, self-contained task (purchase, onboarding). Vertical rather than 
 - Open: a short vertical movement combined with a cross-fade. Same axis as iOS, much shorter distance.
 - Close: the current screen scales down and slides downward, with a cross-fade.
 
-> Do not confuse this with an alert or dialog. Same full-bleed impression, different meaning: an alert interrupts and demands a response, a focused flow is a task the user chose to start. See `../patterns/interaction-models.md`.
+> Do not confuse this with an alert or dialog. Same full-bleed impression, different meaning: an alert interrupts and demands a response, a focused flow is a task the user chose to start. See [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models).
 
 ### Timing and easing
 
 _Not settled yet. Being researched in a separate story; do not pick durations or curves from this section._
 
-Until that lands, treat the transitions above as native platform behaviour and let the platform supply the timing. The token rules in `../tokens/motion.md` still apply everywhere else: semantic tokens only, never raw ms values or invented curves.
+Until that lands, treat the transitions above as native platform behaviour and let the platform supply the timing. The token rules in NESSIE Motion Tokens still apply everywhere else: semantic tokens only, never raw ms values or invented curves.
 
 The open question is the shape of the token, not only its value. Gesture-driven transitions (back on both platforms) are spring-based and interruptible, which a duration plus easing curve cannot express. The intended direction is one semantic token per transition type, with timing, easing, and direction filled in per platform so each matches native behaviour.
 
@@ -102,10 +88,6 @@ Flag these rather than guessing at them:
 
 - Whether the bottom navigation stays in place during a page push or moves with the page.
 - What each transition degrades to under reduced motion.
-- Persistent panels (map, active journey). They are dragged between three heights and never dismissed, so the sheet rule does not describe them. See `../patterns/interaction-models.md`.
-- Whether the skeleton or loading state appears during the transition or after it settles. See `layout.md` (Loading transitions).
+- Persistent panels (map, active journey). They are dragged between three heights and never dismissed, so the sheet rule does not describe them. See [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models).
+- Whether the skeleton or loading state appears during the transition or after it settles. See Layout for App (Loading transitions).
 - Whether swipe-initiated navigation is specified here or left entirely to the platform.
-
-## Source
-
-- ZeroHeight: Fundamentals → Motion (page `6693108`). The navigation-transition model above is a team decision of August 2026, not yet on that page.
