@@ -1,3 +1,13 @@
+---
+tokens: Color
+zeroheight_page_id: 6694970
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/42131f-color
+last_synced: 2026-08-20
+sync: pull
+related: [color, applied]
+gaps: []
+---
+
 # NESSIE Color Tokens
 
 Semantic color reference for designing/auditing iOS-first NS app screens. Pick **base (semantic)** or **applied (component)** tokens — never core/raw, never hex. Dark mode resolves automatically; you do not set dark values by hand.

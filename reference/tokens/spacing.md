@@ -1,3 +1,13 @@
+---
+tokens: Style / Dimension
+zeroheight_page_id: 6694971
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/8634a7-dimension
+last_synced: 2026-08-20
+sync: pull
+related: [layout, style, shape]
+gaps: []
+---
+
 # NESSIE Spacing & Dimension Tokens
 
 Spacing, control-height, and icon-size reference for NS app layouts. Pick **semantic space tokens** — never raw dimension steps, never invented values. Values are px (web) / points (iOS) / dp (Android).

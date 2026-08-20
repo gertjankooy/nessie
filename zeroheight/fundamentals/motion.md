@@ -1,6 +1,8 @@
-> When and how motion is applied in the NS app: which transition belongs to which kind of navigation, and how that differs per platform. The duration and easing **tokens themselves** live in NESSIE Motion Tokens; this page is about applying them.
+> When and how motion is applied in the NS app: which transition belongs to which kind of navigation, and how that differs per platform. The duration and easing **tokens themselves** live in [NESSIE Motion Tokens](https://design.ns.nl/4a05a30ad/v/latest/p/981ac3-motion); this page is about applying them.
 
-Navigation **structure** (top bar, tabs vs bottom navigation, back navigation) is defined in Layout for App (Navigation region). The transient surfaces themselves (sheets, focused flows, panels, menus) are defined in [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models). This page describes how those surfaces and screens arrive and leave.
+> **App only. Web is not covered here.** The navigation model below (tabs, pushed pages, sheets, focused flows) describes native app navigation on iOS and Android, and does not carry over to web. The underlying duration and easing tokens *are* shared across platforms, including web; only their application to app navigation is scoped to this page.
+
+Navigation **structure** (top bar, tabs vs bottom navigation, back navigation) is defined in [Layout for App](https://design.ns.nl/4a05a30ad/p/75e06d-layout-for-app) (Navigation region). The transient surfaces themselves (sheets, focused flows, panels, menus) are defined in [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models). This page describes how those surfaces and screens arrive and leave.
 
 ## General rules
 
@@ -23,7 +25,7 @@ The underlying rule: **parallel destinations get no motion, hierarchy gets horiz
 
 ### Tab navigation
 
-`transition: tab-switch` · both platforms
+Identical on **both platforms**.
 
 - Switching tabs is **instant**. No transition animation.
 - Each tab keeps its own navigation stack. Returning to a tab restores the view where the user left it, not the root.
@@ -32,8 +34,6 @@ The underlying rule: **parallel destinations get no motion, hierarchy gets horiz
 Example: Planner (tab) to Map (tab) to Tickets (tab). Uses [Bottom Navigation](https://design.ns.nl/4a05a30ad/v/latest/p/65dd76-bottom-navigation).
 
 ### Page navigation
-
-`transition: page-enter` `transition: page-back`
 
 Pushing and popping pages inside a tab. Uses [Top Bar](https://design.ns.nl/4a05a30ad/v/latest/p/37561d-top-bar) for the back affordance. Example: Tickets (tab) to My tickets (page) to Order details (page).
 
@@ -50,7 +50,7 @@ Pushing and popping pages inside a tab. Uses [Top Bar](https://design.ns.nl/4a05
 
 ### Sheets
 
-`transition: sheet-open` `transition: sheet-close` · both platforms
+Identical on **both platforms**.
 
 - Open: slides up from the bottom and stops at the intended height (partial or full height).
 - Close: slides down toward the bottom edge.
@@ -59,8 +59,6 @@ Pushing and popping pages inside a tab. Uses [Top Bar](https://design.ns.nl/4a05
 Example: saving notifications for a trip. Uses [Bottom Sheet](https://design.ns.nl/4a05a30ad/v/latest/p/438def-bottom-sheet); for the sheet variants and their rules see [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models).
 
 ### Focused flow
-
-`transition: focused-flow-open` `transition: focused-flow-close`
 
 A full-screen, self-contained task (purchase, onboarding). Vertical rather than horizontal, because the user steps out of the current context instead of deeper into it.
 
@@ -78,7 +76,7 @@ A full-screen, self-contained task (purchase, onboarding). Vertical rather than 
 
 _Not settled yet. Being researched in a separate story; do not pick durations or curves from this section._
 
-Until that lands, treat the transitions above as native platform behaviour and let the platform supply the timing. The token rules in NESSIE Motion Tokens still apply everywhere else: semantic tokens only, never raw ms values or invented curves.
+Until that lands, treat the transitions above as native platform behaviour and let the platform supply the timing. The token rules in [NESSIE Motion Tokens](https://design.ns.nl/4a05a30ad/v/latest/p/981ac3-motion) still apply everywhere else: semantic tokens only, never raw ms values or invented curves.
 
 The open question is the shape of the token, not only its value. Gesture-driven transitions (back on both platforms) are spring-based and interruptible, which a duration plus easing curve cannot express. The intended direction is one semantic token per transition type, with timing, easing, and direction filled in per platform so each matches native behaviour.
 
@@ -89,5 +87,5 @@ Flag these rather than guessing at them:
 - Whether the bottom navigation stays in place during a page push or moves with the page.
 - What each transition degrades to under reduced motion.
 - Persistent panels (map, active journey). They are dragged between three heights and never dismissed, so the sheet rule does not describe them. See [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models).
-- Whether the skeleton or loading state appears during the transition or after it settles. See Layout for App (Loading transitions).
+- Whether the skeleton or loading state appears during the transition or after it settles. See [Layout for App](https://design.ns.nl/4a05a30ad/p/75e06d-layout-for-app) (Loading transitions).
 - Whether swipe-initiated navigation is specified here or left entirely to the platform.

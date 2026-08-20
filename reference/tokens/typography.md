@@ -1,3 +1,13 @@
+---
+tokens: Typography
+zeroheight_page_id: 6694972
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/666930-typography
+last_synced: 2026-08-20
+sync: pull
+related: [typography]
+gaps: []
+---
+
 # NESSIE Typography Tokens
 
 Type-style reference for NS app screens. Pick a **semantic preset** (heading/body/label/…) — never raw font sizes, never hardcoded weights. Font is **NS Sans** (Regular 400, Demi 550, Bold 700).

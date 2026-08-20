@@ -25,6 +25,10 @@ const DROP_SECTIONS = ['Source'];
 const LOCAL_GUIDANCE = /^>\s*\*\*Local guidance/;
 const GAP_MARKER = /^_Not available in ZeroHeight.*to review\._\s*$/;
 
+// Machine-readable tags exist so an agent can address a variant or state without
+// parsing prose. On ZeroHeight they are meaningless slugs, so they come out.
+const TAG = /`(?:pattern|variant|state|property|context|transition):\s*[a-z0-9-]+`/g;
+
 // ---------------------------------------------------------------- frontmatter
 
 // Minimal YAML subset: scalars, inline [lists], inline {maps}, and nested
@@ -93,14 +97,24 @@ function splitSections(body) {
   return sections;
 }
 
-// Remove the H1, Local guidance marker lines, and gap markers.
+// Remove the H1, Local guidance marker lines, gap markers, and machine-readable
+// tags. A line that held nothing but tags is dropped; one that held tags plus
+// prose keeps the prose, with any orphaned separator tidied away.
 function clean(lines, isIntro) {
   const out = [];
   for (const line of lines) {
     if (isIntro && /^# /.test(line)) continue;
     if (LOCAL_GUIDANCE.test(line)) continue;
     if (GAP_MARKER.test(line)) continue;
-    out.push(line);
+    if (!TAG.test(line)) { out.push(line); continue; }
+    TAG.lastIndex = 0;
+    const stripped = line.replace(TAG, '')
+      .replace(/\s{2,}/g, ' ')
+      .replace(/^\s*[·|]\s*/, '')
+      .replace(/\s*[·|]\s*$/, '')
+      .replace(/\s+([:;,.])/g, '$1')
+      .trim();
+    if (stripped) out.push(stripped);
   }
   return out;
 }

@@ -1,3 +1,13 @@
+---
+tokens: Overview / applied
+zeroheight_page_id: 6699047
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/53fbfb-overview
+last_synced: 2026-08-20
+sync: pull
+related: [color, shape, spacing]
+gaps: []
+---
+
 # NESSIE Applied Tokens
 
 Component-level (tier 3) tokens: pre-composed values for form states, interaction states, skeleton, modality, and layout. **Use an applied token when one exists** instead of re-composing base tokens — it encodes a fixed design decision and themes automatically. Each resolves to a base token (shown), which in turn remaps per light/dark.

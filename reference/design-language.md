@@ -1,3 +1,13 @@
+---
+doc: Visual direction
+zeroheight_page_id: 5794046
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/708186-visual-direction
+last_synced: 2026-08-20
+sync: pull
+related: [layout, color, typography]
+gaps: []
+---
+
 # NS NESSIE — Design Language
 
 > What makes a screen feel like NESSIE: brand personality, visual direction, color, iconography, logo/assets, platform philosophy, and core UX principles. iOS-first. Source of truth: NS Nessie design system (design.ns.nl). Never invent guidance.

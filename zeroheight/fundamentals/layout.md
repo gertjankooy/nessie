@@ -1,16 +1,3 @@
----
-fundamental: Layout for App
-zeroheight_page_id: 6693137
-zeroheight_url: https://design.ns.nl/4a05a30ad/p/75e06d-layout-for-app
-last_synced: 2026-08-20
-sync: push
-platforms: [ios, android]
-related: [color, typography, style, motion]
-gaps: []
----
-
-# NS NESSIE — App Layout System
-
 > How to space, inset, stack and scale content on an NS app screen. iOS-first; spacing is the primary tool for expressing structure and guiding focus. Never invent token names. Token names below come from the Token Studio `screen.*.json` source; values are resolved to px (dp on Android).
 
 > **App only. Web is not covered here.** The `space.app.*` families, the layout regions, and the screen-type patterns below are the app layout system on iOS and Android. Web uses its own layout scale and is out of scope for this page.
@@ -114,9 +101,7 @@ Apply this to every new screen frame regardless of screen type.
 
 ### Navigation region
 
-> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).** This navigation-region guidance comes from NS App Guidelines (Notion), not the ZeroHeight Composition page; reconcile and remove this line once ZeroHeight covers it.
-
-Holds primary navigation: the **Header** (top bar) and the **Bottom Navigation**. For transient surfaces layered over a screen — sheets, dialogs, alerts, menus, focused flows, persistent panels — and focused-flow close/confirm placement, see `../patterns/interaction-models.md`. For which transition to use when moving between screens (tabs, pages, sheets, focused flows, per platform), see `motion.md`.
+Holds primary navigation: the **Header** (top bar) and the **Bottom Navigation**. For transient surfaces layered over a screen — sheets, dialogs, alerts, menus, focused flows, persistent panels — and focused-flow close/confirm placement, see [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models). For which transition to use when moving between screens (tabs, pages, sheets, focused flows, per platform), see [Using Motion](https://design.ns.nl/4a05a30ad/p/161256-motion).
 
 **Header (top bar).** Carries the screen title, back/close affordance, and trailing actions. Start (top) spacing varies by screen type:
 
@@ -136,7 +121,7 @@ Holds primary navigation: the **Header** (top bar) and the **Bottom Navigation**
 > **iOS:** back chevron top-left (often with the previous title) + edge-swipe-back; sheets dismiss with swipe-down or an explicit Close/Done.
 > **Android:** up arrow in the top app bar **plus** the system back gesture/button — both must work and reach the same destination (predictive back where supported).
 
-**Loading transitions.** Navigating to a new screen or refreshing: use a **Skeleton** when the incoming layout is predictable (placeholder blocks mimic the final content); use a **loading spinner** when structure or duration is unpredictable and there's no content shape to show yet. See `../patterns/feedback-states.md` for the full loading / empty / error decision.
+**Loading transitions.** Navigating to a new screen or refreshing: use a **Skeleton** when the incoming layout is predictable (placeholder blocks mimic the final content); use a **loading spinner** when structure or duration is unpredictable and there's no content shape to show yet. See [Feedback & States](https://design.ns.nl/4a05a30ad/v/latest/p/4717b2-feedback-states) for the full loading / empty / error decision.
 
 ### Body region
 
@@ -146,7 +131,7 @@ Scrollable content, structured as four nested levels of grouping. The strongest 
 | :--- | :--- | :--- | :--- |
 | 1 | **Section** | Content collection for the page; wraps all Containers. LR padding always: `applied.space.app.section.inset` (16). TB padding varies by screen type — see "Screen type patterns" below. | Section `gap` = 0; spacing between Containers is created by compounding Container TB insets. |
 | 2 | **Container** | Thematic grouping of related components (e.g. all booking options, all traveller inputs). On flow screens, multiple Containers stack directly in the Section. On navigation screens, a single Container wraps all Groups. | TB: `applied.space.app.container.inset` (24). Internal gap between Groups: `applied.space.app.container.stack.default` (24) or `applied.space.app.container.stack.control` (32) for list types and input fields. |
-| 3 | **Group** | Related components sharing a conceptual purpose. Can contain one or more SubGroups. A **heading** (a `heading1–4` type style with the heading role — not an app-library component) — when used — is the first child of the first SubGroup and carries its own bottom spacing. | Gap between SubGroups: `applied.space.app.group.stack.default` (16) or `applied.space.app.group.stack.relaxed` (24). Headings are not always required — see `../patterns/settings-utility.md`. |
+| 3 | **Group** | Related components sharing a conceptual purpose. Can contain one or more SubGroups. A **heading** (a `heading1–4` type style with the heading role — not an app-library component) — when used — is the first child of the first SubGroup and carries its own bottom spacing. | Gap between SubGroups: `applied.space.app.group.stack.default` (16) or `applied.space.app.group.stack.relaxed` (24). Headings are not always required — see [Settings & Utility](https://design.ns.nl/4a05a30ad/v/latest/p/17b7b1-settings-utility). |
 | 4 | **SubGroup** | A zero-gap stack of tightly related components that share the same Group heading but need a subtle visual break from sibling SubGroups (e.g. info fields / card actions / destructive action, all under "About this card"). | `gap` is **always 0** on the SubGroup layer itself. The gap between SubGroups is controlled by the parent Group's `itemSpacing` token — never applied on the SubGroup layer. |
 
 ## Stacking behaviour (spacing compounds)
@@ -179,7 +164,7 @@ Two patterns are documented from real screens. Add further types here as screens
 | Screen type | Section TB padding | Containers in Section | Container internal gap | Bottom chrome |
 | :--- | :--- | :--- | :--- | :--- |
 | **Navigation / Home** (tab hub, cards + navigation lists) | `space/app/inset/relaxed` (32) | Single Container wrapping all Groups | `applied.space.app.container.stack.control` (32) | `🚄 Bottom Navigation` |
-| **Flow** (booking, configuration, decision screens) | — | Multiple thematic Containers; Section `gap:0` | `applied.space.app.container.stack.default` (24) | Sticky footer — see `../patterns/interaction-models.md` for focused flow top bar guidance |
+| **Flow** (booking, configuration, decision screens) | — | Multiple thematic Containers; Section `gap:0` | `applied.space.app.container.stack.default` (24) | Sticky footer — see [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models) for focused flow top bar guidance |
 
 > **Flow compounding:** Section `gap` is 0 between Containers. Spacing is created by compounding Container TB insets — 24 + 24 = 48px between adjacent Containers, signalling each Container is a separate topic.
 
@@ -236,7 +221,7 @@ Box spacing for spacing inside boxed UI elements (form inputs, highlight boxes, 
 
 ## Surfaces for layout (base vs default vs elevated)
 
-NESSIE surface roles for layout (see `../design-language.md` / tokens for exact token names — never invent):
+NESSIE surface roles for layout (see [NS NESSIE — Design Language](https://design.ns.nl/4a05a30ad/v/latest/p/708186-visual-direction) / tokens for exact token names — never invent):
 
 - **Base surface** — the lightest background layer (light grey). Content sits directly on it. Cards on a base surface often need **no outline** (App Guidelines: skip the outline when on background base).
 - **Default surface** — standard content surface; the normal container fill, typically outlined to separate from surroundings.

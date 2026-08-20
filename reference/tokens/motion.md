@@ -1,3 +1,13 @@
+---
+tokens: Motion
+zeroheight_page_id: 6699072
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/981ac3-motion
+last_synced: 2026-08-20
+sync: pull
+related: [motion]
+gaps: []
+---
+
 # NESSIE Motion Tokens
 
 Duration & easing reference for NS app transitions and animations. Pick **semantic motion tokens** — never raw ms values, never invented curves.

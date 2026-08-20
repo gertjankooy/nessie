@@ -70,7 +70,7 @@ Every pattern carries an inline `` `pattern: <kebab-slug>` `` tag on the line un
 A pattern is **components + connections + function**: the building blocks, the interactions between them, and the purpose that emerges. Each documented pattern should make all three legible — name the **components it requires to function** (linked to `../components/*.md`), how they connect, and what the combination is for. A pattern that names no components is usually a guideline, not a pattern.
 
 ### Token / Fundamentals  (`reference/tokens/*.md`, `reference/fundamentals/*.md`, `design-language.md`)
-These files have an established house style (3-tier tables, usage columns, the Figma-slash callout) and **no YAML frontmatter** — **preserve it**. Fold changes in:
+These files have an established house style (3-tier tables, usage columns, the Figma-slash callout) — **preserve it**. They **do** carry YAML frontmatter (`zeroheight_page_id`, `zeroheight_url`, `last_synced`, `sync`, `related`, `gaps`), which is what `/docs-coverage` counts and what lets other docs resolve a cross-link to them on push. Fold changes in:
 - New/changed semantic or applied tokens → the right tier table, described by meaning.
 - Usage guidance (e.g. Color's *Visual hierarchy*, when-to-use concepts) → the matching `reference/fundamentals/<x>.md`, **not** the token file.
 - **Always keep the `--slash/form` vs dotted-JSON callout** at the top of every `reference/tokens/` file (token-doc convention in `CLAUDE.md`); add it to any new token file/category.

@@ -1,6 +1,7 @@
 ---
 fundamental: Using Motion
-# zeroheight_url: unknown, fill in once resolved from ZeroHeight
+zeroheight_page_id: 6693108
+zeroheight_url: https://design.ns.nl/4a05a30ad/p/161256-motion
 last_synced: 2026-08-20
 sync: push
 platforms: [ios, android]
@@ -11,6 +12,8 @@ gaps: [Timing and easing]
 # Using Motion
 
 > When and how motion is applied in the NS app: which transition belongs to which kind of navigation, and how that differs per platform. The duration and easing **tokens themselves** live in `../tokens/motion.md`; this page is about applying them.
+
+> **App only. Web is not covered here.** The navigation model below (tabs, pushed pages, sheets, focused flows) describes native app navigation on iOS and Android, and does not carry over to web. The underlying duration and easing tokens *are* shared across platforms, including web; only their application to app navigation is scoped to this page.
 
 Navigation **structure** (top bar, tabs vs bottom navigation, back navigation) is defined in `layout.md` (Navigation region). The transient surfaces themselves (sheets, focused flows, panels, menus) are defined in `../patterns/interaction-models.md`. This page describes how those surfaces and screens arrive and leave.
 
@@ -37,7 +40,9 @@ The underlying rule: **parallel destinations get no motion, hierarchy gets horiz
 
 ### Tab navigation
 
-`transition: tab-switch` · both platforms
+`transition: tab-switch`
+
+Identical on **both platforms**.
 
 - Switching tabs is **instant**. No transition animation.
 - Each tab keeps its own navigation stack. Returning to a tab restores the view where the user left it, not the root.
@@ -64,7 +69,9 @@ Pushing and popping pages inside a tab. Uses `../components/top-bar.md` for the 
 
 ### Sheets
 
-`transition: sheet-open` `transition: sheet-close` · both platforms
+`transition: sheet-open` `transition: sheet-close`
+
+Identical on **both platforms**.
 
 - Open: slides up from the bottom and stops at the intended height (partial or full height).
 - Close: slides down toward the bottom edge.

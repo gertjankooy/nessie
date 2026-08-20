@@ -1,3 +1,13 @@
+---
+tokens: Style / Dimension
+zeroheight_page_id: 6699361
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/06ea1c-style
+last_synced: 2026-08-20
+sync: pull
+related: [style, spacing]
+gaps: []
+---
+
 # NESSIE Shape Tokens (Radius & Border Width)
 
 Corner-radius and border-width reference for NS app surfaces. Pick **semantic radius/width tokens** — never raw radius steps, never invented values. Values are px / points / dp.
