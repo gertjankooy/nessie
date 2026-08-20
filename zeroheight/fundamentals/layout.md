@@ -40,6 +40,8 @@ The same token has three name shapes. **The Token Studio JSON / Figma variables 
 | Android (Compose) | camelCase, drop dashes | `spaceAppInlineComfy` |
 
 > **Auditing tip:** Figma binds variables in the `--space/app/...` form. Convert by replacing `/` with `.` (drop the leading `--`) to match the JSON token names in this doc.
+>
+> The tier (core / base / applied) is **not part of the name**. `space.app.container.inset` is an applied token, but nothing in the name says so, and no token is ever called `applied.something`. Match on the name as written here.
 
 ### App Inset — padding inside a container/boundary
 
@@ -79,14 +81,14 @@ Use applied tokens for common layout structures instead of composing spacing by 
 
 | Applied token | References | Use |
 | :--- | :--- | :--- |
-| `applied.space.app.section.inset` | `inset.default` (16) | Section left/right padding. |
-| `applied.space.app.container.inset` | `inset.comfy` (24) | Container top/bottom padding. |
-| `applied.space.app.container.stack.default` | `stack.default` (24) | Default gap between containers/sections. |
-| `applied.space.app.container.stack.control` | `stack.comfy` (32) | Gap around list types and input fields. |
-| `applied.space.app.group.stack.default` | `stack.dense` (16) | Default gap within a group. |
-| `applied.space.app.group.stack.relaxed` | `stack.default` (24) | Relaxed gap within a group. |
+| `space.app.section.inset` | `inset.default` (16) | Section left/right padding. |
+| `space.app.container.inset` | `inset.relaxed` (32) | Container top/bottom padding. |
+| `space.app.container.stack.default` | `stack.default` (24) | Default gap between containers/sections. |
+| `space.app.container.stack.control` | `stack.comfy` (32) | Gap around list types and input fields. |
+| `space.app.group.stack.default` | `stack.dense` (16) | Default gap within a group. |
+| `space.app.group.stack.comfy` | `stack.comfy` (32) | Relaxed gap within a group. |
 
-> `applied.app.pane.inset` and `applied.app.split.gutter` are reserved (future) for MD/expanded multi-pane layouts — not yet defined.
+> Multi-pane layout tokens (pane inset, split gutter) are reserved for MD/expanded layouts and **not yet defined**. No token name exists for them yet, so don't expect to match one in a design.
 
 ## Layout regions
 
@@ -129,9 +131,9 @@ Scrollable content, structured as four nested levels of grouping. The strongest 
 
 | Level | Name | Role | Spacing rule |
 | :--- | :--- | :--- | :--- |
-| 1 | **Section** | Content collection for the page; wraps all Containers. LR padding always: `applied.space.app.section.inset` (16). TB padding varies by screen type — see "Screen type patterns" below. | Section `gap` = 0; spacing between Containers is created by compounding Container TB insets. |
-| 2 | **Container** | Thematic grouping of related components (e.g. all booking options, all traveller inputs). On flow screens, multiple Containers stack directly in the Section. On navigation screens, a single Container wraps all Groups. | TB: `applied.space.app.container.inset` (24). Internal gap between Groups: `applied.space.app.container.stack.default` (24) or `applied.space.app.container.stack.control` (32) for list types and input fields. |
-| 3 | **Group** | Related components sharing a conceptual purpose. Can contain one or more SubGroups. A **heading** (a `heading1–4` type style with the heading role — not an app-library component) — when used — is the first child of the first SubGroup and carries its own bottom spacing. | Gap between SubGroups: `applied.space.app.group.stack.default` (16) or `applied.space.app.group.stack.relaxed` (24). Headings are not always required — see [Settings & Utility](https://design.ns.nl/4a05a30ad/v/latest/p/17b7b1-settings-utility). |
+| 1 | **Section** | Content collection for the page; wraps all Containers. LR padding always: `space.app.section.inset` (16). TB padding varies by screen type — see "Screen type patterns" below. | Section `gap` = 0; spacing between Containers is created by compounding Container TB insets. |
+| 2 | **Container** | Thematic grouping of related components (e.g. all booking options, all traveller inputs). On flow screens, multiple Containers stack directly in the Section. On navigation screens, a single Container wraps all Groups. | TB: `space.app.container.inset` (32). Internal gap between Groups: `space.app.container.stack.default` (24) or `space.app.container.stack.control` (32) for list types and input fields. |
+| 3 | **Group** | Related components sharing a conceptual purpose. Can contain one or more SubGroups. A **heading** (a `heading1–4` type style with the heading role — not an app-library component) — when used — is the first child of the first SubGroup and carries its own bottom spacing. | Gap between SubGroups: `space.app.group.stack.default` (16) or `space.app.group.stack.comfy` (32). Headings are not always required — see [Settings & Utility](https://design.ns.nl/4a05a30ad/v/latest/p/17b7b1-settings-utility). |
 | 4 | **SubGroup** | A zero-gap stack of tightly related components that share the same Group heading but need a subtle visual break from sibling SubGroups (e.g. info fields / card actions / destructive action, all under "About this card"). | `gap` is **always 0** on the SubGroup layer itself. The gap between SubGroups is controlled by the parent Group's `itemSpacing` token — never applied on the SubGroup layer. |
 
 ## Stacking behaviour (spacing compounds)
@@ -155,7 +157,7 @@ Default container inset depends on the kind of screen (all values are `space.app
 | **Flow screens** (booking, onboarding, decision-mode) | 24 | `space.app.inset.comfy` | 24 + 24 = 48 between containers; calmer rhythm. |
 | **High-density screens** (scan-mode, data-heavy) | 16 | `space.app.inset.default` | 16 + 16 = 32 between containers; tighter grouping. |
 
-> **Forms** typically use **32 stacking** *within* the container between grouped input fields — `applied.space.app.container.stack.control` (→ `space.app.stack.comfy`, 32). This is separate from the container inset choice above.
+> **Forms** typically use **32 stacking** *within* the container between grouped input fields — `space.app.container.stack.control` (→ `space.app.stack.comfy`, 32). This is separate from the container inset choice above.
 
 ### Screen type patterns
 
@@ -163,8 +165,8 @@ Two patterns are documented from real screens. Add further types here as screens
 
 | Screen type | Section TB padding | Containers in Section | Container internal gap | Bottom chrome |
 | :--- | :--- | :--- | :--- | :--- |
-| **Navigation / Home** (tab hub, cards + navigation lists) | `space/app/inset/relaxed` (32) | Single Container wrapping all Groups | `applied.space.app.container.stack.control` (32) | `🚄 Bottom Navigation` |
-| **Flow** (booking, configuration, decision screens) | — | Multiple thematic Containers; Section `gap:0` | `applied.space.app.container.stack.default` (24) | Sticky footer — see [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models) for focused flow top bar guidance |
+| **Navigation / Home** (tab hub, cards + navigation lists) | `space/app/inset/relaxed` (32) | Single Container wrapping all Groups | `space.app.container.stack.control` (32) | `🚄 Bottom Navigation` |
+| **Flow** (booking, configuration, decision screens) | — | Multiple thematic Containers; Section `gap:0` | `space.app.container.stack.default` (24) | Sticky footer — see [Interaction Models](https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models) for focused flow top bar guidance |
 
 > **Flow compounding:** Section `gap` is 0 between Containers. Spacing is created by compounding Container TB insets — 24 + 24 = 48px between adjacent Containers, signalling each Container is a separate topic.
 
