@@ -21,7 +21,7 @@ Output mirrors the source path, so `reference/fundamentals/motion.md` becomes `z
 
 ## What gets stripped
 
-See `/build-zeroheight` for the full list: frontmatter, the H1, `## Source`, `Local guidance` and gap markers, and repo-relative links (rewritten to ZeroHeight URLs, or flattened to the target's title).
+See `/build-zeroheight` for the full list: frontmatter, the H1, `## Source`, `Local guidance` marker lines, whole `Superseded` banners, gap markers, and repo-relative links (rewritten to ZeroHeight URLs, or flattened to the target's title).
 
 ## Scope
 

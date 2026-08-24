@@ -125,7 +125,7 @@ Every doc is owned by exactly one side. The `sync:` key says which, and an absen
 
 **This file stays the single canonical copy either way.** For `push` docs the files under `zeroheight/` are generated output: never hand-edited, never read by an agent, and enforced by the pre-commit check.
 
-A push doc **keeps `zeroheight_page_id`** when it maps to exactly one ZeroHeight page, so `/docs-coverage` still counts the page as covered; drop it only when the doc is published as several pages, where no single id applies. It also **keeps `zeroheight_url`** when one exists, because that is what lets *other* docs resolve a cross-link to this one. The build strips the frontmatter, the H1, `## Source`, `Local guidance` markers, and gap markers; see `/build-zeroheight` for the full list.
+A push doc **keeps `zeroheight_page_id`** when it maps to exactly one ZeroHeight page, so `/docs-coverage` still counts the page as covered; drop it only when the doc is published as several pages, where no single id applies. It also **keeps `zeroheight_url`** when one exists, because that is what lets *other* docs resolve a cross-link to this one. The build strips the frontmatter, the H1, `## Source`, `Local guidance` marker lines, whole `Superseded` banners, and gap markers; see `/build-zeroheight` for the full list.
 
 ## Protected markers (blocks a sync must not delete)
 

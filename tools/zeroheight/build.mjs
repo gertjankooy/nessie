@@ -23,6 +23,7 @@ const OUT = join(ROOT, 'zeroheight');
 // Repo-only scaffolding that must not reach ZeroHeight.
 const DROP_SECTIONS = ['Source'];
 const LOCAL_GUIDANCE = /^>\s*\*\*Local guidance/;
+const SUPERSEDED = /^>\s*\*\*Superseded/;
 const GAP_MARKER = /^_Not available in ZeroHeight.*to review\._\s*$/;
 
 // Machine-readable tags exist so an agent can address a variant or state without
@@ -97,14 +98,25 @@ function splitSections(body) {
   return sections;
 }
 
-// Remove the H1, Local guidance marker lines, gap markers, and machine-readable
+// Remove the H1, protected-marker blocks, gap markers, and machine-readable
 // tags. A line that held nothing but tags is dropped; one that held tags plus
 // prose keeps the prose, with any orphaned separator tidied away.
+//
+// The two markers come out differently. Local guidance loses only its marker
+// line, because the block beneath it is real documentation. Superseded loses
+// the whole banner: it warns about the doc rather than documenting the
+// component, and a page telling its own reader it is out of date, in repo
+// bookkeeping wording, reads as noise on ZeroHeight.
 function clean(lines, isIntro) {
   const out = [];
-  for (const line of lines) {
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if (isIntro && /^# /.test(line)) continue;
     if (LOCAL_GUIDANCE.test(line)) continue;
+    if (SUPERSEDED.test(line)) {
+      while (i + 1 < lines.length && /^\s*>/.test(lines[i + 1])) i++;
+      continue;
+    }
     if (GAP_MARKER.test(line)) continue;
     if (!TAG.test(line)) { out.push(line); continue; }
     TAG.lastIndex = 0;
