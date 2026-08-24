@@ -127,7 +127,7 @@ Every doc is owned by exactly one side. The `sync:` key says which, and an absen
 
 A push doc **keeps `zeroheight_page_id`** when it maps to exactly one ZeroHeight page, so `/docs-coverage` still counts the page as covered; drop it only when the doc is published as several pages, where no single id applies. It also **keeps `zeroheight_url`** when one exists, because that is what lets *other* docs resolve a cross-link to this one. The build strips the frontmatter, the H1, `## Source`, `Local guidance` markers, and gap markers; see `/build-zeroheight` for the full list.
 
-## Local guidance (authored ahead of ZeroHeight)
+## Protected markers (blocks a sync must not delete)
 
 **Rule: any content you add that is not sourced from ZeroHeight MUST carry this marker.** Sometimes a decision is documented here *before* the ZeroHeight page catches up (design changes flow both ways). Mark every such block so `/sync-docs` doesn't mistake its absence upstream for a removal and delete it:
 
@@ -135,7 +135,21 @@ A push doc **keeps `zeroheight_page_id`** when it maps to exactly one ZeroHeight
 > **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).**
 ```
 
-Put the line directly under the section/sub-section heading it protects. When ZeroHeight later covers the content, reconcile the wording and **remove the marker** — it becomes normal synced content. This is the counterpart to a gap: a gap = ZeroHeight has it, we don't yet; a `Local guidance` block = we have it, ZeroHeight doesn't yet. (Keep the marker's "Local guidance" wording distinct from the gap phrase "not yet in ZeroHeight — to review", which means the opposite.)
+Put the line directly under the section or sub-section heading it protects. This is the counterpart to a gap: a gap = ZeroHeight has it, we don't yet; a `Local guidance` block = we have it, ZeroHeight doesn't yet. (Keep the marker's "Local guidance" wording distinct from the gap phrase "not yet in ZeroHeight — to review", which means the opposite.)
+
+### Superseded (the page is behind newer guidance)
+
+Use this when a ZeroHeight page is **out of date** and something else is now authoritative, so a reader is warned before they follow it. Put it directly under the H1 when the whole doc is affected, or under the section it applies to:
+
+```
+> **Superseded — keep on sync (this page is out of date; not a removal).**
+```
+
+Follow the marker with what supersedes it and where to go instead. `Local guidance` and `Superseded` are opposites: one says the repo is ahead of the page, the other says the page is behind newer guidance. Both are protected the same way.
+
+### Lifecycle
+
+Both markers are meant to be temporary, and neither is removed silently. Remove one only when its reason is gone: for `Local guidance`, once ZeroHeight covers the content (reconcile the wording, drop the marker, and it becomes normal synced content); for `Superseded`, once the page has caught up with whatever replaced it. On a targeted `/sync-docs` run the command surfaces every marked block and asks before removing it, so a stale marker gets noticed rather than living forever.
 
 ## Authoring checklist (verify before done)
 

@@ -13,6 +13,9 @@ gaps: [Accessibility]
 
 # Bottom Sheet
 
+> **Superseded — keep on sync (this page is out of date; not a removal).**
+> For **choosing** a sheet and for its sizing, dismissal, and toolbar rules, use [../patterns/interaction-models.md](../patterns/interaction-models.md) (`pattern: sheet`), which is newer and authoritative. This doc mirrors the current Figma component, which is scheduled for update; where the two disagree, the pattern wins. It still describes the component's own anatomy and options accurately.
+
 ## Usage
 ### Use when
 - Handling a self-contained process with a clear start and end point.

@@ -53,6 +53,8 @@ This file (`AGENTS.md`) is the entry point. **Read the relevant skill file befor
 | Check only token usage | **`skills/audit-tokens.md`** | `reference/tokens/*` for the values, `reference/fundamentals/*` for whether the right one was picked |
 | Create / update a component's reference doc | **`skills/document-component.md`** | `reference/components/_component-doc-standard.md` |
 
+**Patterns outrank components for "which one should I use".** When the question is which surface or interaction to reach for (a sheet, dialog, menu, focused flow, or how a screen should respond), read `reference/patterns/` first, starting with `interaction-models.md`. Component docs describe a component's own anatomy, configurations, and behaviour; they don't decide between components. Open one once the component is already chosen or the designer names it. Where a component doc and a pattern disagree, the pattern is newer and wins, and the component doc should carry a `Superseded` marker saying so.
+
 All paths **in this file** are relative to the repository root. Cross-links **inside `reference/`** are relative to the linking file's own directory (`../tokens/color.md`, `layout.md`); keep new links in that form. Re-read files every session; never assume you remember them.
 
 ## Reference map
