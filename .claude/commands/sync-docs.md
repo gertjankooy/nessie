@@ -55,7 +55,7 @@ Refresh this skill's reference docs from the NESSIE ZeroHeight (`Nessie Design S
    - `> **Local guidance — keep on sync …**` — authored here ahead of / independent of the page. Its absence from ZeroHeight is **not** a removal.
    - `> **Superseded — keep on sync …**` — the page is out of date and something else is authoritative. Keep the warning even though the page contradicts it.
 
-   **Never remove a marked block silently.** On a **targeted** run (one name, or a short comma-list), surface every marked block, say what the page now covers, and **ask the user before removing it**; if they decline, or the run is unattended, leave it. On a **bulk** run (`all`, or a category), do not prompt: leave every marker untouched and list the docs carrying one in the report as needing review. Either way, report every marked block you passed over.
+   **Never remove a marked block silently.** On a **targeted** run (one name, or a short comma-list), raise a marked block only when the page has caught up with what it protects: say what the page now covers and **ask the user before removing it**; if they decline, or the run is unattended, leave it. A marker whose reason still holds needs no mention, so a re-sync of the same page doesn't repeat itself. On a **bulk** run (`all`, or a category), do not prompt: leave every marker untouched and list the docs carrying one in the report, since that overview is the point.
 
 9. **No em dashes.** Per the house writing rules in `reference/components/_component-doc-standard.md` → *Golden rules*, which apply to every file this command writes, not just components. Rewrite as you distill; verify with `grep -n '—' <file>`.
 
