@@ -2,7 +2,7 @@
 pattern: Interaction Models
 zeroheight_page_id: 8100862
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models
-last_synced: 2026-07-22
+last_synced: 2026-08-26
 platforms: [ios, android]
 related: [layout, feedback-states]
 gaps: []
@@ -27,18 +27,18 @@ Patterns triggered directly by the user (a button tap or long press) that surfac
 - A list of secondary actions anchored to an explicit `⋯` (iOS) / `⋮` (Android) trigger; the trigger's scope must match the actions' scope (page-level in the top bar, item-level on a card/row).
 - **Use when:** 2–5 secondary actions that don't need persistent visibility and relate to the screen or an element.
 - **Don't use when:** more than 5 actions, or actions needing toggles/adjustable settings — use a **Sheet**.
-- **Rules:** order top-to-bottom by frequency; destructive actions last and in red; a destructive selection is followed by an **Action sheet** (iOS) / **Alert** (Android), never executed immediately.
+- **Rules:** order top-to-bottom by frequency; destructive actions last and in red; a destructive selection is followed by an **Action sheet** (iOS) / **Alert** (Android), never executed immediately. A pull-down menu is not a replacement for a properly structured action list.
 
 ### Pop-up menu
 `pattern: popup-menu` · iOS pop-up button (`UIButton` + `UIMenu`) · Android exposed dropdown (`NesPopupMenu`)
 - An explicit button reflecting the current selection; tapping reveals mutually exclusive options and the label updates to the chosen value.
-- **Use when:** a control has mutually exclusive options (sort, filter, appearance) and the current selection should stay visible.
+- **Use when:** a control has mutually exclusive options (sort, filter, appearance), the current selection should stay visible, and the trigger needs to be permanently visible rather than hidden behind a long press (see `../components/list-items.md` for platform differences).
 - **Rules:** reflect the selection in the label; dismiss on selection (no confirm); only for selecting options, never for actions or anything with side effects.
 
 ### Action sheet
 `pattern: action-sheet` · **iOS only** (`.confirmationDialog()`); on Android use an **Alert** (≤3 options) or a **Sheet**.
 - A confirmation step for a destructive or irreversible action, triggered from a button or as a follow-up to a destructive overflow option.
-- **Use when:** an action is destructive/irreversible and the user should understand what's affected before confirming.
+- **Use when:** an action is destructive/irreversible and the user should understand what's affected before confirming. When the trigger has only a few options and at least one is destructive, skip the overflow menu and go straight to an action sheet.
 - **Rules:** title names what's affected ("Delete widget"); add a short description only when the consequence isn't obvious from the title; label the destructive button with a specific verb (not "OK"); when the only option is destructive, Cancel is always a separate button.
 
 ### Alert
@@ -56,21 +56,22 @@ Patterns that introduce a new surface above the current screen.
 ### Sheet
 `pattern: sheet` · iOS `.sheet()` (medium/large detent) · Android `NesBottomSheetDialogFragment`
 - Slides up from the bottom; the user stays conceptually tied to the originating screen. Size follows content complexity, not interaction type.
-- **Partial** (`variant: partial`): single selections or short adjustments; dismiss on selection for single choices, explicit **Apply** when configuring multiple settings together; always show a grab handle on iOS (optional on Android).
-- **Full height** (`variant: full-height`): small gap at the top; for more vertical space or multiple fields; always dimmed; always a toolbar (Cancel left, Save/Apply right); cancelling with unsaved changes triggers an action sheet (iOS) / alert (Android) to confirm discard.
+- **Partial** (`variant: partial`): single selections or short adjustments. Dismiss on selection when the choice itself is the action; keep the sheet open when the selection leads into a next step, or when a pre-selection has to be confirmed first. Use an explicit **Apply** when several settings are configured together. Show a grab handle **only** when the sheet supports multiple detents and can be dragged between them; a fixed-height partial sheet that only dismisses needs none.
+- **Full height** (`variant: full-height`): stops at the status bar, revealing the screen underneath with a scrim on top; for more vertical space or multiple fields. Cancelling with unsaved changes triggers an action sheet (iOS) / alert (Android) to confirm discard.
+- **Toolbar actions:** the dismiss action sits on the **right** by default. It moves left only when paired with a confirming action such as Save or Apply, which then takes the right as the primary forward-moving action. A confirming action may stay disabled until the required input is complete: a Nessie decision rather than a platform rule, applied consistently across sheets that save data.
 - **Drag to dismiss:** on by default; disable when the user must complete a required step before the sheet can close (e.g. accepting required terms), not only when unsaved input exists. When disabled, iOS bounces the drag to signal the sheet can't close this way; Android simply doesn't respond. On iOS, dragging down with unsaved changes can trigger a system action sheet to confirm discard, but only when the app explicitly enables that. Tapping the dimmed area dismisses unless there are unsaved changes.
 
 ### Focused flow
 `pattern: focused-flow` · iOS `.fullScreenCover()` · Android `NesActivityFullScreen`
 - A full-screen (no top gap) presentation for a self-contained task with a clear start and end; the user can't return without completing or cancelling.
 - **Use when:** the interaction spans multiple steps, has a clear completion milestone (purchase, onboarding), and doesn't need the originating context.
-- **Dismissal:** Cancel only at the very start; mid-flow cancel confirms via action sheet/alert; drag-to-dismiss disabled once meaningful input exists; Back moves within the flow; completing returns to the originating screen.
+- **Dismissal:** an optional exit action sits top right, labelled for the flow (**Close** for a purchase, **Skip** for onboarding, **Later** for setup); when present it stays on every step and disappears only once the flow completes. From step two a back button appears top left. The forward action sits at the bottom of each step and ideally names the next one ("Order", "Confirm & Pay"), with a completing label on the final step. Closing with several inputs already entered may warn via an action sheet that input will be lost, as a per-context consideration rather than a fixed rule. Completing returns to the originating screen.
 
 ### Persistent panel — map context
 `pattern: persistent-panel` `context: map` · iOS non-modal `.sheet()` with detents · Android `NesBottomSheet`
 - A panel over an active map (Maps, Disruptions). Three states — collapsed, half height, full height — dragged between; no drag-to-dismiss, closed only explicitly.
 - Collapsed/half: map stays visible and interactive, top bar and bottom nav visible. Full height: stops below the top bar, a sliver of map stays visible.
-- Opening a detail hides all nav bars and zooms the map; from full height the panel first collapses to partial so map context stays visible. Contextual details open as a partial sheet (map zooms); informational details open as a full dimmed sheet.
+- Opening a detail hides all nav bars and zooms the map; from full height the panel first collapses to partial so map context stays visible. Contextual details open as a partial sheet with no dimming, so the map stays visible; if the content warrants it the sheet can take a second detent, signalled by a grab handle, with drag-to-dismiss disabled at the smaller detent so it stays anchored and closes only via the explicit dismiss button. It stays a detail, not a panel: no independent navigation, and it closes on dismiss. Informational details open as a full dimmed sheet.
 > **iOS 26+:** the collapsed/half panel has side padding and rounded corners matching the floating bottom nav, with concentric radius as it expands; full width at full height. Android is full width at all states.
 
 ### Persistent panel — active journey
@@ -98,4 +99,4 @@ Patterns that introduce a new surface above the current screen.
 | An active journey needing awareness across screens | Persistent panel, active journey |
 
 ## Source
-- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models (page `8100862`, synced 2026-07-22)
+- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/529255-interaction-models (page `8100862`, synced 2026-08-26)
