@@ -13,7 +13,7 @@ gaps: []
 
 > How to choose color on an NS app screen: which surface carries which job, and how tokens combine. The **token list itself** (brand, system, content, applied) lives in `../tokens/color.md`; this page is about applying it.
 
-> **App only. Web is not covered here.** The surface hierarchy below (`base`, `default`, `elevated`) and the nesting rules are the app system on iOS and Android. The color tokens themselves *are* shared across platforms, including web; only their application to app surfaces is scoped to this page.
+> **App only. Web is not covered here.** The surface hierarchy below (`base`, `default`, `elevated`) and the nesting rules are the app system on iOS and Android. The color tokens themselves *are* shared across platforms.
 
 Pick by **meaning**, never by swatch. Dark mode resolves automatically, so you never hand-pick a light-mode step or set a dark override.
 
@@ -22,8 +22,8 @@ Pick by **meaning**, never by swatch. Dark mode resolves automatically, so you n
 Three foundational surface tokens build app layout hierarchy: `base`, `default`, and `elevated` (each with an `-alt` for a different dark-mode tone). Pick by the screen's job, not by looks.
 
 - **`default`**: content-first screens (forms, reading, focused flows), rich text, and primary containers. **Modals and bottom sheets always use `default`**; they are content-heavy and need clarity across modes.
-- **`base`**: utility / navigation-dominant screens (settings, search, overview/filter panels), and as the canvas to **visually group** `default` containers placed on top. Reach for **`base-alt`** when the screen pairs with `brand.primary-alt`, so the two don't read as too similar in dark mode.
-- **`elevated`**: components that must lift off the surface (cards, tiles, inputs). In **dark mode** use a border (shadows barely read); shadow *or* border, never both. Drive that border with a mode-conditional opacity token so it shows in dark mode only. Use **`elevated-alt`** when an elevated surface needs lower contrast on a `base` background, and **`elevated-alpha`** for a semi-transparent component background that holds up on any surface.
+- **`base`**: screens with dense UI or navigation clusters (settings, search, overview/filter panels), and as the canvas to **visually group** `default` containers placed on top. Reach for **`base-alt`** when the screen pairs with `brand.primary-alt`, so the two don't read as too similar in dark mode.
+- **`elevated`**: components that must lift off the surface (cards, tiles, inputs). In **dark mode** use a border (shadows barely read); shadow *or* border, never both. Drive that border with `base.color.boolean.high-in-light` so it shows in dark mode only. Use **`elevated-alt`** when an elevated surface needs lower contrast on a `base` background, and **`elevated-alpha`** for a semi-transparent component background that holds up on any surface.
 
 **Nesting & combinations**
 - Nest `default` containers inside a `base` screen (e.g. settings: `base` page + `default` grouped containers). Inside a container, separate items with dividers; don't wrap every item in its own container.
