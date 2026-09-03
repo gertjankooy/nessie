@@ -40,15 +40,16 @@ The underlying rule: **parallel destinations get no motion, hierarchy gets horiz
 
 ### Tab navigation
 
-`transition: tab-switch`
+`transition: tab-switch` `transition: return-to-root` `transition: scroll-to-top`
 
 Identical on **both platforms**.
 
 - Switching tabs is **instant**. No transition animation.
 - Each tab keeps its own navigation stack. Returning to a tab restores the view where the user left it, not the root.
-- Tapping the tab that is already active returns to that tab's root page, also instantly.
+- Tapping the active tab returns to that tab's root page, using the same movement as going back a page. Pages in between are not shown.
+- Tapping the active tab again scrolls that page to the top, animated.
 
-Example: Planner (tab) to Map (tab) to Tickets (tab). Uses `../components/bottom-navigation.md`.
+See `../components/bottom-navigation.md` for when each step applies.
 
 ### Page navigation
 
