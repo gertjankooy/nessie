@@ -1,7 +1,7 @@
 ---
 fundamental: Using Shape & Style
 zeroheight_page_id: 6693107
-# zeroheight_url: unknown, fill in once resolved from ZeroHeight
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/468f74-style
 last_synced: 2026-08-20
 sync: pull
 platforms: [ios, android]

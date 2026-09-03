@@ -1,7 +1,7 @@
 ---
 fundamental: Using Typography
 zeroheight_page_id: 6693097
-# zeroheight_url: unknown, fill in once resolved from ZeroHeight
+zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/2024f1-typography
 last_synced: 2026-08-20
 sync: pull
 platforms: [ios, android]
