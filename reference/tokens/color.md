@@ -95,12 +95,13 @@ Use `.pale` for the tinted background of an alert, `.default` for icon/border, `
 | `content.background.base` | gray.25 → gray.900 | App canvas — settings, search, nav-heavy screens. |
 | `content.background.base-alt` | gray.25 → gray.950 | Pairs with brand-alt; avoids overlap in dark mode (e.g. a branded Top Bar on a base canvas — see `../components/top-bar.md`). |
 | `content.background.default` | white → gray.800 | Content-first screens, modals, forms, grouped containers. |
-| `content.background.alt` | white → gray.200 | Alternative theming, larger areas in dark mode. |
+| `content.background.alt` | white → gray.200 | UI knobs and handles (e.g. a toggle knob). Not a screen surface. |
 | `content.background.elevated` | white → gray.700 | Cards, tiles, form inputs (shadow OR border, never both). |
-| `content.background.elevated-alpha` / `-alpha-inverse` | white / alpha | Component overlays on any surface. |
+| `content.background.elevated-alpha` | white → alpha.white.900 | Semi-transparent component background that holds up on any surface. |
+| `content.background.elevated-alpha-inverse` | white → alpha.black.400 | The same job where the component sits *on* an alpha surface. Dark mode goes darker rather than lighter, so the two stay distinguishable (e.g. the active segment of a Radio Panel on an `elevated-alpha` track). |
 | `content.background.inverse` / `-subtle` / `-subdued` | gray.700/500/300 → gray.200/400/600 | Tooltips, toasts, inverted sections. |
 | `content.background.alpha-subtle/-subdued/-strong/-heavy/-alt/-inverse-subtle` | alpha steps | Adaptive overlays over any surface. |
-| `content.background.pure` | white → black | True white/black surface (rare). |
+| `content.background.pure` | white → black | True white/black surface. Live activities. |
 
 ## Content — Border, Shadow, Scrim
 

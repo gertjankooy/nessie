@@ -2,7 +2,7 @@
 fundamental: Using Color
 zeroheight_page_id: 6693013
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/44f5db-color
-last_synced: 2026-08-26
+last_synced: 2026-09-03
 sync: pull
 platforms: [ios, android]
 related: [layout, typography, color-tokens]
@@ -19,11 +19,12 @@ Pick by **meaning**, never by swatch. Dark mode resolves automatically, so you n
 
 ## Visual hierarchy: choosing a background
 
-Three foundational surface tokens build app layout hierarchy: `base`, `default`, and `elevated` (each with an `-alt` for a different dark-mode tone). Pick by the screen's job, not by looks.
+Three foundational surface tokens build app layout hierarchy: `base`, `default`, and `elevated`. Pick by the screen's job, not by looks.
 
 - **`default`**: content-first screens (forms, reading, focused flows), rich text, and primary containers. **Modals and bottom sheets always use `default`**; they are content-heavy and need clarity across modes.
 - **`base`**: screens with dense UI or navigation clusters (settings, search, overview/filter panels), and as the canvas to **visually group** `default` containers placed on top. Reach for **`base-alt`** when the screen pairs with `brand.primary-alt`, so the two don't read as too similar in dark mode.
-- **`elevated`**: components that must lift off the surface (cards, tiles, inputs). In **dark mode** use a border (shadows barely read); shadow *or* border, never both. Drive that border with `base.color.boolean.hide-in-light` so it shows in dark mode only. Use **`elevated-alt`** when an elevated surface needs lower contrast on a `base` background, and **`elevated-alpha`** for a semi-transparent component background that holds up on any surface.
+- **`elevated`**: components that must lift off the surface (cards, tiles, inputs). Use it sparingly, ideally once per screen. In **dark mode** use a border (shadows barely read); shadow *or* border, never both. Drive that border with `base.color.boolean.hide-in-light` so it shows in dark mode only. Reach for **`elevated-alpha`** when the component background has to hold up on any surface.
+- **`pure`**: true white or black. Live activities only, never a screen surface.
 
 **Nesting & combinations**
 - Nest `default` containers inside a `base` screen (e.g. settings: `base` page + `default` grouped containers). Inside a container, separate items with dividers; don't wrap every item in its own container.
