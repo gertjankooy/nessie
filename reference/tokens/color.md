@@ -114,6 +114,17 @@ Use `.pale` for the tinted background of an alert, `.default` for icon/border, `
 | `content.shadow.default` | black | Shadow color (compose with elevation/opacity). |
 | `content.scrim.default` | alpha.black.500 → alpha.white.800 | Modal/sheet backdrop scrim. |
 
+## Mode-conditional visibility
+
+Two booleans that resolve per color mode, for a part that should appear in one mode only. Bind one to the layer's visibility.
+
+| Token | Light → Dark | Usage |
+| :--- | :--- | :--- |
+| `boolean.hide-in-light` | off → on | Visible in dark mode only. Drives the border that stands in for a shadow on `content.background.elevated`. |
+| `boolean.hide-in-dark` | on → off | Visible in light mode only. |
+
+`opacity.hide-in-light` / `-in-dark` do the same job by fading instead of toggling; see `applied.md`.
+
 ## Applied color (component)
 
 Prefer these over re-composing base tokens for forms, interaction, skeleton, modality. Full table in `applied.md`.

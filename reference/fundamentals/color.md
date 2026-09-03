@@ -23,7 +23,7 @@ Three foundational surface tokens build app layout hierarchy: `base`, `default`,
 
 - **`default`**: content-first screens (forms, reading, focused flows), rich text, and primary containers. **Modals and bottom sheets always use `default`**; they are content-heavy and need clarity across modes.
 - **`base`**: screens with dense UI or navigation clusters (settings, search, overview/filter panels), and as the canvas to **visually group** `default` containers placed on top. Reach for **`base-alt`** when the screen pairs with `brand.primary-alt`, so the two don't read as too similar in dark mode.
-- **`elevated`**: components that must lift off the surface (cards, tiles, inputs). In **dark mode** use a border (shadows barely read); shadow *or* border, never both. Drive that border with `base.color.boolean.high-in-light` so it shows in dark mode only. Use **`elevated-alt`** when an elevated surface needs lower contrast on a `base` background, and **`elevated-alpha`** for a semi-transparent component background that holds up on any surface.
+- **`elevated`**: components that must lift off the surface (cards, tiles, inputs). In **dark mode** use a border (shadows barely read); shadow *or* border, never both. Drive that border with `base.color.boolean.hide-in-light` so it shows in dark mode only. Use **`elevated-alt`** when an elevated surface needs lower contrast on a `base` background, and **`elevated-alpha`** for a semi-transparent component background that holds up on any surface.
 
 **Nesting & combinations**
 - Nest `default` containers inside a `base` screen (e.g. settings: `base` page + `default` grouped containers). Inside a container, separate items with dividers; don't wrap every item in its own container.
