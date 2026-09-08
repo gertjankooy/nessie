@@ -245,7 +245,10 @@ function build(filter, { write = true } = {}) {
     results.push({ rel: d.rel, out: outPathFor(d.rel), text: r.text });
   }
   if (write) {
-    if (existsSync(OUT)) rmSync(OUT, { recursive: true });
+    // Only a full build owns the whole tree, so only a full build may clear it to
+    // prune orphans. A filtered build writes its own pages and nothing else --
+    // clearing here would delete every push doc outside the filter.
+    if (!filter && existsSync(OUT)) rmSync(OUT, { recursive: true });
     for (const r of results) { mkdirSync(dirname(r.out), { recursive: true }); writeFileSync(r.out, r.text); }
   }
   return { results, flattened };

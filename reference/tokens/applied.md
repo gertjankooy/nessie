@@ -87,10 +87,13 @@ Color-codes transport modes. **Never use as generic accents.** `modality.color.t
 
 ## Applied layout spacing
 
+> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).** The `space.app.container.inset.default` / `.dense` split is defined in the design-tokens repo (`03.applied/ns.json`); reconcile and remove this line once ZeroHeight covers it.
+
 | Token | Resolves to | Usage |
 | :--- | :--- | :--- |
 | `space.app.section.inset` | `space.app.inset.default` (16) | Horizontal inset for app sections. |
-| `space.app.container.inset` | `space.app.inset.relaxed` (32) | Vertical inset for app containers. |
+| `space.app.container.inset.default` | `space.app.inset.relaxed` (32) | Container top/bottom inset — navigation screens, where a single container stacks all groups. |
+| `space.app.container.inset.dense` | `space.app.inset.comfy` (24) | Container top/bottom inset — flow screens, where multiple containers are stacked. |
 | `space.app.container.stack.default` | `space.app.stack.default` (24) | Between containers. |
 | `space.app.container.stack.control` | `space.app.stack.comfy` (32) | Between controls in a container. |
 | `space.app.group.stack.default` | `space.app.stack.dense` (16) | Between grouped elements. |

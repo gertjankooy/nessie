@@ -54,7 +54,7 @@ The same token has three name shapes. **The Token Studio JSON / Figma variables 
 
 > **Auditing tip:** Figma binds variables in the `--space/app/...` form. Convert by replacing `/` with `.` (drop the leading `--`) to match the JSON token names in this doc.
 >
-> The tier (core / base / applied) is **not part of the name**. `space.app.container.inset` is an applied token, but nothing in the name says so, and no token is ever called `applied.something`. Match on the name as written here.
+> The tier (core / base / applied) is **not part of the name**. `space.app.container.inset.default` is an applied token, but nothing in the name says so, and no token is ever called `applied.something`. Match on the name as written here.
 
 ### App Inset — padding inside a container/boundary
 
@@ -95,7 +95,8 @@ Use applied tokens for common layout structures instead of composing spacing by 
 | Applied token | References | Use |
 | :--- | :--- | :--- |
 | `space.app.section.inset` | `inset.default` (16) | Section left/right padding. |
-| `space.app.container.inset` | `inset.relaxed` (32) | Container top/bottom padding. |
+| `space.app.container.inset.default` | `inset.relaxed` (32) | Container top/bottom padding — navigation screens (a single container wrapping all groups). |
+| `space.app.container.inset.dense` | `inset.comfy` (24) | Container top/bottom padding — flow screens (multiple stacked containers). |
 | `space.app.container.stack.default` | `stack.default` (24) | Default gap between containers/sections. |
 | `space.app.container.stack.control` | `stack.comfy` (32) | Gap around list types and input fields. |
 | `space.app.group.stack.default` | `stack.dense` (16) | Default gap within a group. |
@@ -147,7 +148,7 @@ Scrollable content, structured as four nested levels of grouping. The strongest 
 | Level | Name | Role | Spacing rule |
 | :--- | :--- | :--- | :--- |
 | 1 | **Section** | Content collection for the page; wraps all Containers. LR padding always: `space.app.section.inset` (16). TB padding varies by screen type — see "Screen type patterns" below. | Section `gap` = 0; spacing between Containers is created by compounding Container TB insets. |
-| 2 | **Container** | Thematic grouping of related components (e.g. all booking options, all traveller inputs). On flow screens, multiple Containers stack directly in the Section. On navigation screens, a single Container wraps all Groups. | TB: `space.app.container.inset` (32). Internal gap between Groups: `space.app.container.stack.default` (24) or `space.app.container.stack.control` (32) for list types and input fields. |
+| 2 | **Container** | Thematic grouping of related components (e.g. all booking options, all traveller inputs). On flow screens, multiple Containers stack directly in the Section. On navigation screens, a single Container wraps all Groups. | TB: `space.app.container.inset.default` (32) on navigation screens, `space.app.container.inset.dense` (24) on flow screens. Internal gap between Groups: `space.app.container.stack.default` (24) or `space.app.container.stack.control` (32) for list types and input fields. |
 | 3 | **Group** | Related components sharing a conceptual purpose. Can contain one or more SubGroups. A **heading** (a `heading1–4` type style with the heading role — not an app-library component) — when used — is the first child of the first SubGroup and carries its own bottom spacing. | Gap between SubGroups: `space.app.group.stack.default` (16) or `space.app.group.stack.comfy` (32). Headings are not always required — see `../patterns/settings-utility.md`. |
 | 4 | **SubGroup** | A zero-gap stack of tightly related components that share the same Group heading but need a subtle visual break from sibling SubGroups (e.g. info fields / card actions / destructive action, all under "About this card"). | `gap` is **always 0** on the SubGroup layer itself. The gap between SubGroups is controlled by the parent Group's `itemSpacing` token — never applied on the SubGroup layer. |
 

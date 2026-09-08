@@ -5,7 +5,7 @@ zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/06ea1c-style
 last_synced: 2026-08-20
 sync: pull
 related: [style, spacing]
-gaps: []
+gaps: [Platform-conditional radius (ios26)]
 ---
 
 # NESSIE Shape Tokens (Radius & Border Width)
