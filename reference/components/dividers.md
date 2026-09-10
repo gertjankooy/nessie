@@ -6,7 +6,7 @@ aliases: [Divider]
 zeroheight_page_id: 1937086
 zeroheight_url: https://design.ns.nl/4a05a30ad/v/latest/p/9142e1-dividers
 figma_node: "1848:45672"
-last_synced: 2026-06-30
+last_synced: 2026-09-10
 related: [list-items, tiles]
 gaps: [Content guidelines, Accessibility]
 ---
@@ -16,20 +16,22 @@ gaps: [Content guidelines, Accessibility]
 ## Usage
 ### Use when
 - Separating pieces of content into clear groups, sections, options, or parts.
-- White space alone isn't enough of a separator.
+- [White space](../tokens/spacing.md) alone isn't enough of a separator.
 ### Don't use when
-- White space can ensure clear grouping — prefer white space over dividers.
+- White space can ensure clear grouping; prefer white space over dividers.
 
-Use the Strong type for extra attention (such as a costs overview followed by a total). Use the Brand type sparingly, to add NS branding to a section like a content-page intro.
+Use the Brand type sparingly within a page, to give a section some additional NS branding, such as supporting the intro section of a content page.
 
 ## Anatomy
+
+> **Local guidance — keep on sync (authored ahead of ZeroHeight; not a removal).**
+
 - **Line**: a horizontal rule separating content.
 
 ## Configurations
 ### Type
-- **Default**: standard separation.
-- **Strong**: higher attention value.
-- **Brand**: NS-branded, used sparingly.
+- **Default** `variant: default`: standard separation.
+- **Brand** `variant: brand`: NS-branded, used sparingly.
 
 ## Placement
 - Spans the full width of its container by default.
@@ -47,5 +49,5 @@ Follow the UX-writing scorecard and NS voice in [../content/index.md](../content
 Follow the cross-cutting accessibility rules in [../accessibility.md](../accessibility.md) — roles, labels, touch targets, contrast, focus & status. Component-specific guidance is not yet in ZeroHeight — to review.
 
 ## Source
-- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/9142e1-dividers (page `1937086`, synced 2026-06-30)
+- ZeroHeight: https://design.ns.nl/4a05a30ad/v/latest/p/9142e1-dividers (page `1937086`, synced 2026-09-10)
 - Figma: `1848:45672`

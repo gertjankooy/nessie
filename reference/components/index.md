@@ -76,7 +76,7 @@ Routing/lookup table for the NESSIE (NS Dutch Railways) **App** component librar
 | Sticker | Highlight contextual info on a nearby element. | [sticker.md](sticker.md) |
 | Tag | Inline line/route number or platform/track location. | [tag.md](tag.md) |
 | Price | Display an amount of money. | [price.md](price.md) |
-| Dividers | Separate content groups; Default/Strong/Brand. | [dividers.md](dividers.md) |
+| Dividers | Separate content groups; Default/Brand. | [dividers.md](dividers.md) |
 | Link | Button styled as a link ("Read more", external, attachment). | [link.md](link.md) |
 | Image | Visual support with fixed aspect ratios. | [image.md](image.md) |
 | Icon | NES icon by name/size (retrieval API documented). | [icon.md](icon.md) |
