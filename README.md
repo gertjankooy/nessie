@@ -14,7 +14,7 @@ npx nessie-skill update    # pull the latest docs
 
 It vendors `AGENTS.md` + `skills/` + `reference/` into a `.nessie/` folder and writes the entry file your tool reads (`CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, `.cursor/rules/`) — using managed blocks that never overwrite your own instructions. See [`tools/cli/`](tools/cli/).
 
-No install needed? Point any repo-aware agent at this public repo and tell it to read `AGENTS.md`. To **audit** an actual Figma file, your tool also needs the Figma MCP / Dev Mode MCP server connected.
+No install needed? Point any repo-aware agent at this public repo and tell it to read `AGENTS.md`. Agents that can fetch a URL but not clone (Cursor/Windsurf `@url`, Figma Make, web agents) can use the [llms.txt](https://raw.githubusercontent.com/gertjankooy/nessie/main/llms.txt) map (~5K tokens, links to every doc) or [llms-full.txt](https://raw.githubusercontent.com/gertjankooy/nessie/main/llms-full.txt) (the whole skill in one file, ~85K tokens — needs a large context window). To **audit** an actual Figma file, your tool also needs the Figma MCP / Dev Mode MCP server connected.
 
 ## Architecture
 
@@ -36,6 +36,8 @@ reference/                 Source-of-truth knowledge (self-contained, skimmable)
   content/                   UX writing — index + per-component wording
   accessibility.md           Cross-cutting a11y guidance (WCAG 2.2 AA)
   patterns/                  interaction-models, feedback-states, settings-utility
+llms.txt                   Generated map of every doc (llmstxt.org spec) — fetch by URL, no clone needed
+llms-full.txt              Generated: the whole skill in one file (~85K tokens)
 .claude/commands/          Maintainer tooling (Claude Code only; not part of the distributed skill)
 ```
 
@@ -45,7 +47,7 @@ Reference content is distilled from the NESSIE ZeroHeight, the design-tokens Tok
 
 ## Updating
 
-Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session, and by `npx nessie-skill update`). Keep files tight — they're AI-consumed references, not marketing copy.
+Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session, and by `npx nessie-skill update`). The pre-commit hook regenerates `llms.txt` / `llms-full.txt` (and any staged ZeroHeight push page) for you — enable it once per clone with `git config core.hooksPath .githooks`. Keep files tight — they're AI-consumed references, not marketing copy.
 
 ## License
 

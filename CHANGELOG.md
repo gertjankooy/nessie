@@ -2,6 +2,10 @@
 
 Designer-facing updates to the NESSIE skill — what's new for you when using it to design and audit screens.
 
+## 2026-09-11
+
+**🔗 Use the skill without cloning it.** Two generated files now sit at the repo root, following the [llms.txt](https://llmstxt.org/) convention that IDE agents already look for: `llms.txt` is a short map linking to every skill and reference doc (about 5K tokens), and `llms-full.txt` is the whole skill in one file (about 85K tokens) for tools with a large context window. Paste either URL into Cursor, Windsurf, Figma Make, or any agent that can fetch a page but not open a repo. Both are rebuilt from the same source docs every time those change, so they cannot drift from what the skill says.
+
 ## 2026-08-20
 
 **🎬 Know which transition to use when navigating.** A new **Motion** page under Fundamentals answers a question the skill had no answer for before: what should move, and in which direction, when the user goes somewhere. Tabs are instant, moving deeper into a hierarchy is horizontal, temporary content is vertical, and a focused flow is vertical and full screen. One rule underneath it all: parallel destinations get no motion, hierarchy gets horizontal motion, temporary content gets vertical motion.

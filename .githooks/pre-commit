@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # NESSIE pre-commit security gate (public repo).
 # BLOCKS secrets & local-only/secret-bearing files from being committed; WARNS on
-# machine paths and internal references. The thorough interactive version is
+# machine paths and internal references; REBUILDS + stages generated output
+# (zeroheight/ scoped per staged page, llms.txt pair) and blocks if still stale. The thorough interactive version is
 # `/pre-publish-check`. Bypass only when you are certain: git commit --no-verify
 set -u
 
@@ -38,11 +39,40 @@ paths=$(printf '%s\n' "$added" | grep -nE '/Users/[a-z]|/home/[a-z]|C:\\Users' |
 intern=$(printf '%s\n' "$added" | grep -nE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}|atlassian\.net|sharepoint\.com|slack\.com/share|[A-Za-z0-9.-]+\.ns\.nl' | grep -viE 'design\.ns\.nl' || true)
 [ -n "$intern" ] && { printf '%s\n' "${YEL}SECURITY REVIEW: internal reference / contact in staged changes:${NC}"; printf '   %s\n' "$intern"; }
 
-# 5) generated ZeroHeight output must match its source  -> BLOCK
-if printf '%s\n' "$staged" | grep -qE '^(reference/|zeroheight/)' && command -v node >/dev/null 2>&1; then
-  if ! zh=$(node tools/zeroheight/build.mjs check 2>&1); then
+# 5) generated output must match its source  -> AUTO-BUILD, then BLOCK if still stale
+#    zeroheight/  : one scoped build per staged `sync: push` doc (never the whole tree)
+#    llms(-full)  : always the pair (it is one artefact by nature)
+#    Auto-build only runs when every source file is fully staged; a build from a
+#    half-staged working tree would bake unstaged edits into a committed file.
+gen_src='^(AGENTS\.md|README\.md|CHANGELOG\.md|LICENSE-docs\.md|skills/|reference/|tools/(llms|zeroheight)/build\.mjs$|tools/cli/README\.md$)'
+touches_zh=$(printf '%s\n' "$staged" | grep -E '^(reference/|zeroheight/|tools/zeroheight/build\.mjs$)' || true)
+touches_llms=$(printf '%s\n' "$staged" | grep -E "$gen_src|^llms(-full)?\.txt$" || true)
+if [ -n "$touches_zh$touches_llms" ] && command -v node >/dev/null 2>&1; then
+  unstaged=$(git diff --name-only | grep -E "$gen_src" || true)
+  if [ -n "$unstaged" ]; then
+    printf '%s\n' "${YEL}GENERATED OUTPUT: not auto-building — these sources have unstaged edits. Stage them (git add) and commit again; the check below runs against the working tree:${NC}"
+    printf '   %s\n' $unstaged
+  else
+    if [ -n "$touches_zh" ]; then
+      for f in $(printf '%s\n' "$staged" | grep -E '^reference/.*\.md$' || true); do
+        if git show ":$f" | grep -qE '^sync: push'; then
+          rel="${f#reference/}"
+          node tools/zeroheight/build.mjs build "$rel" >/dev/null 2>&1 && git add "zeroheight/$rel" 2>/dev/null
+        fi
+      done
+    fi
+    if [ -n "$touches_llms" ]; then
+      node tools/llms/build.mjs build >/dev/null 2>&1 && git add llms.txt llms-full.txt
+    fi
+  fi
+  if [ -n "$touches_zh" ] && ! zh=$(node tools/zeroheight/build.mjs check 2>&1); then
     printf '%s\n' "${RED}ZEROHEIGHT BUILD STALE:${NC}"
     printf '%s\n' "$zh"
+    fail=1
+  fi
+  if [ -n "$touches_llms" ] && ! ll=$(node tools/llms/build.mjs check 2>&1); then
+    printf '%s\n' "${RED}LLMS BUILD STALE:${NC}"
+    printf '%s\n' "$ll"
     fail=1
   fi
 fi
