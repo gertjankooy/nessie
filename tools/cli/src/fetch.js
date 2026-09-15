@@ -45,6 +45,23 @@ export async function resolveCommit({ repo, ref }) {
   }
 }
 
+/** Don't hit the GitHub API more than once per project per day (human `status` or the hook). */
+const CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Rate-limited wrapper around `resolveCommit`: reuses `meta.latestSha` when it was
+ * checked within the last day, otherwise re-checks. Never throws — network failure
+ * just falls back to whatever was last known.
+ */
+export async function checkForUpdate(meta) {
+  const last = meta.lastChecked ? Date.parse(meta.lastChecked) : 0;
+  if (last && Date.now() - last < CHECK_INTERVAL_MS) {
+    return { latestSha: meta.latestSha || null, checked: false };
+  }
+  const latestSha = await resolveCommit({ repo: meta.repo, ref: meta.ref });
+  return { latestSha: latestSha || meta.latestSha || null, checked: true };
+}
+
 /**
  * Download the skill repo tarball for `ref` and extract the paths listed in the
  * repo's `.nessie-manifest.json` (or the default allowlist) into `destDir`.

@@ -5,12 +5,22 @@ import {
   parseArgs,
   upsertManagedBlock,
   removeManagedBlock,
+  upsertSessionStartHook,
+  removeSessionStartHook,
   writeFileEnsured,
   promptLine,
   c,
 } from './util.js';
-import { fetchSkill, resolveCommit } from './fetch.js';
-import { TOOLS, TOOL_KEYS, detectTools, pointerBody, cursorRule } from './tools.js';
+import { fetchSkill, resolveCommit, checkForUpdate } from './fetch.js';
+import {
+  TOOLS,
+  TOOL_KEYS,
+  detectTools,
+  pointerBody,
+  cursorRule,
+  STATUS_HOOK_FILE,
+  STATUS_HOOK_COMMAND,
+} from './tools.js';
 
 const DEFAULT_REPO = 'gertjankooy/nessie';
 const DEFAULT_REF = 'main';
@@ -112,6 +122,7 @@ async function update(flags) {
 async function status(flags) {
   const dir = resolve(flags.dir || process.cwd());
   const dest = join(dir, VENDOR);
+  if (flags.hook) return statusHook(dest);
   if (!existsSync(dest)) throw new Error(`No ${VENDOR}/ here. Run "nessie-skill init" first.`);
 
   const meta = await readVersion(dest);
@@ -131,6 +142,7 @@ async function status(flags) {
     console.log(c.yellow('Could not reach GitHub to check for updates.'));
     return;
   }
+  await patchVersion(dest, { lastChecked: new Date().toISOString(), latestSha: latest });
   if (meta.sha && latest === meta.sha) {
     console.log(`${c.green('✓ Up to date.')}`);
   } else {
@@ -138,6 +150,46 @@ async function status(flags) {
       `${c.yellow('↑ Update available')} ${c.dim(`(${latest.slice(0, 7)})`)} — ` +
         `run ${c.bold('npx nessie-skill update')}.`
     );
+  }
+}
+
+/**
+ * Quiet, machine-facing counterpart to `status`, run automatically from a Claude
+ * Code SessionStart hook (see `STATUS_HOOK_COMMAND`). Rate-limited to ~once a day
+ * per project so it doesn't hit GitHub on every session. Prints nothing when
+ * there's nothing to report; on ANY failure it stays silent rather than risk
+ * breaking session start — an update nudge is never worth an error surfaced there.
+ */
+async function statusHook(dest) {
+  try {
+    if (!existsSync(dest)) return;
+    const meta = await readVersion(dest);
+    if (!meta.sha || !meta.repo) return;
+
+    const { latestSha, checked } = await checkForUpdate(meta);
+    if (checked) {
+      await patchVersion(dest, { lastChecked: new Date().toISOString(), latestSha });
+    }
+    if (!latestSha || latestSha === meta.sha) return;
+
+    const short = (sha) => sha.slice(0, 7);
+    const context =
+      `A newer version of the NESSIE design-system docs is available ` +
+      `(installed ${short(meta.sha)}, latest ${short(latestSha)}) in this project's ` +
+      `${VENDOR}/ folder. Near the start of your first reply this session, actively offer ` +
+      `to update it for the user — don't just mention it in passing and don't wait to be ` +
+      `asked. Ask a direct yes/no question, e.g. "There's an update available for the ` +
+      `NESSIE design-system docs — want me to run it now?" with something like "Yes, ` +
+      `update now" / "No, I'll do it later" as the choices. If they say yes, run ` +
+      `\`npx nessie-skill update\` yourself and report the result; if later, don't ask ` +
+      `again this session.`;
+    process.stdout.write(
+      `${JSON.stringify({
+        hookSpecificOutput: { hookEventName: 'SessionStart', additionalContext: context },
+      })}\n`
+    );
+  } catch {
+    // Silent by design — see doc comment above.
   }
 }
 
@@ -164,6 +216,10 @@ async function remove(flags) {
     console.log(`${c.green('✓')} removed ${CURSOR_RULE}`);
     any = true;
   }
+  if (await removeSessionStartHook(join(dir, STATUS_HOOK_FILE))) {
+    console.log(`${c.green('✓')} removed update-check hook from ${STATUS_HOOK_FILE}`);
+    any = true;
+  }
   console.log(any ? `\n${c.green('Removed.')}` : 'Nothing to remove here.');
 }
 
@@ -175,12 +231,18 @@ async function writePointers(dir, tools) {
     for (const f of TOOLS[t].files || []) fileTargets.add(f);
   }
   for (const rel of mdTargets) {
-    const res = await upsertManagedBlock(join(dir, rel), pointerBody());
+    // CLAUDE.md gets the deterministic SessionStart hook instead (wired below).
+    const body = pointerBody({ checkInstruction: rel !== 'CLAUDE.md' });
+    const res = await upsertManagedBlock(join(dir, rel), body);
     console.log(`${c.green('✓')} ${res} ${rel}`);
   }
   for (const rel of fileTargets) {
     await writeFileEnsured(join(dir, rel), cursorRule());
     console.log(`${c.green('✓')} wrote ${rel}`);
+  }
+  if (tools.includes('claude')) {
+    await upsertSessionStartHook(join(dir, STATUS_HOOK_FILE), STATUS_HOOK_COMMAND);
+    console.log(`${c.green('✓')} wired update-check hook into ${STATUS_HOOK_FILE}`);
   }
 }
 
@@ -204,6 +266,12 @@ async function readVersion(dest) {
   }
 }
 
+/** Merge fields (e.g. lastChecked/latestSha from an update check) into .nessie-version. */
+async function patchVersion(dest, patch) {
+  const meta = await readVersion(dest);
+  await writeFileEnsured(join(dest, '.nessie-version'), `${JSON.stringify({ ...meta, ...patch }, null, 2)}\n`);
+}
+
 function help() {
   console.log(`
 ${c.bold('nessie-skill')} — install the NESSIE design system agent skill into your AI tool.
@@ -222,6 +290,8 @@ ${c.bold('Options')}
   --dir <path>     Target project (default: current directory)
   --ref <ref>      Branch, tag, or commit of the skill repo (default: ${DEFAULT_REF})
   --repo <o/n>     Source repo (default: ${DEFAULT_REPO})
+  --hook           (status only) quiet, machine-readable check for the Claude Code
+                   SessionStart hook wired by "init --tools claude" — not for interactive use
 
 ${c.bold('Examples')}
   npx nessie-skill init

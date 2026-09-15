@@ -81,6 +81,50 @@ export async function removeManagedBlock(file) {
   return 'stripped';
 }
 
+/** Substring that marks a SessionStart hook entry as nessie-owned, for upsert/remove. */
+const HOOK_MARKER = 'nessie-skill status --hook';
+
+/**
+ * Insert or refresh the nessie SessionStart hook in a Claude Code settings file,
+ * without touching any other hooks or settings already there. Idempotent.
+ */
+export async function upsertSessionStartHook(file, command) {
+  let json = {};
+  if (existsSync(file)) {
+    try {
+      json = JSON.parse(await readFile(file, 'utf8'));
+    } catch {
+      json = {};
+    }
+  }
+  json.hooks ??= {};
+  const list = Array.isArray(json.hooks.SessionStart) ? json.hooks.SessionStart : [];
+  const kept = list.filter((block) => !(block.hooks || []).some((h) => h.command?.includes(HOOK_MARKER)));
+  kept.push({ hooks: [{ type: 'command', command }] });
+  json.hooks.SessionStart = kept;
+  await writeFileEnsured(file, `${JSON.stringify(json, null, 2)}\n`);
+}
+
+/** Remove the nessie SessionStart hook, cleaning up now-empty hooks/SessionStart keys. */
+export async function removeSessionStartHook(file) {
+  if (!existsSync(file)) return false;
+  let json;
+  try {
+    json = JSON.parse(await readFile(file, 'utf8'));
+  } catch {
+    return false;
+  }
+  const list = json.hooks?.SessionStart;
+  if (!Array.isArray(list)) return false;
+  const kept = list.filter((block) => !(block.hooks || []).some((h) => h.command?.includes(HOOK_MARKER)));
+  if (kept.length === list.length) return false;
+  if (kept.length) json.hooks.SessionStart = kept;
+  else delete json.hooks.SessionStart;
+  if (json.hooks && Object.keys(json.hooks).length === 0) delete json.hooks;
+  await writeFileEnsured(file, `${JSON.stringify(json, null, 2)}\n`);
+  return true;
+}
+
 /** Single-line prompt with a default; returns the default on empty/no-TTY. */
 export function promptLine(question, def) {
   if (!process.stdin.isTTY) return Promise.resolve(def || '');
