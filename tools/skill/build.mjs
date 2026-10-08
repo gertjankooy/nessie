@@ -160,13 +160,22 @@ function skillsRef() {
 
 // ----------------------------------------------------------------- spec-check
 
+// Node's fetch ignores HTTPS_PROXY, so behind an egress proxy (e.g. a cloud
+// sandbox) the page is fetched with curl, which honours it.
+async function get(url) {
+  if (process.env.HTTPS_PROXY || process.env.https_proxy) {
+    return execFileSync('curl', ['-sSfL', '--max-time', '30', url], { encoding: 'utf8' });
+  }
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${url} → HTTP ${res.status}`);
+  return res.text();
+}
+
 async function fetchSpec() {
   const out = {};
   for (const [file, url] of Object.entries(SPEC_PAGES)) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`${url} → HTTP ${res.status}`);
     // Drop the site-wide "Documentation Index" preamble so it can't cause noise.
-    out[file] = (await res.text()).replace(/^(> .*\n)+\n?/, '').trimEnd() + '\n';
+    out[file] = (await get(url)).replace(/^(> .*\n)+\n?/, '').trimEnd() + '\n';
   }
   return out;
 }
