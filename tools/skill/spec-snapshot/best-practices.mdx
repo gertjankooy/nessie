@@ -1,6 +1,8 @@
-# Best practices for skill creators
-
-> How to write skills that are well-scoped and calibrated to the task.
+---
+title: "Best practices for skill creators"
+sidebarTitle: "Best practices"
+description: "How to write skills that are well-scoped and calibrated to the task."
+---
 
 ## Start from real expertise
 
@@ -12,10 +14,10 @@ Effective skills are grounded in real expertise. The key is feeding domain-speci
 
 Complete a real task in conversation with an agent, providing context, corrections, and preferences along the way. Then extract the reusable pattern into a skill. Pay attention to:
 
-* **Steps that worked** — the sequence of actions that led to success
-* **Corrections you made** — places where you steered the agent's approach (e.g., "use library X instead of Y," "check for edge case Z")
-* **Input/output formats** — what the data looked like going in and coming out
-* **Context you provided** — project-specific facts, conventions, or constraints the agent didn't already know
+- **Steps that worked** — the sequence of actions that led to success
+- **Corrections you made** — places where you steered the agent's approach (e.g., "use library X instead of Y," "check for edge case Z")
+- **Input/output formats** — what the data looked like going in and coming out
+- **Context you provided** — project-specific facts, conventions, or constraints the agent didn't already know
 
 ### Synthesize from existing project artifacts
 
@@ -23,11 +25,11 @@ When you have a body of existing knowledge, you can feed it into an LLM and ask 
 
 Good source material includes:
 
-* Internal documentation, runbooks, and style guides
-* API specifications, schemas, and configuration files
-* Code review comments and issue trackers (captures recurring concerns and reviewer expectations)
-* Version control history, especially patches and fixes (reveals patterns through what actually changed)
-* Real-world failure cases and their resolutions
+- Internal documentation, runbooks, and style guides
+- API specifications, schemas, and configuration files
+- Code review comments and issue trackers (captures recurring concerns and reviewer expectations)
+- Version control history, especially patches and fixes (reveals patterns through what actually changed)
+- Real-world failure cases and their resolutions
 
 ## Refine with real execution
 
@@ -36,7 +38,7 @@ The first draft of a skill usually needs refinement. Run the skill against real 
 Even a single pass of execute-then-revise noticeably improves quality, and complex domains often benefit from several.
 
 <Tip>
-  Read agent execution traces, not just final outputs. If the agent wastes time on unproductive steps, common causes include instructions that are too vague (the agent tries several approaches before finding one that works), instructions that don't apply to the current task (the agent follows them anyway), or too many options presented without a clear default.
+Read agent execution traces, not just final outputs. If the agent wastes time on unproductive steps, common causes include instructions that are too vague (the agent tries several approaches before finding one that works), instructions that don't apply to the current task (the agent follows them anyway), or too many options presented without a clear default.
 </Tip>
 
 For a more structured approach to iteration, including test cases, assertions, and grading, see [Evaluating skill output quality](/skill-creation/evaluating-skills).
@@ -49,7 +51,7 @@ Once a skill activates, its full `SKILL.md` body loads into the agent's context 
 
 Focus on what the agent *wouldn't* know without your skill: project-specific conventions, domain-specific procedures, non-obvious edge cases, and the particular tools or APIs to use. You don't need to explain what a PDF is, how HTTP works, or what a database migration does.
 
-````markdown theme={null}
+````markdown
 <!-- Too verbose — the agent already knows what PDFs are -->
 ## Extract PDF text
 
@@ -95,7 +97,7 @@ Not every part of a skill needs the same level of prescriptiveness. Match the sp
 
 **Give the agent freedom** when multiple approaches are valid and the task tolerates variation. For flexible instructions, explaining *why* can be more effective than rigid directives — an agent that understands the purpose behind an instruction makes better context-dependent decisions. A code review skill can describe what to look for without prescribing exact steps:
 
-```markdown theme={null}
+```markdown
 ## Code review process
 
 1. Check all database queries for SQL injection (use parameterized queries)
@@ -106,7 +108,7 @@ Not every part of a skill needs the same level of prescriptiveness. Match the sp
 
 **Be prescriptive** when operations are fragile, consistency matters, or a specific sequence must be followed:
 
-````markdown theme={null}
+````markdown
 ## Database migration
 
 Run exactly this sequence:
@@ -124,7 +126,7 @@ Most skills have a mix. Calibrate each part independently.
 
 When multiple tools or approaches could work, pick a default and mention alternatives briefly rather than presenting them as equal options.
 
-````markdown theme={null}
+````markdown
 <!-- Too many options -->
 You can use pypdf, pdfplumber, PyMuPDF, or pdf2image...
 
@@ -142,7 +144,7 @@ For scanned PDFs requiring OCR, use pdf2image with pytesseract instead.
 
 A skill should teach the agent *how to approach* a class of problems, not *what to produce* for a specific instance. Compare:
 
-```markdown theme={null}
+```markdown
 <!-- Specific answer — only useful for this exact task -->
 Join the `orders` table to `customers` on `customer_id`, filter where
 `region = 'EMEA'`, and sum the `amount` column.
@@ -164,7 +166,7 @@ These are reusable techniques for structuring skill content. Not every skill nee
 
 The highest-value content in many skills is a list of gotchas — environment-specific facts that defy reasonable assumptions. These aren't general advice ("handle errors appropriately") but concrete corrections to mistakes the agent will make without being told otherwise:
 
-```markdown theme={null}
+````markdown
 ## Gotchas
 
 - The `users` table uses soft deletes. Queries must include
@@ -174,19 +176,19 @@ The highest-value content in many skills is a list of gotchas — environment-sp
 - The `/health` endpoint returns 200 as long as the web server is running,
   even if the database connection is down. Use `/ready` to check full
   service health.
-```
+````
 
 Keep gotchas in `SKILL.md` where the agent reads them before encountering the situation. A separate reference file works if you tell the agent when to load it, but for non-obvious issues, the agent may not recognize the trigger.
 
 <Tip>
-  When an agent makes a mistake you have to correct, add the correction to the gotchas section. This is one of the most direct ways to improve a skill iteratively (see [Refine with real execution](#refine-with-real-execution)).
+When an agent makes a mistake you have to correct, add the correction to the gotchas section. This is one of the most direct ways to improve a skill iteratively (see [Refine with real execution](#refine-with-real-execution)).
 </Tip>
 
 ### Templates for output format
 
 When you need the agent to produce output in a specific format, provide a template. This is more reliable than describing the format in prose, because agents pattern-match well against concrete structures. Short templates can live inline in `SKILL.md`; for longer templates, or templates only needed in certain cases, store them in `assets/` and reference them from `SKILL.md` so they only load when needed.
 
-````markdown theme={null}
+````markdown
 ## Report structure
 
 Use this template, adapting sections as needed for the specific analysis:
@@ -211,7 +213,7 @@ Use this template, adapting sections as needed for the specific analysis:
 
 An explicit checklist helps the agent track progress and avoid skipping steps, especially when steps have dependencies or validation gates.
 
-```markdown theme={null}
+```markdown
 ## Form processing workflow
 
 Progress:
@@ -226,7 +228,7 @@ Progress:
 
 Instruct the agent to validate its own work before moving on. The pattern is: do the work, run a validator (a script, a reference checklist, or a self-check), fix any issues, and repeat until validation passes.
 
-```markdown theme={null}
+```markdown
 ## Editing workflow
 
 1. Make your edits
@@ -244,7 +246,7 @@ A reference document can also serve as the "validator" — instruct the agent to
 
 For batch or destructive operations, have the agent create an intermediate plan in a structured format, validate it against a source of truth, and only then execute.
 
-```markdown theme={null}
+```markdown
 ## PDF form filling
 
 1. Extract form fields: `python scripts/analyze_form.py input.pdf` → `form_fields.json`
@@ -257,7 +259,7 @@ For batch or destructive operations, have the agent create an intermediate plan 
 5. Fill the form: `python scripts/fill_form.py input.pdf field_values.json output.pdf`
 ```
 
-The key ingredient is step 3: a validation script that checks the plan (`field_values.json`) against the source of truth (`form_fields.json`). Errors like "Field 'signature\_date' not found — available fields: customer\_name, order\_total, signature\_date\_signed" give the agent enough information to self-correct.
+The key ingredient is step 3: a validation script that checks the plan (`field_values.json`) against the source of truth (`form_fields.json`). Errors like "Field 'signature_date' not found — available fields: customer_name, order_total, signature_date_signed" give the agent enough information to self-correct.
 
 ### Bundling reusable scripts
 
@@ -269,5 +271,5 @@ For more on designing and bundling scripts, see [Using scripts in skills](/skill
 
 Once you have a working skill, two guides can help you refine it further:
 
-* **[Evaluating skill output quality](/skill-creation/evaluating-skills)** — Set up test cases, grade results, and iterate systematically.
-* **[Optimizing skill descriptions](/skill-creation/optimizing-descriptions)** — Test and improve your skill's `description` field so it triggers on the right prompts.
+- **[Evaluating skill output quality](/skill-creation/evaluating-skills)** — Set up test cases, grade results, and iterate systematically.
+- **[Optimizing skill descriptions](/skill-creation/optimizing-descriptions)** — Test and improve your skill's `description` field so it triggers on the right prompts.

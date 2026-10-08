@@ -16,7 +16,8 @@
 // `spec-check` reports an upstream change, update RULES/validate() to match,
 // then accept the new snapshot with `spec-check --update`.
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, resolve, dirname, basename, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -51,11 +52,14 @@ const FRONTMATTER = {
   },
 };
 
-// Upstream pages whose changes matter to how this skill is packaged and written.
+// Upstream pages whose changes matter to how this skill is packaged and written:
+// the source of the agentskills.io docs, read from the standard's own repo
+// (a git clone works anywhere GitHub does, including behind an egress proxy).
+const SPEC_REPO = 'https://github.com/agentskills/agentskills.git';
 const SPEC_PAGES = {
-  'specification.md': 'https://agentskills.io/specification.md',
-  'best-practices.md': 'https://agentskills.io/skill-creation/best-practices.md',
-  'optimizing-descriptions.md': 'https://agentskills.io/skill-creation/optimizing-descriptions.md',
+  'specification.mdx': 'docs/specification.mdx',
+  'best-practices.mdx': 'docs/skill-creation/best-practices.mdx',
+  'optimizing-descriptions.mdx': 'docs/skill-creation/optimizing-descriptions.mdx',
 };
 
 // ------------------------------------------------------------------ the rules
@@ -160,24 +164,22 @@ function skillsRef() {
 
 // ----------------------------------------------------------------- spec-check
 
-// Node's fetch ignores HTTPS_PROXY, so behind an egress proxy (e.g. a cloud
-// sandbox) the page is fetched with curl, which honours it.
-async function get(url) {
-  if (process.env.HTTPS_PROXY || process.env.https_proxy) {
-    return execFileSync('curl', ['-sSfL', '--max-time', '30', url], { encoding: 'utf8' });
+// Shallow, sparse clone of just the tracked pages into a temp dir.
+function fetchSpec() {
+  const dir = mkdtempSync(join(tmpdir(), 'agentskills-'));
+  const git = (...args) => execFileSync('git', args, { cwd: dir, stdio: 'pipe', encoding: 'utf8' });
+  try {
+    execFileSync('git', ['clone', '--quiet', '--depth', '1', '--filter=blob:none', '--sparse', SPEC_REPO, dir], { stdio: 'pipe' });
+    git('sparse-checkout', 'set', '--no-cone', ...Object.values(SPEC_PAGES));
+    const out = {};
+    for (const [file, path] of Object.entries(SPEC_PAGES)) {
+      if (!existsSync(join(dir, path))) throw new Error(`${path} no longer exists upstream; the docs moved — update SPEC_PAGES`);
+      out[file] = readFileSync(join(dir, path), 'utf8');
+    }
+    return { pages: out, commit: git('rev-parse', '--short=12', 'HEAD').trim() };
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
   }
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`${url} → HTTP ${res.status}`);
-  return res.text();
-}
-
-async function fetchSpec() {
-  const out = {};
-  for (const [file, url] of Object.entries(SPEC_PAGES)) {
-    // Drop the site-wide "Documentation Index" preamble so it can't cause noise.
-    out[file] = (await get(url)).replace(/^(> .*\n)+\n?/, '').trimEnd() + '\n';
-  }
-  return out;
 }
 
 function diff(a, b) {
@@ -186,8 +188,9 @@ function diff(a, b) {
   return [...A.filter(l => !setB.has(l)).map(l => `- ${l}`), ...B.filter(l => !setA.has(l)).map(l => `+ ${l}`)];
 }
 
-async function specCheck(update) {
-  const live = await fetchSpec();
+function specCheck(update) {
+  const { pages: live, commit } = fetchSpec();
+  console.log(`agentskills/agentskills @ ${commit}`);
   mkdirSync(SNAPSHOT_DIR, { recursive: true });
   let changed = 0;
   for (const [file, text] of Object.entries(live)) {
@@ -227,7 +230,7 @@ if (cmd === 'build') {
   if (!skillsRef()) fail = true;
   if (fail) process.exit(1);
 } else if (cmd === 'spec-check') {
-  await specCheck(process.argv.includes('--update'));
+  specCheck(process.argv.includes('--update'));
 } else {
   console.error('usage: node tools/skill/build.mjs build|check|spec-check [--update]');
   process.exit(2);

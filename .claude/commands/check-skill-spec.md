@@ -5,7 +5,7 @@ allowed-tools: Bash, Read, Edit, WebFetch
 
 # /check-skill-spec
 
-Keeps the root `SKILL.md` in line with the [Agent Skills standard](https://agentskills.io/specification). `SKILL.md` is generated from `AGENTS.md` by `tools/skill/build.mjs`, which also holds the frontmatter and the validation rules. Three upstream pages are snapshotted in `tools/skill/spec-snapshot/`: the specification, best practices, and optimizing descriptions.
+Keeps the root `SKILL.md` in line with the [Agent Skills standard](https://agentskills.io/specification). `SKILL.md` is generated from `AGENTS.md` by `tools/skill/build.mjs`, which also holds the frontmatter and the validation rules. Three upstream pages are snapshotted in `tools/skill/spec-snapshot/`: the specification, best practices, and optimizing descriptions. They're read as `.mdx` source from the standard's own repo, [agentskills/agentskills](https://github.com/agentskills/agentskills) (`docs/`), with a shallow git clone, so the check works anywhere GitHub is reachable.
 
 ## Run
 
@@ -32,4 +32,4 @@ Report "standard unchanged since the last snapshot" and the `check` result. Writ
 
 - **Never edit `SKILL.md` by hand.** Change `AGENTS.md` or the frontmatter in the build script, then rebuild. The pre-commit hook rebuilds and checks it whenever `AGENTS.md`, `SKILL.md` or the build script is staged.
 - **Never run `--update` before the rules are adapted.** The snapshot is the record of which version of the standard the validator implements; updating it alone hides the drift.
-- A new upstream page worth tracking goes in `SPEC_PAGES` in the build script.
+- A new upstream page worth tracking goes in `SPEC_PAGES` in the build script (path inside the agentskills repo). If `spec-check` reports a tracked page no longer exists upstream, the docs were moved: find the new path, update `SPEC_PAGES`, and treat it as a change to review.
