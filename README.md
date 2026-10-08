@@ -50,7 +50,7 @@ Reference content is distilled from the NESSIE ZeroHeight, the design-tokens Tok
 
 ## Updating
 
-Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session, and by `npx nessie-skill update`). The pre-commit hook regenerates `llms.txt` / `llms-full.txt`, `SKILL.md` (and any staged ZeroHeight push page) for you, and blocks a commit whose `SKILL.md` breaks the Agent Skills spec — enable it once per clone with `git config core.hooksPath .githooks`. Keep files tight — they're AI-consumed references, not marketing copy.
+Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session, and by `npx nessie-skill update`). The pre-commit hook regenerates `llms.txt` / `llms-full.txt`, `SKILL.md` (and any staged ZeroHeight push page) for you, and blocks a commit whose `SKILL.md` breaks the Agent Skills spec or whose `skills/` / `reference/` pages have a broken relative link — enable it once per clone with `git config core.hooksPath .githooks`. Keep files tight — they're AI-consumed references, not marketing copy.
 
 ## License
 

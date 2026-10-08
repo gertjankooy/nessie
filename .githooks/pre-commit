@@ -42,13 +42,14 @@ intern=$(printf '%s\n' "$added" | grep -nE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A
 # 5) generated output must match its source  -> AUTO-BUILD, then BLOCK if still stale
 #    zeroheight/  : one scoped build per staged `sync: push` doc (never the whole tree)
 #    llms(-full)  : always the pair (it is one artefact by nature)
-#    SKILL.md     : AGENTS.md + frontmatter, validated against the Agent Skills spec
+#    SKILL.md     : AGENTS.md + frontmatter, validated against the Agent Skills spec;
+#                   any staged skills/ or reference/ page also gets the link check
 #    Auto-build only runs when every source file is fully staged; a build from a
 #    half-staged working tree would bake unstaged edits into a committed file.
 gen_src='^(AGENTS\.md|README\.md|CHANGELOG\.md|LICENSE-docs\.md|skills/|reference/|tools/(llms|zeroheight|skill)/build\.mjs$|tools/cli/README\.md$)'
 touches_zh=$(printf '%s\n' "$staged" | grep -E '^(reference/|zeroheight/|tools/zeroheight/build\.mjs$)' || true)
 touches_llms=$(printf '%s\n' "$staged" | grep -E "$gen_src|^llms(-full)?\.txt$" || true)
-touches_skill=$(printf '%s\n' "$staged" | grep -E '^(AGENTS\.md|SKILL\.md|tools/skill/build\.mjs)$' || true)
+touches_skill=$(printf '%s\n' "$staged" | grep -E '^(AGENTS\.md|SKILL\.md|tools/skill/build\.mjs|skills/.*\.md|reference/.*\.md)$' || true)
 if [ -n "$touches_zh$touches_llms$touches_skill" ] && command -v node >/dev/null 2>&1; then
   unstaged=$(git diff --name-only | grep -E "$gen_src" || true)
   if [ -n "$unstaged" ]; then
@@ -81,7 +82,7 @@ if [ -n "$touches_zh$touches_llms$touches_skill" ] && command -v node >/dev/null
     fail=1
   fi
   if [ -n "$touches_skill" ] && ! sk=$(node tools/skill/build.mjs check 2>&1); then
-    printf '%s\n' "${RED}SKILL.md STALE OR OFF-SPEC:${NC}"
+    printf '%s\n' "${RED}SKILL CHECK FAILED (SKILL.md stale/off-spec, or a broken link in skills/ or reference/):${NC}"
     printf '%s\n' "$sk"
     fail=1
   fi

@@ -11,7 +11,7 @@ Keeps the root `SKILL.md` in line with the [Agent Skills standard](https://agent
 
 ```bash
 node tools/skill/build.mjs spec-check   # exit 1 + a line diff when an upstream page changed
-node tools/skill/build.mjs check        # SKILL.md is current and passes the rules
+node tools/skill/build.mjs check        # SKILL.md is current and passes the rules; every link in skills/ + reference/ resolves
 ```
 
 ## When nothing changed

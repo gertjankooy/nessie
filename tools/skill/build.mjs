@@ -3,7 +3,8 @@
 // Not part of the distributed skill (see tools/cli for that).
 //
 //   node tools/skill/build.mjs build                 regenerate SKILL.md from AGENTS.md
-//   node tools/skill/build.mjs check                 SKILL.md is current + passes the spec rules
+//   node tools/skill/build.mjs check                 SKILL.md is current + passes the spec rules,
+//                                                    and every link in skills/ + reference/ resolves
 //   node tools/skill/build.mjs spec-check            has the upstream standard changed since the snapshot?
 //   node tools/skill/build.mjs spec-check --update   accept the upstream standard as the new snapshot
 //
@@ -16,7 +17,7 @@
 // `spec-check` reports an upstream change, update RULES/validate() to match,
 // then accept the new snapshot with `spec-check --update`.
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, mkdtempSync, rmSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve, dirname, basename, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -110,13 +111,54 @@ function validate(fm, body) {
   if (tokens > RULES.bodyTokensMax) warnings.push(`body is ~${tokens} tokens (spec recommends under ${RULES.bodyTokensMax})`);
 
   // Relative file references must resolve from the skill root.
-  for (const [, target] of body.matchAll(/\]\(([^)\s]+)\)/g)) {
-    if (/^(https?:|mailto:|#)/.test(target)) continue;
-    const file = target.split('#')[0];
-    if (!existsSync(join(ROOT, posix.normalize(file)))) errors.push(`broken file reference: ${target}`);
-  }
+  for (const target of brokenLinks(body, '.')) errors.push(`broken file reference: ${target}`);
 
   return { errors, warnings, lines, tokens };
+}
+
+// Relative links in `text` (a file in `dir`, repo-relative) whose target doesn't
+// exist. Code spans and fenced blocks are skipped: they hold examples such as
+// `[kebab.md](kebab.md)`, not real references.
+function brokenLinks(text, dir) {
+  const prose = text.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '');
+  const out = [];
+  for (const [, target] of prose.matchAll(/\]\(([^)\s]+)\)/g)) {
+    if (/^(https?:|mailto:|#)/.test(target)) continue;
+    const file = decodeURI(target.split('#')[0]);
+    if (!existsSync(join(ROOT, dir, file))) out.push(target);
+  }
+  return out;
+}
+
+// The supporting files the skill routes to: the playbooks and the reference
+// docs. The standard sets no format for them, so this checks only what breaks
+// an agent silently — a dead link (blocks) — plus its size advice (warns).
+const RESOURCE_DIRS = ['skills', 'reference'];
+
+function mdFilesUnder(dir) {
+  const out = [];
+  for (const e of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
+    const rel = posix.join(dir, e.name);
+    if (e.isDirectory()) out.push(...mdFilesUnder(rel));
+    else if (e.name.endsWith('.md')) out.push(rel);
+  }
+  return out;
+}
+
+function checkResources() {
+  const errors = [];
+  const warnings = [];
+  const files = RESOURCE_DIRS.flatMap(mdFilesUnder);
+  for (const f of files) {
+    const text = readFileSync(join(ROOT, f), 'utf8');
+    for (const target of brokenLinks(text, posix.dirname(f))) errors.push(`${f}: broken link → ${target}`);
+    const tokens = Math.round(text.length / 4);
+    if (tokens > RULES.bodyTokensMax) warnings.push(`${f} is ~${tokens} tokens; the spec advises small, focused reference files — consider splitting`);
+  }
+  for (const w of warnings) console.log(`warning: ${w}`);
+  for (const e of errors) console.error(`error: ${e}`);
+  if (!errors.length) console.log(`${files.length} skill and reference files: every relative link resolves`);
+  return errors.length === 0;
 }
 
 // ------------------------------------------------------------------ rendering
@@ -227,6 +269,7 @@ if (cmd === 'build') {
     console.error('stale: SKILL.md — run: node tools/skill/build.mjs build');
     fail = true;
   }
+  if (!checkResources()) fail = true;
   if (!skillsRef()) fail = true;
   if (fail) process.exit(1);
 } else if (cmd === 'spec-check') {
