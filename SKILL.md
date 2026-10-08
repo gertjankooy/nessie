@@ -1,0 +1,125 @@
+---
+name: "nessie"
+description: "Design and audit NS (Dutch Railways) app screens with the NESSIE design system, iOS-first. Use this skill whenever the user wants to build, mock up or generate a screen, view, flow or component composition for an NS app in Figma or Figma Make; audit an existing screen or check its token bindings; document a NESSIE component; or asks which NESSIE component, design token, pattern, colour, spacing, typography, motion, UX-writing or accessibility rule applies. Use it even when the user only mentions NS, the NS app or the travel planner without naming NESSIE."
+license: "CC-BY-4.0 for the docs (LICENSE-docs.md); Apache-2.0 for the tooling (LICENSE)"
+compatibility: "Works from the bundled markdown in any agent. Reading or auditing an actual Figma file needs the Figma MCP (Dev Mode MCP server) connected."
+metadata:
+  repository: "https://github.com/gertjankooy/nessie"
+  source: "AGENTS.md"
+---
+<!-- Generated from AGENTS.md by tools/skill/build.mjs. Edit AGENTS.md (or the frontmatter in the build script), never this file. -->
+
+# NESSIE Design System — Agent Skill
+
+You are working with **NESSIE**, the NS (Dutch Railways) design system. This skill helps you **design new screens** and **audit existing screens** so they correctly follow NESSIE components, tokens, layout, accessibility, and brand. It is tool-agnostic — it works with any AI coding/design agent (Claude Code, Cursor, Codex, Copilot, the Figma AI agent, Figma Make).
+
+**Default context: iOS app.** Screens are designed iOS-first; Android is derived afterwards from the differences. Only treat a task as web or Android when the user says so.
+
+## Context detection — run this first, every session
+
+Before reading skill files or producing any design output, determine which environment you are running in and verify its prerequisite.
+
+### Local coding agent (Claude Code, Cursor, Codex, Copilot, …)
+
+**How to detect:** You have direct filesystem access to this repository (you can read `AGENTS.md`, `skills/`, and `reference/`), and there is **no** `[Enabled Libraries: …]` block and **no** `src/NesFundamentals` kit.
+
+**Prerequisite:** none — the reference docs in this repo are self-contained. Read this brief, then the relevant skill and reference files below, and proceed.
+
+> **Fetch-only access (no filesystem):** read `llms.txt` at the repo root for the map — it links the raw markdown of every skill and reference file. Load `llms-full.txt` (everything in one file, ~85K tokens) only when you have a large context window and the task genuinely needs the whole system.
+
+> **Reading a Figma file (audits, design-to-code):** designing from scratch and answering from the reference docs need no Figma connection. But to **read an actual Figma design** (e.g. `skills/audit-screen.md`, `skills/audit-tokens.md`), the **Figma MCP / Dev Mode MCP server must be connected in your tool** and a frame selected — that's what provides `get_design_context` / `get_variable_defs` / `get_screenshot`. Without it, work only from a screenshot or exported code the user pastes, and flag token bindings as unverified. See each audit skill's "Reading the design" note.
+
+### Figma Agent (AI panel in Figma)
+
+**How to detect:** Your system context contains an `[Enabled Libraries: …]` block (injected by the Figma AI panel).
+
+**Prerequisite check:** Scan `[Enabled Libraries: …]` for the key `lk-167c442bae9da6aac8ec1c58e6026a2f71189db5c1f46b7eeb3795b562284aadea1732849c8ad53afc2713a37d59dc416728cd6d7e5b2e385947a8f5d42ab4ec`.
+
+- ✅ **Key present** → proceed normally.
+- ❌ **Key absent** → stop and tell the user:
+
+  > The **🚄 NES App Components** library is not connected. Please add it via the **Add Context** button in the Figma AI panel, then try again.
+
+Do not attempt design or audit work until the library is connected.
+
+### Figma Make (code generation)
+
+**How to detect:** No `[Enabled Libraries: …]` block in context; you have filesystem access to a `src/` directory with React source files.
+
+**Prerequisite check:** Verify that `../src/NesFundamentals/guidelines/Guidelines.md` is readable.
+
+- ✅ **File present** → invoke the `make-kit` skill and proceed.
+- ❌ **File absent** → stop and tell the user:
+
+  > The **Nessie Make Kit** is not included in this project. Please add it as a dependency in Figma Make before generating any UI.
+
+Do not generate any UI until the Make Kit is confirmed present.
+
+## How to use this skill
+
+This file (`AGENTS.md`) is the entry point. **Read the relevant skill file before producing any design output** — do not rely on memory from a previous session. Then lazy-load only the reference files you need for that task (each `reference/` file is self-contained and skimmable).
+
+| User intent | Read this skill file first — before any output | Then load |
+| :--- | :--- | :--- |
+| Design / generate a new screen, view, or flow | **`skills/build-screen.md`** | `reference/components/index.md`, then specific component files + the `reference/fundamentals/` file for what you're deciding (layout, color, typography, motion, style) + its matching `reference/tokens/` file for the values |
+| Review / check an existing screen against NESSIE | **`skills/audit-screen.md`** | the five reference areas it lists |
+| Check only token usage | **`skills/audit-tokens.md`** | `reference/tokens/*` for the values, `reference/fundamentals/*` for whether the right one was picked |
+| Create / update a component's reference doc | **`skills/document-component.md`** | `reference/components/_component-doc-standard.md` |
+
+**Patterns outrank components for "which one should I use".** When the question is which surface or interaction to reach for (a sheet, dialog, menu, focused flow, or how a screen should respond), read `reference/patterns/` first, starting with `interaction-models.md`. Component docs describe a component's own anatomy, configurations, and behaviour; they don't decide between components. Open one once the component is already chosen or the designer names it. Where a component doc and a pattern disagree, the pattern is newer and wins, and the component doc should carry a `Superseded` marker saying so.
+
+All paths **in this file** are relative to the repository root. Cross-links **inside `reference/`** are relative to the linking file's own directory (`../tokens/color.md`, `layout.md`); keep new links in that form. Re-read files every session; never assume you remember them.
+
+## Reference map
+
+- `reference/design-language.md` — brand personality, visual direction, iconography, brand-color usage. (The "what makes it feel NESSIE" doc.)
+- `reference/components/index.md` — **master catalog**: every App component, when to use it, and a link to its own file. **Start here to pick components**, then open the linked `reference/components/<component>.md` (one file per component — e.g. `button.md`, `input.md`, `route.md`). Each is synced from ZeroHeight and carries `zeroheight_page_id` / `last_synced` / `gaps` frontmatter. (Maintainers refresh docs with the `/sync-docs` command in Claude Code.)
+- `reference/tokens/` — the **token lists** (vocabulary): `color.md` · `typography.md` · `spacing.md` · `shape.md` · `motion.md` · `applied.md`. *ZeroHeight: TOKENS → …*
+  > **Pairing:** each token file has a matching `reference/fundamentals/` file that says **which token to pick when**. Load both: `tokens/color.md` + `fundamentals/color.md`, and so on. Values live in tokens, usage lives in fundamentals.
+- `reference/fundamentals/` — **how to apply** the system to a screen, one file per ZeroHeight *Fundamentals* page:
+  - `layout.md` (composition: app insets/stacks/surfaces, safe areas, screen-type patterns, the **navigation region** — header/tabs/bottom-nav/back-nav — and the token `--slash` ↔ dotted naming crosswalk). *ZeroHeight: Fundamentals → Composition.*
+  - `color.md` (visual hierarchy: which background for which screen job; applying color by meaning). *Fundamentals → Color.*
+  - `typography.md` (picking guide: which preset for which role). *Fundamentals → Typography.*
+  - `motion.md` (which **transition** for which navigation — tabs, pages, sheets, focused flows — iOS vs Android; direction and behaviour only, timing & easing pending). *Fundamentals → Motion.*
+  - `style.md` (choosing radius and border width per surface). *Fundamentals → Style.*
+- `reference/content/` — **UX writing**: `index.md` (six principles, content scorecard, NS voice — Sympathetic/Professional/Inspiring, NL+EN B1) plus per-component wording (`button.md`, `link.md`, `error-message.md`, `empty-state.md`, `breadcrumb.md`). The source of truth for tone and copy referenced by patterns and components.
+- `reference/accessibility.md` — cross-cutting accessibility guidance (WCAG 2.2 AA: contrast pairings, touch targets, headings/structure, labels, focus & status). *ZeroHeight: Guidelines → Accessibility.*
+- `reference/patterns/` — `interaction-models.md` (transient **surfaces**: menus, sheets, dialogs, flows, panels — iOS vs Android) · `feedback-states.md` (empty / loading / error / offline states: which surface for empty vs error vs stale content, and error-handling rules) · `settings-utility.md` (settings list layout/behaviour/states)
+
+### Token doc convention (always follow when adding/editing tokens)
+
+Token names have two shapes that must never be confused: **Figma binds variables in slash form with a `--` prefix** (e.g. `--content/text/default`), while **these docs use dotted JSON form** (e.g. `content.text.default`). Convert by dropping the leading `--` and replacing `/` with `.`. The Token Studio JSON / Figma variable names are authoritative; older Notion labels are out of date.
+
+Every file in `reference/tokens/` MUST carry a callout near the top stating this rule with a token example from that file, cross-linking to `reference/fundamentals/layout.md` (the single-source naming crosswalk). When you add a new token file or a new token category, add/extend that callout — do not document a token only in dotted form without noting its Figma `--slash/form`.
+
+## Non-negotiable rules (always apply)
+
+1. **Tokens only.** Every color, type style, spacing, radius, and motion value comes from a NESSIE token (`base`/semantic or `applied`/component tier). Never a raw hex, never an off-scale number, never a `core`/raw-palette token used directly.
+2. **Components first.** Use an existing NESSIE App component for anything it covers — never hand-roll a duplicate. Use only documented variants.
+3. **Dark mode is automatic.** Tokens remap per mode; never hardcode light-mode values or branch on mode manually.
+4. **Accessibility is built in, meaning is yours.** NESSIE components carry role / touch-target / heading semantics; you must still supply labels, contrast pairings, and structure (`reference/accessibility.md`).
+5. **Figma generation.** When running in a Figma environment, before calling `use_figma` follow the `/figma-use` skill (mandatory). Prefer the Figma plugin's bundled skills when present.
+6. **When in doubt, flag it.** If a design needs something the system doesn't have, surface it as a system gap rather than inventing a token or component.
+7. **Read before you design.** When any screen or component task starts, read the skill file for that task (from the routing table above) *before* writing any design output. This is a hard gate, not a suggestion.
+
+## Figma Make — Nessie Kit
+
+When running in **Figma Make** (generating React/web UI), the Nessie Kit applies in addition to the rules above.
+
+### Make Kit bootstrap
+
+At the start of every Make session, these design-system guidelines MUST be read in full **before generating any UI**:
+
+- `../src/NesFundamentals/guidelines/Guidelines.md` — NES Fundamentals guidelines
+
+Invoke the `make-kit` skill **before** generating any UI element, updating tokens, picking icons, or reproducing an attached design or screenshot.
+
+### Before applying styles
+
+Before hardcoding a color, spacing, radius, font-size, or any other style value, check the kit's stylesheet for a CSS custom property that fits — e.g. `--primary-button`, `--text-default`, `--spacer-md`. Use `var(--name)` rather than raw hex / px / rem values. Hardcoded values bypass the kit's theming and break dark mode, re-skinning, and future token changes.
+
+Some base components have styling (e.g. gap, typography) baked in as defaults. Explicitly set any styling from the guidelines in generated React to override those defaults.
+
+## Platform notes
+
+iOS-first. Android-specific and iOS-26+ distinctions live in clearly-marked sections of `reference/fundamentals/layout.md` (navigation region, safe areas, breakpoints) and as `> **Android:**` / `> **iOS 26+:**` callouts inside component files. Add new distinctions there as they're discovered.

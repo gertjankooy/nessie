@@ -16,12 +16,15 @@ It vendors `AGENTS.md` + `skills/` + `reference/` into a `.nessie/` folder and w
 
 No install needed? Point any repo-aware agent at this public repo and tell it to read `AGENTS.md`. Agents that can fetch a URL but not clone (Cursor/Windsurf `@url`, Figma Make, web agents) can use the [llms.txt](https://raw.githubusercontent.com/gertjankooy/nessie/main/llms.txt) map (~5K tokens, links to every doc) or [llms-full.txt](https://raw.githubusercontent.com/gertjankooy/nessie/main/llms-full.txt) (the whole skill in one file, ~85K tokens — needs a large context window). To **audit** an actual Figma file, your tool also needs the Figma MCP / Dev Mode MCP server connected.
 
+The repo root is also a standard [Agent Skill](https://agentskills.io/specification): `SKILL.md` carries the `name`/`description` frontmatter that skill-aware tools (Claude skills, VS Code, and the other clients listed on agentskills.io) use to discover and load it. It's generated from `AGENTS.md`, so the two cannot drift.
+
 ## Architecture
 
 Three layers, loaded lazily — the entry brief routes to a skill, which pulls in only the reference files it needs. Each tool auto-reads its own entry file; all of them redirect into `AGENTS.md`.
 
 ```
 AGENTS.md                  Canonical entry point: context detection + routing + rules + reference map
+SKILL.md                   Generated: AGENTS.md + Agent Skills frontmatter (agentskills.io standard)
 CLAUDE.md                  Thin pointer → AGENTS.md (Claude Code)
 .github/copilot-instructions.md  Thin pointer → AGENTS.md (GitHub Copilot)
 skills/                    Task playbooks (the "commands")
@@ -47,10 +50,10 @@ Reference content is distilled from the NESSIE ZeroHeight, the design-tokens Tok
 
 ## Updating
 
-Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session, and by `npx nessie-skill update`). The pre-commit hook regenerates `llms.txt` / `llms-full.txt` (and any staged ZeroHeight push page) for you — enable it once per clone with `git config core.hooksPath .githooks`. Keep files tight — they're AI-consumed references, not marketing copy.
+Edit the relevant `reference/` or `skills/` file, then commit and push (changes are picked up on the next session, and by `npx nessie-skill update`). The pre-commit hook regenerates `llms.txt` / `llms-full.txt`, `SKILL.md` (and any staged ZeroHeight push page) for you, and blocks a commit whose `SKILL.md` breaks the Agent Skills spec — enable it once per clone with `git config core.hooksPath .githooks`. Keep files tight — they're AI-consumed references, not marketing copy.
 
 ## License
 
 - **Code** (e.g. `tools/cli/`) — Apache-2.0, see [`LICENSE`](LICENSE).
-- **Documentation** (`AGENTS.md`, `skills/`, `reference/`) — CC BY 4.0, see [`LICENSE-docs.md`](LICENSE-docs.md).
+- **Documentation** (`AGENTS.md`, `SKILL.md`, `skills/`, `reference/`) — CC BY 4.0, see [`LICENSE-docs.md`](LICENSE-docs.md).
 - NS trademarks, logos, brand colours, and the "flow" element are **not** licensed and remain the property of NS.
