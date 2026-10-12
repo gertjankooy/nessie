@@ -90,6 +90,9 @@ function loadDoc(path) {
     if (/^# /.test(l)) { seenH1 = true; continue; }
     if (!seenH1 || !l.trim()) continue;
     if (/^(#|>|\||-|\*|\d+\.|```|<)/.test(l)) continue;
+    // A machine-readable tag line (`pattern: x`, `variant: y`, …) sits under a
+    // heading by convention (_component-doc-standard.md); it is not the lead.
+    if (/^`(?:pattern|variant|state|property|context|transition):/.test(l)) continue;
     lead = l.trim();
     break;
   }
