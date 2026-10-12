@@ -53,15 +53,21 @@ const FRONTMATTER = {
   },
 };
 
-// Upstream pages whose changes matter to how this skill is packaged and written:
-// the source of the agentskills.io docs, read from the standard's own repo
-// (a git clone works anywhere GitHub does, including behind an egress proxy).
+// Upstream pages whose changes matter to how this skill is packaged and written.
+// Two sources:
+// - the open standard, read as .mdx source from its own repo with a shallow git
+//   clone (works anywhere GitHub does, including behind an egress proxy);
+// - Claude's own skill-authoring guide, which adds rules of its own (reserved
+//   words, no XML tags, a table of contents in long reference files). Fetched
+//   as markdown from the Claude docs site.
 const SPEC_REPO = 'https://github.com/agentskills/agentskills.git';
 const SPEC_PAGES = {
-  'specification.mdx': 'docs/specification.mdx',
-  'best-practices.mdx': 'docs/skill-creation/best-practices.mdx',
-  'optimizing-descriptions.mdx': 'docs/skill-creation/optimizing-descriptions.mdx',
+  'specification.mdx': { repo: 'docs/specification.mdx' },
+  'best-practices.mdx': { repo: 'docs/skill-creation/best-practices.mdx' },
+  'optimizing-descriptions.mdx': { repo: 'docs/skill-creation/optimizing-descriptions.mdx' },
+  'claude-best-practices.md': { url: 'https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices.md' },
 };
+const sourceOf = ({ repo, url }) => url || `${SPEC_REPO.replace(/\.git$/, '')}/blob/main/${repo}`;
 
 // ------------------------------------------------------------------ the rules
 
@@ -72,6 +78,8 @@ const RULES = {
   bodyLinesMax: 500,      // "Keep your main SKILL.md under 500 lines"
   bodyTokensMax: 5000,    // "< 5000 tokens recommended"
   knownFields: ['name', 'description', 'license', 'compatibility', 'metadata', 'allowed-tools'],
+  reservedWords: ['anthropic', 'claude'],   // Claude: not allowed in name
+  tocAfterLines: 100,                        // Claude: longer reference files open with a table of contents
 };
 
 function validate(fm, body) {
@@ -88,6 +96,7 @@ function validate(fm, body) {
     if (!/^[a-z0-9-]+$/.test(name)) errors.push('name may only contain lowercase letters, digits and hyphens');
     if (/^-|-$/.test(name)) errors.push('name must not start or end with a hyphen');
     if (name.includes('--')) errors.push('name must not contain consecutive hyphens');
+    for (const w of RULES.reservedWords) if (name.includes(w)) errors.push(`name must not contain the reserved word "${w}"`);
     // The spec wants name === parent folder. The repo's own name is `nessie`, but
     // a clone can live in any folder, so a mismatch is only a warning here.
     if (basename(ROOT) !== name) warnings.push(`folder is "${basename(ROOT)}", spec expects it to match name "${name}" (fine for a renamed clone)`);
@@ -95,6 +104,9 @@ function validate(fm, body) {
 
   if (typeof description !== 'string' || !description.trim()) errors.push('description is required');
   else if (len(description) > RULES.descriptionMax) errors.push(`description is ${len(description)} characters (max ${RULES.descriptionMax})`);
+  for (const [k, v] of [['name', name], ['description', description]]) {
+    if (typeof v === 'string' && /<\/?[A-Za-z][^>]*>/.test(v)) errors.push(`${k} must not contain XML tags`);
+  }
 
   if (compatibility !== undefined && (len(compatibility) < 1 || len(compatibility) > RULES.compatibilityMax)) {
     errors.push(`compatibility must be 1-${RULES.compatibilityMax} characters`);
@@ -154,6 +166,12 @@ function checkResources() {
     for (const target of brokenLinks(text, posix.dirname(f))) errors.push(`${f}: broken link → ${target}`);
     const tokens = Math.round(text.length / 4);
     if (tokens > RULES.bodyTokensMax) warnings.push(`${f} is ~${tokens} tokens; the spec advises small, focused reference files — consider splitting`);
+    // Claude may preview a referenced file with a partial read; a contents list
+    // near the top shows it the file's full scope.
+    const lines = text.split('\n');
+    if (lines.length > RULES.tocAfterLines && !/^#{2,3} (Contents|Table of contents)\s*$/im.test(lines.slice(0, 40).join('\n'))) {
+      warnings.push(`${f} is ${lines.length} lines with no "## Contents" near the top (Claude: long reference files open with a table of contents)`);
+    }
   }
   for (const w of warnings) console.log(`warning: ${w}`);
   for (const e of errors) console.error(`error: ${e}`);
@@ -206,22 +224,46 @@ function skillsRef() {
 
 // ----------------------------------------------------------------- spec-check
 
-// Shallow, sparse clone of just the tracked pages into a temp dir.
-function fetchSpec() {
+// Repo pages: one shallow, sparse clone of just the tracked files.
+function fetchRepoPages(pages) {
   const dir = mkdtempSync(join(tmpdir(), 'agentskills-'));
   const git = (...args) => execFileSync('git', args, { cwd: dir, stdio: 'pipe', encoding: 'utf8' });
   try {
     execFileSync('git', ['clone', '--quiet', '--depth', '1', '--filter=blob:none', '--sparse', SPEC_REPO, dir], { stdio: 'pipe' });
-    git('sparse-checkout', 'set', '--no-cone', ...Object.values(SPEC_PAGES));
+    git('sparse-checkout', 'set', '--no-cone', ...pages.map(([, s]) => s.repo));
     const out = {};
-    for (const [file, path] of Object.entries(SPEC_PAGES)) {
-      if (!existsSync(join(dir, path))) throw new Error(`${path} no longer exists upstream; the docs moved — update SPEC_PAGES`);
-      out[file] = readFileSync(join(dir, path), 'utf8');
+    for (const [file, { repo }] of pages) {
+      if (!existsSync(join(dir, repo))) throw new Error(`${repo} no longer exists upstream; the docs moved — update SPEC_PAGES`);
+      out[file] = readFileSync(join(dir, repo), 'utf8');
     }
-    return { pages: out, commit: git('rev-parse', '--short=12', 'HEAD').trim() };
+    return { out, commit: git('rev-parse', '--short=12', 'HEAD').trim() };
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+}
+
+// URL pages: Node's fetch ignores HTTPS_PROXY, so behind an egress proxy (a
+// cloud sandbox) curl fetches instead, which honours it.
+async function fetchUrl(url) {
+  if (process.env.HTTPS_PROXY || process.env.https_proxy) {
+    return execFileSync('curl', ['-sSfL', '--max-time', '30', url], { encoding: 'utf8' });
+  }
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${url} → HTTP ${res.status}`);
+  return res.text();
+}
+
+async function fetchSpec() {
+  const entries = Object.entries(SPEC_PAGES);
+  const { out: pages, commit } = fetchRepoPages(entries.filter(([, s]) => s.repo));
+  for (const [file, { url }] of entries.filter(([, s]) => s.url)) {
+    try {
+      pages[file] = await fetchUrl(url);
+    } catch (e) {
+      throw new Error(`could not fetch ${url} (${e.message.split('\n')[0]}); is the host allowed in this environment's network policy?`);
+    }
+  }
+  return { pages, commit };
 }
 
 function diff(a, b) {
@@ -230,8 +272,8 @@ function diff(a, b) {
   return [...A.filter(l => !setB.has(l)).map(l => `- ${l}`), ...B.filter(l => !setA.has(l)).map(l => `+ ${l}`)];
 }
 
-function specCheck(update) {
-  const { pages: live, commit } = fetchSpec();
+async function specCheck(update) {
+  const { pages: live, commit } = await fetchSpec();
   console.log(`agentskills/agentskills @ ${commit}`);
   mkdirSync(SNAPSHOT_DIR, { recursive: true });
   let changed = 0;
@@ -241,7 +283,7 @@ function specCheck(update) {
     if (old === text) { console.log(`unchanged  ${file}`); continue; }
     changed++;
     if (update) { writeFileSync(path, text); console.log(`updated    ${file}`); continue; }
-    console.log(`CHANGED    ${file}  (${SPEC_PAGES[file]})`);
+    console.log(`CHANGED    ${file}  (${sourceOf(SPEC_PAGES[file])})`);
     for (const l of diff(old, text)) console.log(`    ${l}`);
   }
   if (changed && !update) {
@@ -273,7 +315,7 @@ if (cmd === 'build') {
   if (!skillsRef()) fail = true;
   if (fail) process.exit(1);
 } else if (cmd === 'spec-check') {
-  specCheck(process.argv.includes('--update'));
+  await specCheck(process.argv.includes('--update'));
 } else {
   console.error('usage: node tools/skill/build.mjs build|check|spec-check [--update]');
   process.exit(2);
