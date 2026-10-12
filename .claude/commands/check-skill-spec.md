@@ -8,7 +8,9 @@ allowed-tools: Bash, Read, Edit, WebFetch
 Keeps the root `SKILL.md` in line with the [Agent Skills standard](https://agentskills.io/specification). `SKILL.md` is generated from `AGENTS.md` by `tools/skill/build.mjs`, which also holds the frontmatter and the validation rules. Four upstream pages are snapshotted in `tools/skill/spec-snapshot/`:
 
 - **The open standard:** the specification, best practices, and optimizing descriptions, read as `.mdx` source from the standard's own repo, [agentskills/agentskills](https://github.com/agentskills/agentskills) (`docs/`), with a shallow git clone.
-- **Claude's guide:** [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices), fetched as markdown. It adds rules of its own on top of the standard (reserved words and no XML tags in `name`/`description`, a table of contents in reference files over 100 lines). Where the two disagree, the stricter rule wins, because the skill has to load in Claude and in every other client.
+- **Claude's guide:** [Skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices), fetched as markdown. It adds rules of its own on top of the standard (reserved words and no XML tags in `name`/`description`, a table of contents in reference files over 100 lines).
+
+Where each rule lives in `tools/skill/build.mjs`: frontmatter rules in `RULES` + `validate()`; the link and size checks in `checkResources()`; the table-of-contents rule in `withToc()`, which `toc` writes and `check` verifies. When a rule changes upstream, change it there. Where the two disagree, the stricter rule wins, because the skill has to load in Claude and in every other client.
 
 ## Run
 

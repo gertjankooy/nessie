@@ -26,6 +26,10 @@ const OUT_FULL = join(ROOT, 'llms-full.txt');
 
 const url = p => RAW + p;
 const read = p => readFileSync(join(ROOT, p), 'utf8');
+// The generated "## Contents" block (tools/skill/build.mjs toc) is navigation
+// for an agent that reads only the top of one file; in the concatenation its
+// #anchors would be ambiguous, so llms-full drops it.
+const TOC_BLOCK = /<!-- toc: [^\n]*-->\n[\s\S]*?<!-- \/toc -->\n*/;
 const mdFiles = dir => readdirSync(join(ROOT, dir)).filter(f => f.endsWith('.md')).sort().map(f => posix.join(dir, f));
 
 // ---------------------------------------------------------------- frontmatter
@@ -277,7 +281,7 @@ function buildFull(c) {
     const m = meta(d.data);
     if (m) L.push(`Meta: ${m}`);
     L.push('');
-    L.push(absolutize(d.body, p).replace(/\s+$/, ''));
+    L.push(absolutize(d.body.replace(TOC_BLOCK, ''), p).replace(/\s+$/, ''));
   }
   L.push('');
   return L.join('\n');

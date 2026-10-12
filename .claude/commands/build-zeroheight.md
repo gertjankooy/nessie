@@ -38,4 +38,5 @@ Repo-only scaffolding that would be meaningless to a reader on ZeroHeight:
 
 - **Never edit anything in `zeroheight/`.** It is generated output. Every fix belongs in the `reference/` source, followed by a rebuild.
 - **Never commit a build you didn't verify.** The pre-commit hook rebuilds each staged `sync: push` doc **scoped to that page only** (never the whole tree), stages the result, then runs `check` whenever `reference/` or `zeroheight/` is staged — stale output still fails the commit. It skips the auto-build when a source file has unstaged edits.
+- The generated `## Contents` block (`<!-- toc -->`, files over 100 lines) is stripped: it's navigation for agents reading a partial file, and ZeroHeight has its own page navigation.
 - This build is **text only**: no Figma export, no images, no credentials. The fuller pipeline with image export and per-tab component pages lives on the `docs/zeroheight-push-pipeline` branch.

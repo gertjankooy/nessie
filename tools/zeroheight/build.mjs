@@ -25,6 +25,9 @@ const DROP_SECTIONS = ['Source'];
 const LOCAL_GUIDANCE = /^>\s*\*\*Local guidance/;
 const SUPERSEDED = /^>\s*\*\*Superseded/;
 const GAP_MARKER = /^_Not available in ZeroHeight.*to review\._\s*$/;
+// The generated "## Contents" block (tools/skill/build.mjs toc) helps an agent
+// that reads only the top of a long file; ZeroHeight has its own page nav.
+const TOC_BLOCK = /<!-- toc: [^\n]*-->\n[\s\S]*?<!-- \/toc -->\n*/;
 
 // Machine-readable tags exist so an agent can address a variant or state without
 // parsing prose. On ZeroHeight they are meaningless slugs, so they come out.
@@ -223,7 +226,7 @@ function render(source, fromRel, flattened) {
   if (data.sync !== 'push') return null;
 
   const parts = [];
-  for (const s of splitSections(body)) {
+  for (const s of splitSections(body.replace(TOC_BLOCK, ''))) {
     if (DROP_SECTIONS.includes(s.name)) continue;
     const lines = trimBlank(clean(s.lines, s.name === '__intro__'));
     if (isBlank(lines)) continue; // gap-only or empty section

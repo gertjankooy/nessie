@@ -44,6 +44,9 @@ intern=$(printf '%s\n' "$added" | grep -nE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A
 #    llms(-full)  : always the pair (it is one artefact by nature)
 #    SKILL.md     : AGENTS.md + frontmatter, validated against the Agent Skills spec;
 #                   any staged skills/ or reference/ page also gets the link check
+#    ## Contents  : generated table of contents in every skills/ + reference/ page
+#                   over 100 lines (Claude's skill-authoring guide); runs FIRST,
+#                   because the other builds read those pages
 #    Auto-build only runs when every source file is fully staged; a build from a
 #    half-staged working tree would bake unstaged edits into a committed file.
 gen_src='^(AGENTS\.md|README\.md|CHANGELOG\.md|LICENSE-docs\.md|skills/|reference/|tools/(llms|zeroheight|skill)/build\.mjs$|tools/cli/README\.md$)'
@@ -56,6 +59,9 @@ if [ -n "$touches_zh$touches_llms$touches_skill" ] && command -v node >/dev/null
     printf '%s\n' "${YEL}GENERATED OUTPUT: not auto-building — these sources have unstaged edits. Stage them (git add) and commit again; the check below runs against the working tree:${NC}"
     printf '   %s\n' $unstaged
   else
+    if [ -n "$touches_skill" ]; then
+      for f in $(node tools/skill/build.mjs toc 2>/dev/null); do git add "$f"; done
+    fi
     if [ -n "$touches_zh" ]; then
       for f in $(printf '%s\n' "$staged" | grep -E '^reference/.*\.md$' || true); do
         if git show ":$f" | grep -qE '^sync: push'; then

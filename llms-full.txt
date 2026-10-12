@@ -5291,6 +5291,12 @@ Use exactly these headers, in this order. Keep a header even when its content is
 
 **Say each thing once; fill a section only when it adds something.** A section earns its place by carrying information no other section already states. Don't restate in Behavior what Anatomy or Configurations covered, or repeat a placement rule under both Placement and Best practices — put each fact in its most natural home and cross-reference if another section needs to point at it. If a section would only echo others, cut it to what is genuinely new. A section with nothing in ZeroHeight keeps its header and a gap marker per the Gaps convention (an empty section there means content not yet synced). The fixed order still governs whatever sections you include.
 
+### Generated table of contents (files over 100 lines)
+
+A doc longer than 100 lines gets a `## Contents` block between the H1 and the first section, wrapped in `<!-- toc: … -->` / `<!-- /toc -->` comments. **It is generated, not written:** the pre-commit hook builds it from the file's headings (`node tools/skill/build.mjs toc`), refreshes it when a heading changes, and removes it when the file drops to 100 lines or fewer. Never edit it by hand and never delete it on a sync; edit the headings instead. It isn't one of the 10 sections and doesn't change their order.
+
+Why it exists: Claude's [skill-authoring guide](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) asks that reference files over 100 lines open with a table of contents, because an agent sometimes previews a file with a partial read (only the first ~100 lines) and would otherwise not know what the rest covers. It's agent navigation only, so the ZeroHeight push and `llms-full.txt` strip it.
+
 ### The disabled-state callout (buttons & form controls)
 When a component *could* have a disabled state, include this after Configurations:
 
@@ -5404,6 +5410,7 @@ Both markers are meant to be temporary, and neither is removed silently. Remove 
 - [ ] `## Accessibility` and `## Content guidelines` gaps are **cross-linked** (`../accessibility.md` / `../content/index.md`), not bare markers — and still listed in `gaps:`.
 - [ ] Buttons / form controls carry the `⚠️ Missing the disabled state?` callout.
 - [ ] Cross-links resolve (paths relative to `reference/components/`); WCAG refs in backticks.
+- [ ] Over 100 lines? The generated `## Contents` block is present and untouched (the pre-commit hook adds it; `node tools/skill/build.mjs check` fails if it's missing or stale).
 - [ ] No implementation code, no `---` dividers, sentence case throughout.
 - [ ] **No em dash (`—`) anywhere in the file** (`grep -n '—' <file>` returns nothing).
 - [ ] Filename = kebab-case of the App page title; **`index.md` row added/refreshed** under the right category.
