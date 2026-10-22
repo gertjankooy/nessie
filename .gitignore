@@ -18,5 +18,9 @@ bootstrap.md
 .claude/commands/sync-tokens.md
 .claude/state/
 
+# AI-for-design-systems course output (ds-inspection skill) — internal NS detail
+# (team names, internal hosts, Figma keys); kept locally, never published
+ds-inspection/
+
 # OS / editor cruft
 .DS_Store

@@ -16,7 +16,7 @@ RED=$'\033[31m'; YEL=$'\033[33m'; GRN=$'\033[32m'; NC=$'\033[0m'
 added=$(git diff --cached --diff-filter=ACM -U0 | grep -E '^\+' | grep -vE '^\+\+\+' | sed 's/^+//')
 
 # 1) local-only / secret-bearing files must never be staged  -> BLOCK
-badfiles=$(printf '%s\n' "$staged" | grep -iE '(^|/)\.env(\.|$)|\.(pem|key|p12)$|(^|/)settings\.local\.json$|(^|/)sync-tokens\.md$|(^|/)figma-bootstrap/|(^|/)\.claude/state/|(^|/)bootstrap\.md$' || true)
+badfiles=$(printf '%s\n' "$staged" | grep -iE '(^|/)\.env(\.|$)|\.(pem|key|p12)$|(^|/)settings\.local\.json$|(^|/)sync-tokens\.md$|(^|/)figma-bootstrap/|(^|/)\.claude/state/|(^|/)bootstrap\.md$|^ds-inspection/' || true)
 if [ -n "$badfiles" ]; then
   printf '%s\n' "${RED}SECURITY BLOCK: local-only / secret-bearing file is staged:${NC}"
   printf '   %s\n' $badfiles
